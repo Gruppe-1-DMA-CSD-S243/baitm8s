@@ -1,4 +1,7 @@
 
+using BaitM8s.DAL.DAO;
+using BaitM8s.DAL.Interfaces;
+
 namespace BaitM8s.API
 {
     public class Program
@@ -7,9 +10,19 @@ namespace BaitM8s.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json", optional: true)
+            .AddUserSecrets<Program>()
+            .AddEnvironmentVariables()
+            .Build();
+
             // Add services to the container.
 
             builder.Services.AddControllers();
+
+            builder.Services.AddScoped<IBookingDAO>(bookingDAO =>
+            new BookingDAO(configuration["CONNECTION_STRING"]));
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

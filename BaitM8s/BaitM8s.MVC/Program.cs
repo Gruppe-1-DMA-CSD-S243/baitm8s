@@ -1,3 +1,6 @@
+using BaitM8s.APIClient.Clients;
+using BaitM8s.APIClient.Interfaces;
+
 namespace BaitM8s.MVC
 {
     public class Program
@@ -6,8 +9,16 @@ namespace BaitM8s.MVC
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json", optional: true)
+            .AddUserSecrets<Program>()
+            .AddEnvironmentVariables()
+            .Build();
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddScoped<IAPIClient>(_ => new BookingAPIClient(configuration["API_BASE_URI"]));
 
             var app = builder.Build();
 

@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36414.22 d17.14
+VisualStudioVersion = 17.14.36414.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaitM8s.API", "BaitM8s.API\BaitM8s.API.csproj", "{EE31C45F-9A54-4471-80C1-73FF97DDE8BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaitM8s.MVC", "BaitM8s.MVC\BaitM8s.MVC.csproj", "{68519838-AF15-4412-A52F-FD90581DD79C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaitM8s.DAL", "BaitM8s.DAL\BaitM8s.DAL.csproj", "{3B906D6A-DE8F-A126-FDB4-1AE5267A5164}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaitM8s.APIClient", "BaitM8s.APIClient\BaitM8s.APIClient.csproj", "{2E5FF97F-0854-4015-331A-41E93FF7BC71}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{68519838-AF15-4412-A52F-FD90581DD79C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68519838-AF15-4412-A52F-FD90581DD79C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68519838-AF15-4412-A52F-FD90581DD79C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B906D6A-DE8F-A126-FDB4-1AE5267A5164}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B906D6A-DE8F-A126-FDB4-1AE5267A5164}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B906D6A-DE8F-A126-FDB4-1AE5267A5164}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B906D6A-DE8F-A126-FDB4-1AE5267A5164}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E5FF97F-0854-4015-331A-41E93FF7BC71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E5FF97F-0854-4015-331A-41E93FF7BC71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E5FF97F-0854-4015-331A-41E93FF7BC71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E5FF97F-0854-4015-331A-41E93FF7BC71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
