@@ -1,0 +1,6 @@
+@BaitM8s.API_HostAddress = http://localhost:5133
+
+GET {{BaitM8s.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
