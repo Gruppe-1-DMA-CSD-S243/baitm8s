@@ -1,0 +1,54 @@
+﻿.booking-page {
+    display: flex;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+    align-items: stretch; /* gør at børn får samme højde */
+    height: calc(80vh - 60px - 80px);
+}
+
+/* Venstre info-boks fylder højden af højre container */
+.info-box {
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Højre container (top-boks + kalender) a
+.calendar-container {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* Top-boks med fast højde */
+.top-box {
+    height: 130px; /* kan justeres */
+    background-color: #e3e3e3;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+/* Kalenderen fylder resten af højden */
+#calendar {
+    flex: 1; /* fylder alt tilbageværende plads */
+    min-width: 600px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* FullCalendar fylder sin container */
+.fc {
+    width: 100% !important;
+    height: 100% !important;
+}

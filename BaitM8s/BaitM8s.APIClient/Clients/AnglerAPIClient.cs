@@ -9,38 +9,36 @@ using System.Threading.Tasks;
 
 namespace BaitM8s.APIClient.Clients
 {
-    public class BookingAPIClient : IAPIClient<Booking>
+    public class AnglerAPIClient : IAPIClient<Angler>
     {
         private readonly string _apiBaseUri;
         private readonly RestClient _restClient;
 
-        public BookingAPIClient(string apiBaseUri)
+        public AnglerAPIClient(string apiBaseUri)
         {
             _apiBaseUri = apiBaseUri;
             _restClient = new RestClient(_apiBaseUri);
         }
-
-        public IEnumerable<Booking> GetAll()
+        public IEnumerable<Angler> GetAll()
         {
-            var request = new RestRequest("bookings", Method.Get);
-            var response = _restClient.Execute<IEnumerable<Booking>>(request);
+            var request = new RestRequest("anglers", Method.Get);
+            var response = _restClient.Execute<IEnumerable<Angler>>(request);
 
             if (!response.IsSuccessful || response.Data == null)
             {
-                throw new Exception($"Error retrieving bookings. Message was {response.StatusDescription}");
+                throw new Exception($"Error retrieving anglers. Message was {response.StatusDescription}");
             }
 
             return response.Data;
         }
 
-        public Booking? GetOne(int id)
+        public Angler? GetOne(int id)
         {
-            var request = new RestRequest($"bookings/{id}", Method.Get);
-            var response = _restClient.Execute<Booking>(request);
-
+            var request = new RestRequest($"anglers/{id}", Method.Get);
+            var response = _restClient.Execute<Angler>(request);
             if (!response.IsSuccessful || response.Data == null)
             {
-                throw new Exception($"Error retrieving booking. Message was {response.StatusDescription}");
+                throw new Exception($"Error retrieving angler. Message was {response.StatusDescription}");
             }
 
             return response.Data;

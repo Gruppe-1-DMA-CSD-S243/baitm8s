@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BaitM8s.APIClient.Interfaces
+namespace BaitM8s.DAL.Interface
 {
-    public interface IAPIClient<T>
+    public interface IAnglerDAO
     {
-        IEnumerable<T> GetAll();
-        T? GetOne(int id);
+        Angler? GetAngler(int id);
+        IEnumerable<Angler> GetAnglers();
+
     }
 }
