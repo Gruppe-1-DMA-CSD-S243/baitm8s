@@ -1,4 +1,5 @@
 ﻿using BaitM8s.APIClient.Interfaces;
+using BaitM8s.DAL.Interfaces;
 using BaitM8s.DAL.Model;
 using RestSharp;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BaitM8s.APIClient.Clients
 {
-    public class PutAndTakePondApiClient : IPutAndTakePondApiClient
+    public class PutAndTakePondApiClient : IPutAndTakePondDao
     {
         private readonly RestClient _restClient;
         private readonly string _apiBaseUri;
