@@ -10,7 +10,7 @@ namespace BaitM8s.DAL.DAO
 {
     public class InMemoryBookingDAO : BaseDAO, IBookingDAO
     {
-        private readonly IEnumerable<Booking> _bookings = new List<Booking>();
+        private readonly List<Booking> _bookings = new List<Booking>();
 
         public InMemoryBookingDAO(string connectionString) : base(connectionString)
         {
@@ -144,7 +144,11 @@ namespace BaitM8s.DAL.DAO
 
         public async Task<bool> DeleteBookingAsync(int id)
         {
-            throw new NotImplementedException();
+            Booking foundBooking = _bookings.Where(booking => booking.Id == id).Single();
+
+            _bookings.Remove(foundBooking);
+
+            return true;
         }
     }
 }

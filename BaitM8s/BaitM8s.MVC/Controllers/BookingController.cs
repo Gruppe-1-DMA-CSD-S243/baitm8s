@@ -56,18 +56,18 @@ namespace BaitM8s.MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(BookingDTO booking)
+        public async Task<IActionResult> Delete(int id, BookingDTO booking)
         {
             try
             {
-                bool deleted = await _bookingApiClient.DeleteAsync(booking.Id);
+                bool deleted = await _bookingApiClient.DeleteAsync(id);
 
                 if (deleted)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", "Booking");
                 }
 
-                return RedirectToAction("Delete", new { id = booking.Id });
+                return RedirectToAction("Delete", new { id = id });
             }
             catch (Exception ex)
             {
