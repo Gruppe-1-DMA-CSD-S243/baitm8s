@@ -26,7 +26,7 @@ namespace BaitM8s.APIClient.Clients
 
             if (!response.IsSuccessful || response.Data == null)
             {
-                throw new Exception($"Error organizing notes provided. Message was {response.StatusDescription}");
+                throw new Exception($"Error getting all bookings. Message was {response.StatusDescription}");
             }
 
             return response.Data;
@@ -34,12 +34,29 @@ namespace BaitM8s.APIClient.Clients
 
         public async Task<T?> GetOneAsync(int id)
         {
-            var request = new RestRequest($"bookings/{id}", Method.Get);
+            var request = new RestRequest("bookings/{id}", Method.Get);
+            request.AddUrlSegment("id", id); 
+
             var response = await _restClient.ExecuteAsync<T>(request);
 
             if (!response.IsSuccessful || response.Data == null)
             {
-                throw new Exception($"Error organizing notes provided. Message was {response.StatusDescription}");
+                throw new Exception($"Error getting booking with id {id}. Message was {response.StatusDescription}");
+            }
+
+            return response.Data;
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var request = new RestRequest("Bookings", Method.Delete);
+            request.AddParameter("id", id);
+
+            var response = await _restClient.ExecuteAsync<bool>(request);
+
+            if (!response.IsSuccessful)
+            {
+                throw new Exception($"Error deleting booking with id {id}. Message was {response.StatusDescription}");
             }
 
             return response.Data;

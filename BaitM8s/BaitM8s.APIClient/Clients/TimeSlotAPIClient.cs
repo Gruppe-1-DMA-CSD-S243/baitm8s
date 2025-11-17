@@ -37,5 +37,10 @@ namespace BaitM8s.APIClient.Clients
         {
             throw new NotImplementedException();
         }
+
+        public Task<bool> DeleteAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -41,5 +41,38 @@ namespace BaitM8s.MVC.Controllers
             ViewBag.BookingJson = System.Text.Json.JsonSerializer.Serialize(calendarEvents);
             return View();
         }
+
+        [HttpGet]
+        public async Task<ActionResult<BookingDTO>> Delete(int id)
+        {
+            try
+            {
+                return View(await _bookingApiClient.GetOneAsync(id));
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(BookingDTO booking)
+        {
+            try
+            {
+                bool deleted = await _bookingApiClient.DeleteAsync(booking.Id);
+
+                if (deleted)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                return RedirectToAction("Delete", new { id = booking.Id });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error");
+            }
+        }
     }
 }

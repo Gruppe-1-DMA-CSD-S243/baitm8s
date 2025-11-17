@@ -38,13 +38,7 @@ namespace BaitM8s.API.Controllers
         {
             try
             {
-                var booking = await _bookingDAO.GetBookingAsync(id);
-                if (booking == null)
-                {
-                    return NoContent();
-                }
-
-                return Ok(booking);
+                return Ok(await _bookingDAO.GetBookingAsync(id));
             }
             catch (Exception ex)
             {
@@ -52,6 +46,19 @@ namespace BaitM8s.API.Controllers
                 return StatusCode(500, $"Error: {ex.Message}");
 
                 //return StatusCode(500, $"An error occurred trying to retrieve the blog post with id {id}.");
+            }
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<bool>> DeleteBookingAsync(int id)
+        {
+            try
+            {
+                return Ok(await _bookingDAO.DeleteBookingAsync(id));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
             }
         }
     }

@@ -18,6 +18,7 @@ namespace BaitM8s.DAL.DAO
             {
                 new Booking
                 {
+                    Id = 1,
                     BookingNumber = "BKG-2025-001",
                     Pond = "Søndersø",
                     Date = new DateTime(2025, 5, 12),
@@ -39,6 +40,7 @@ namespace BaitM8s.DAL.DAO
                 },
                 new Booking
                 {
+                    Id = 2,
                     BookingNumber = "BKG-2025-002",
                     Pond = "Lillesø",
                     Date = new DateTime(2025, 5, 13),
@@ -60,6 +62,7 @@ namespace BaitM8s.DAL.DAO
                 },
                 new Booking
                 {
+                    Id = 3,
                     BookingNumber = "BKG-2025-003",
                     Pond = "Storedam",
                     Date = new DateTime(2025, 5, 14),
@@ -81,6 +84,7 @@ namespace BaitM8s.DAL.DAO
                 },
                 new Booking
                 {
+                    Id = 4,
                     BookingNumber = "BKG-2025-004",
                     Pond = "Mosehullet",
                     Date = new DateTime(2025, 5, 15),
@@ -102,6 +106,7 @@ namespace BaitM8s.DAL.DAO
                 },
                 new Booking
                 {
+                    Id = 5,
                     BookingNumber = "BKG-2025-005",
                     Pond = "Ørredparken",
                     Date = new DateTime(2025, 5, 16),
@@ -135,6 +140,11 @@ namespace BaitM8s.DAL.DAO
             booking.Id == id).Single();
 
             return foundBooking;
+        }
+
+        public async Task<bool> DeleteBookingAsync(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

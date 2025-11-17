@@ -11,5 +11,6 @@ namespace BaitM8s.DAL.Interfaces
     {
         Task<Booking?> GetBookingAsync(int id);
         Task<IEnumerable<Booking>> GetAllBookingsAsync();
+        Task<bool> DeleteBookingAsync(int id);
     }
 }
