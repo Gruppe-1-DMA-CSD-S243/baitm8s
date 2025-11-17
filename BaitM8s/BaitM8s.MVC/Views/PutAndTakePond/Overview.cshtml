@@ -1,0 +1,101 @@
+﻿@model IEnumerable<BaitM8s.DAL.Model.PutAndTakePond>
+
+@{
+    ViewData["Title"] = "Overview";
+}
+
+<h1>Overview</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PondNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ZipCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.sizeInSquareMeters)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Toilet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CleanTable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HandiCapFriendly)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyFriendly)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LinkToWebsite)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PondNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ZipCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sizeInSquareMeters)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Toilet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CleanTable)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HandiCapFriendly)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FamilyFriendly)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LinkToWebsite)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
