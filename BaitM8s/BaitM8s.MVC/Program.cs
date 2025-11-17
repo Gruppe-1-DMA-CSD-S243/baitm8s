@@ -1,5 +1,6 @@
 using BaitM8s.APIClient.Clients;
 using BaitM8s.APIClient.Interfaces;
+using BaitM8s.DAL.DTO;
 
 namespace BaitM8s.MVC
 {
@@ -18,7 +19,10 @@ namespace BaitM8s.MVC
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddScoped<IAPIClient>(_ => new BookingAPIClient(configuration["API_BASE_URI"]));
+            builder.Services.AddScoped<IAPIClient<BookingDTO>>(apiClient => new BookingAPIClient<BookingDTO>(configuration["API_BASE_URI"]));
+
+            builder.Services.AddScoped<IAPIClient<TimeSlotDTO>>(apiClient =>
+            new TimeSlotAPIClient<TimeSlotDTO>(configuration["API_BASE_URI"]));
 
             var app = builder.Build();
 

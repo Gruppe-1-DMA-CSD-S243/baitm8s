@@ -15,18 +15,18 @@ namespace BaitM8s.DAL.DAO
         {
 
         }
-        public IEnumerable<Booking> GetAllBookings()
+        public async Task<IEnumerable<Booking>> GetAllBookingsAsync()
         {
             var query = "SELECT * FROM Booking";
             using var connection = CreateConnection();
-            return connection.Query<Booking>(query).ToList();
+            return await connection.QueryAsync<Booking>(query);
         }
 
-        public Booking? GetBooking(int id)
+        public async Task<Booking?> GetBookingAsync(int id)
         {
             var query = "SELECT * FROM Booking WHERE id = @id";
             using var connection = CreateConnection();
-            return connection.QuerySingleOrDefault<Booking>(query, new { Id = id });
+            return await connection.QuerySingleOrDefaultAsync<Booking>(query, new { Id = id });
         }
     }
 }

@@ -1,12 +1,13 @@
-﻿using System;
+﻿using BaitM8s.DAL.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BaitM8s.DAL.Model
+namespace BaitM8s.DAL.DTO
 {
-    public class Booking
+    public class BookingDTO
     {
         public int Id { get; set; }
         public string BookingNumber { get; set; }

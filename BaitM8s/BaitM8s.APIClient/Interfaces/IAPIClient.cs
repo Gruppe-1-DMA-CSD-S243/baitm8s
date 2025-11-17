@@ -1,5 +1,4 @@
-﻿using BaitM8s.DAL.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BaitM8s.APIClient.Interfaces
 {
-    public interface IAPIClient
+    public interface IAPIClient<T>
     {
-        IEnumerable<Booking> GetAllBookings();
-        Booking? GetBooking(int id);
+        Task<IEnumerable<T>> GetAllAsync();
+        Task<T?> GetOneAsync(int id);
     }
 }

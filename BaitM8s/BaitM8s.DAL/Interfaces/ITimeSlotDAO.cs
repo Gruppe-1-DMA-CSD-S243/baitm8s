@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BaitM8s.DAL.Interfaces
 {
-    public interface IBookingDAO
+    public interface ITimeSlotDAO
     {
-        Task<Booking?> GetBookingAsync(int id);
-        Task<IEnumerable<Booking>> GetAllBookingsAsync();
+        Task<IEnumerable<TimeSlot>> GetAllTimeSlotsAsync();
+        Task<IEnumerable<TimeSlot>> GetAllTimeSlotsForPutAndTakePondAsync(int putAndTakePondId);
     }
 }

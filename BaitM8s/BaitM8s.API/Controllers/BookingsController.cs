@@ -1,4 +1,5 @@
-﻿using BaitM8s.DAL.Interfaces;
+﻿using BaitM8s.DAL.DTO;
+using BaitM8s.DAL.Interfaces;
 using BaitM8s.DAL.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +18,11 @@ namespace BaitM8s.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Booking>> Get()
+        public async Task<ActionResult<IEnumerable<BookingDTO>>> GetAsync()
         {
             try
             {
-                return Ok(_bookingDAO.GetAllBookings());
+                return Ok(await _bookingDAO.GetAllBookingsAsync());
             }
             catch (Exception ex)
             {
@@ -33,11 +34,11 @@ namespace BaitM8s.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Booking> Get(int id)
+        public async Task<ActionResult<BookingDTO>> GetAsync(int id)
         {
             try
             {
-                var booking = _bookingDAO.GetBooking(id);
+                var booking = await _bookingDAO.GetBookingAsync(id);
                 if (booking == null)
                 {
                     return NoContent();

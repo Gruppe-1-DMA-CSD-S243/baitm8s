@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaitM8s.DAL", "BaitM8s.DAL\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaitM8s.APIClient", "BaitM8s.APIClient\BaitM8s.APIClient.csproj", "{2E5FF97F-0854-4015-331A-41E93FF7BC71}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaitM8s.Test", "BaitM8s.Test\BaitM8s.Test.csproj", "{74A2B615-043A-4DBD-81FD-0C895A8706DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{2E5FF97F-0854-4015-331A-41E93FF7BC71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E5FF97F-0854-4015-331A-41E93FF7BC71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E5FF97F-0854-4015-331A-41E93FF7BC71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74A2B615-043A-4DBD-81FD-0C895A8706DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74A2B615-043A-4DBD-81FD-0C895A8706DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74A2B615-043A-4DBD-81FD-0C895A8706DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74A2B615-043A-4DBD-81FD-0C895A8706DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

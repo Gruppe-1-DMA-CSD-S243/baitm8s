@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace BaitM8s.APIClient.Clients
 {
-    public class BookingAPIClient<T> : IAPIClient<T>
+    public class TimeSlotAPIClient<T> : IAPIClient<T>
     {
         private readonly string _apiBaseUri;
         private readonly RestClient _restClient;
 
-        public BookingAPIClient(string apiBaseUri)
+        public TimeSlotAPIClient(string apiBaseUri)
         {
             _apiBaseUri = apiBaseUri;
             _restClient = new RestClient(_apiBaseUri);
@@ -21,28 +21,21 @@ namespace BaitM8s.APIClient.Clients
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            var request = new RestRequest("bookings", Method.Get);
+            var request = new RestRequest("TimeSlots", Method.Get);
+
             var response = await _restClient.ExecuteAsync<IEnumerable<T>>(request);
 
             if (!response.IsSuccessful || response.Data == null)
             {
-                throw new Exception($"Error organizing notes provided. Message was {response.StatusDescription}");
+                throw new Exception($"Error getting all TimeSlots. Message was {response.StatusDescription}");
             }
 
             return response.Data;
         }
 
-        public async Task<T?> GetOneAsync(int id)
+        public Task<T?> GetOneAsync(int id)
         {
-            var request = new RestRequest($"bookings/{id}", Method.Get);
-            var response = await _restClient.ExecuteAsync<T>(request);
-
-            if (!response.IsSuccessful || response.Data == null)
-            {
-                throw new Exception($"Error organizing notes provided. Message was {response.StatusDescription}");
-            }
-
-            return response.Data;
+            throw new NotImplementedException();
         }
     }
 }

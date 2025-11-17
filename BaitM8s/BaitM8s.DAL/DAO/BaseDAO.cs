@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BaitM8s.DAL.DAO
 {
-    public class BaseDAO
+    public abstract class BaseDAO
     {
         protected readonly string _connectionString;
         protected BaseDAO(string connectionString) => _connectionString = connectionString;
