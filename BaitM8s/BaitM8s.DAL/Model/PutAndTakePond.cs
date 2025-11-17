@@ -40,5 +40,7 @@ namespace BaitM8s.DAL.Model
         public PutAndTakePond()
         {
         }
+
+        public override string ToString() => $"{FishingSpotNumber} - {Name}";
     }
 }

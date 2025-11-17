@@ -22,6 +22,8 @@ namespace BaitM8s.API
 
             builder.Services.AddScoped<IBookingDAO>(bookingDAO =>
             new BookingDAO(configuration["CONNECTION_STRING"]));
+            builder.Services.AddScoped<IPutAndTakePondDao>(putAndTakePondDao =>
+            new PutAndTakePondDao(configuration["CONNECTION_STRING"]));
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
