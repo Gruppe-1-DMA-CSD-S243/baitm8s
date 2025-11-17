@@ -29,10 +29,6 @@ namespace BaitM8s.API.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<TimeSlotDTO>>> GetByPondIdAsync(int pondId)
-        {
-
-        }
+        
     }
 }

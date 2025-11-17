@@ -20,7 +20,7 @@ public class ViewAvailableTimeSlots
     public async Task OnlyAvailableTimeSlotsAreRetrieved()
     {
         //Arrange
-        IAPIClient<TimeSlotDTO> apiClient = new TimeSlotAPIClient<TimeSlotDTO>("https://localhost:8888/api");
+        IAPIClient<TimeSlotDTO> apiClient = new TimeSlotAPIClient<TimeSlotDTO>("");
         int expectedCount = 5;
 
         //Act
