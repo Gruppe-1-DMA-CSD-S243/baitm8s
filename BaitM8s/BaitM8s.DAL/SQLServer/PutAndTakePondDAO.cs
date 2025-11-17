@@ -28,7 +28,8 @@ namespace BaitM8s.DAL.SQLServer
 
         public IEnumerable<PutAndTakePond> GetAll()
         {
-            var query = "SELECT * FROM PutAndTakePonds";
+            //TODO: update query, this is just temp for testing
+            var query = "SELECT *, phone_number AS PhoneNumber FROM PutAndTakePonds";
             using var connection = CreateConnection();
             return connection.Query<PutAndTakePond>(query).ToList();
         }
@@ -38,9 +39,11 @@ namespace BaitM8s.DAL.SQLServer
             throw new NotImplementedException();
         }
 
-        public PutAndTakePond? GetOne(int id)
+        public PutAndTakePond? GetOne(string phoneNumber)
         {
-            throw new NotImplementedException();
+            var query = "SELECT name, address, zipcode, email, phone_number AS PhoneNumber FROM PutAndTakePonds WHERE phone_number = @phone_number";
+            using var connection = CreateConnection();
+            return connection.QuerySingleOrDefault<PutAndTakePond>(query, new { phone_number = phoneNumber });
         }
 
         public bool Update(PutAndTakePond putAndTakePond)

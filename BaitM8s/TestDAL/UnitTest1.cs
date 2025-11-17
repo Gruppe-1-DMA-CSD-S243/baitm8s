@@ -30,5 +30,16 @@ namespace TestDAL
             }
 
         }
+
+        [Test]
+        public void GetOne()
+        {
+            var putAndTakePondDAO = CreatePutAndTakePondDAO();
+            var one = putAndTakePondDAO.GetOne("555-201-1001");
+
+
+            Console.WriteLine(one.PhoneNumber);
+            Assert.That(one.PhoneNumber == "555-201-1001");
+        }
     }
 }

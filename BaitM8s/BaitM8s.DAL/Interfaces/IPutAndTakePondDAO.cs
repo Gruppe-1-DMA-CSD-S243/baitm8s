@@ -9,7 +9,8 @@ namespace BaitM8s.DAL.Interfaces
 {
     public interface IPutAndTakePondDAO
     {
-        PutAndTakePond? GetOne(int id);
+        //TODO: change from phonenumber to int pondnumber
+        PutAndTakePond? GetOne(string phoneNumber);
         IEnumerable<PutAndTakePond> GetAll();
         IEnumerable<PutAndTakePond> GetByPondOwner(int pondOwnerId);
         bool Delete(int id);

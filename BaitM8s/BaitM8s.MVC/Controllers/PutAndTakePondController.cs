@@ -37,20 +37,21 @@ namespace BaitM8s.MVC.Controllers
 
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Manage(string phoneNumber)
         {
             //TODO: try catch
-            return View(_putAndTakePondAPIClient.GetOne(id));
+            Console.WriteLine(phoneNumber + "number?");
+            return View(_putAndTakePondAPIClient.GetOne(phoneNumber));
         }
 
         [HttpPost]
-        public IActionResult Edit(PutAndTakePond putAndTakePond)
+        public IActionResult Manage(PutAndTakePond putAndTakePond)
         {
             if (ModelState.IsValid)
             {
                 //TODO: try catch
                 _putAndTakePondAPIClient.Update(putAndTakePond);
-                return RedirectToAction("Edit", "PutAndTakePond", new { putAndTakePond.PondNumber });
+                return RedirectToAction("Manage", "PutAndTakePond", new { putAndTakePond.PondNumber });
             }
             //TODO: giv fejlbesked
             return View(putAndTakePond);

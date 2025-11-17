@@ -27,12 +27,12 @@ namespace BaitM8s.API.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<PutAndTakePond> Get(int id)
+        [HttpGet("{phoneNumber}")]
+        public ActionResult<PutAndTakePond> Get(string phoneNumber)
         {
             try
             {
-                var post = _putAndTakePondDAO.GetOne(id);
+                var post = _putAndTakePondDAO.GetOne(phoneNumber);
                 if (post == null)
                 {
                     return NoContent();
@@ -42,7 +42,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred trying to retrieve the blog post with id {id}.");
+                return StatusCode(500, $"An error occurred trying to retrieve the blog post with id {phoneNumber}.");
             }
         }
 

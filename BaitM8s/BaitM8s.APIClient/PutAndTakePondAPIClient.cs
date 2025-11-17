@@ -64,9 +64,9 @@ namespace BaitM8s.APIClient
             throw new Exception("Server reply: Unsuccessful request");
         }
 
-        public PutAndTakePond? GetOne(int id)
+        public PutAndTakePond? GetOne(string phoneNumber)
         {
-            var request = new RestRequest($"putandtakeponds/{id}", Method.Get);
+            var request = new RestRequest($"putandtakeponds/{phoneNumber}", Method.Get);
             var response = _restClient.Execute<PutAndTakePond>(request);
             if (response == null) throw new Exception("NO response from server");
             if (response.IsSuccessStatusCode) return response.Data;
