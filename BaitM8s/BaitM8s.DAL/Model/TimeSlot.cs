@@ -9,16 +9,16 @@ namespace BaitM8s.DAL.Model
     public class TimeSlot
     {
         public int TimeSlotNumber { get; set; }
-        public int WeekNumber { get; set; }
+        public DateTime Date { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public bool IsAvaliable { get; set; }
         public int Capacity { get; set; }
 
-        public TimeSlot(int timeSlotNumber, int weekNumber, DateTime startDate, DateTime endDate, bool isAvaliable, int capacity)
+        public TimeSlot(int timeSlotNumber, DateTime date, DateTime startDate, DateTime endDate, bool isAvaliable, int capacity)
         {
             TimeSlotNumber = timeSlotNumber;
-            WeekNumber = weekNumber;
+            Date = date;
             StartDate = startDate;
             EndDate = endDate;
             IsAvaliable = isAvaliable;
