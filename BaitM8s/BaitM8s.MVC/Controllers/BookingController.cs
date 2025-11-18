@@ -14,33 +14,33 @@ namespace BaitM8s.MVC.Controllers
             _bookingApiClient = bookingApiClient;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            var bookings = await _bookingApiClient.GetAllAsync();
+        //public async Task<IActionResult> Index()
+        //{
+        //    var bookings = await _bookingApiClient.GetAllAsync();
 
-            var calendarEvents = bookings
-                .SelectMany(booking => booking.TimeSlots.Select(ts => new
-                {
-                    title = $"Booking #{booking.BookingNumber} ({booking.Pond})",
+        //    var calendarEvents = bookings
+        //        .SelectMany(booking => booking.TimeSlots.Select(ts => new
+        //        {
+        //            title = $"Booking #{booking.BookingNumber} ({booking.Pond})",
 
-                    start = ts.StartTime.ToString("o"),
-                    end = ts.EndTime.ToString("o"),
+        //            start = ts.StartTime.ToString("o"),
+        //            end = ts.EndTime.ToString("o"),
 
-                    id = $"{booking.Id}-{ts.Id}",
+        //            id = $"{booking.Id}-{ts.Id}",
 
-                    extendedProps = new
-                    {
-                        bookingNumber = booking.BookingNumber,
-                        pond = booking.Pond,
-                        people = booking.NumberOfPeople,
-                        timeSlotNumber = ts.TimeSlotNumber,
-                        capacity = ts.Capacity
-                    }
-                }));
+        //            extendedProps = new
+        //            {
+        //                bookingNumber = booking.BookingNumber,
+        //                pond = booking.Pond,
+        //                people = booking.NumberOfPeople,
+        //                timeSlotNumber = ts.TimeSlotNumber,
+        //                capacity = ts.Capacity
+        //            }
+        //        }));
 
-            ViewBag.BookingJson = System.Text.Json.JsonSerializer.Serialize(calendarEvents);
-            return View();
-        }
+        //    ViewBag.BookingJson = System.Text.Json.JsonSerializer.Serialize(calendarEvents);
+        //    return View();
+        //}
 
         public async Task<IActionResult> Calendar()
         {
@@ -112,11 +112,11 @@ namespace BaitM8s.MVC.Controllers
             return View();
         }
 
-        //TODO: Få kigget på det her. Der er to index actions!
-        //public IActionResult Index()
-        //{
-        //    return View(_bookingApiClient.GetAll());
-        //}
+        //TODO: Få kigget på det her.Der er to index actions!
+        public async Task<IActionResult> Index()
+        {
+            return View(await _bookingApiClient.GetAllAsync());
+        }
 
         [HttpGet]
         public async Task<IActionResult> Details(int? Id)
