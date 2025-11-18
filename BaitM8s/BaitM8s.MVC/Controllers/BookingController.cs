@@ -101,6 +101,19 @@ namespace BaitM8s.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(BookingDTO booking)
         {
+            //TODO: Få lige fixet det her hack!
+            booking = new BookingDTO
+            {
+                Id = 99,
+                BookingNumber = "BK-NEWNUMB",
+                Pond = "NewPond",
+                TimeSlots = new List<BaitM8s.DAL.Model.TimeSlot>(),
+                Date = DateTime.Now,
+                StartTime = TimeSpan.FromMinutes(80),
+                EndTime = TimeSpan.FromMinutes(100),
+                NumberOfPeople = 3,
+                FK_AnglerId = 1
+            };
             if (ModelState.IsValid)
             {
                 //TODO: try catch

@@ -1,6 +1,7 @@
 ﻿using BaitM8s.DAL.DTO;
 using BaitM8s.DAL.Interfaces;
 using BaitM8s.DAL.Model;
+using BaitM8s.Services.Notifications.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,10 +12,11 @@ namespace BaitM8s.API.Controllers
     public class BookingsController : ControllerBase
     {
         private readonly IBookingDAO _bookingDAO;
-
-        public BookingsController(IBookingDAO bookingDAO)
+        private readonly INotificationService _notificationService;
+        public BookingsController(IBookingDAO bookingDAO, INotificationService notificationService)
         {
             _bookingDAO = bookingDAO;
+            _notificationService = notificationService;
         }
 
         [HttpGet]
@@ -63,14 +65,30 @@ namespace BaitM8s.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> CreateBookingAsync([FromBody] Booking booking)
+        public async Task<ActionResult<int>> CreateBookingAsync([FromBody] BookingDTO dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
+                //TODO: Lav en hjælpemetode!!!
+                Booking booking = new Booking
+                {
+                    Id = dto.Id,
+                    BookingNumber = dto.BookingNumber,
+                    Pond = dto.Pond,
+                    TimeSlots = dto.TimeSlots,
+                    Date = dto.Date,
+                    StartTime = dto.StartTime,
+                    EndTime = dto.EndTime,
+                    NumberOfPeople = dto.NumberOfPeople,
+                    FK_AnglerId = dto.FK_AnglerId
+                };
+
                 int newId = await _bookingDAO.CreateBookingAsync(booking);
+
+                await _notificationService.SendNotificationAsync("hej");
 
                 return Ok(newId);
             }

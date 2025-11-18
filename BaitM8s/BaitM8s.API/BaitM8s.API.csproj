@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BaitM8s.DAL\BaitM8s.DAL.csproj" />
+    <ProjectReference Include="..\BaitM8s.Services\BaitM8s.Services.csproj" />
   </ItemGroup>
 
 </Project>

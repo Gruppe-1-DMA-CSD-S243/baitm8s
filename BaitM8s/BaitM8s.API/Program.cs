@@ -1,6 +1,8 @@
 
 using BaitM8s.DAL.DAO;
 using BaitM8s.DAL.Interfaces;
+using BaitM8s.Services.Notifications;
+using BaitM8s.Services.Notifications.Interfaces;
 
 namespace BaitM8s.API
 {
@@ -31,6 +33,9 @@ namespace BaitM8s.API
 
             builder.Services.AddScoped<IBookingDAO>(bookingDAO =>
             new InMemoryBookingDAO("connectionString"));
+
+            builder.Services.AddScoped<INotificationService>(service =>
+            new TelegramNotificationService("https://api.telegram.org", "8230947150:AAHn8ZkyVU4DLGMvtGY06u0ZDz1lnVtHpKY", "-1003297586522"));
 
             builder.Services.AddScoped<ITimeSlotDAO>(timeSlotDAO =>
             new InMemoryTimeSlotDAO("connectionString"));
