@@ -150,5 +150,11 @@ namespace BaitM8s.DAL.DAO
 
             return true;
         }
+
+        public Task<int> CreateBookingAsync(Booking booking)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

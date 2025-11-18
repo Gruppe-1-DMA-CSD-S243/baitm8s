@@ -1,5 +1,6 @@
-﻿using BaitM8s.DAL.Interface;
+﻿using BaitM8s.DAL.Interfaces;
 using BaitM8s.DAL.Model;
+using BaitM8s.DAL.DTO;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
 
@@ -21,11 +22,11 @@ namespace BaitM8s.API.Controllers
 
         // GET: api/<ValuesController>
         [HttpGet]
-        public ActionResult<IEnumerable<Angler>> Get()
+        public async Task<ActionResult<IEnumerable<AnglerDTO>>> GetAsync()
         {
             try
             {
-                return Ok(_anglerDAO.GetAnglers());
+                return Ok(await _anglerDAO.GetAnglersAsync());
             }
             catch (Exception ex)
             {
@@ -35,11 +36,11 @@ namespace BaitM8s.API.Controllers
 
         // GET api/<ValuesController>/5
         [HttpGet("{Id}")]
-        public ActionResult<Angler> Get(int Id)
+        public async Task<ActionResult<Angler>> GetAsync(int Id)
         {
             try
             {
-                var angler = _anglerDAO.GetAngler(Id);
+                var angler = await _anglerDAO.GetAnglerAsync(Id);
                 if (angler == null)
                 {
                     return NoContent();

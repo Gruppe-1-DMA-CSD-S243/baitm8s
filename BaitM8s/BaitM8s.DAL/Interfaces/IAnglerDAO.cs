@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BaitM8s.DAL.Interface
+namespace BaitM8s.DAL.Interfaces
 {
     public interface IAnglerDAO
     {
-        Angler? GetAngler(int Id);
-        IEnumerable<Angler> GetAnglers();
+        Task<Angler?> GetAnglerAsync(int Id);
+        Task<IEnumerable<Angler>> GetAnglersAsync();
     }
 }

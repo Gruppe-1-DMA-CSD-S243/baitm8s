@@ -42,9 +42,9 @@ namespace BaitM8s.MVC.Controllers
             return View();
         }
 
-        public IActionResult Calendar()
+        public async Task<IActionResult> Calendar()
         {
-            var bookings = _bookingApiClient.GetAll();
+            var bookings = await _bookingApiClient.GetAllAsync();
 
             var calendarEvents = bookings.Select(booking => new
             {
@@ -93,13 +93,13 @@ namespace BaitM8s.MVC.Controllers
             }
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Booking booking)
+        public async Task<IActionResult> Create(BookingDTO booking)
         {
             if (ModelState.IsValid)
             {
@@ -113,20 +113,20 @@ namespace BaitM8s.MVC.Controllers
         }
 
         //TODO: Få kigget på det her. Der er to index actions!
-        public IActionResult Index()
-        {
-            return View(_bookingApiClient.GetAll());
-        }
+        //public IActionResult Index()
+        //{
+        //    return View(_bookingApiClient.GetAll());
+        //}
 
         [HttpGet]
-        public IActionResult Details(int? Id)
+        public async Task<IActionResult> Details(int? Id)
         {
             if (!Id.HasValue)
             {
                 return View();
             }
 
-            var booking = _bookingApiClient.GetOne(Id.Value);
+            var booking = await _bookingApiClient.GetOneAsync(Id.Value);
             if (booking == null)
             {
                 return NotFound();

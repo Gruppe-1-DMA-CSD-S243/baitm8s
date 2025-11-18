@@ -1,6 +1,6 @@
 ﻿using BaitM8s.APIClient.Clients;
 using BaitM8s.APIClient.Interfaces;
-using BaitM8s.DAL.Model;
+using BaitM8s.DAL.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,40 +8,42 @@ namespace BaitM8s.MVC.Controllers
 {
     public class AnglerController : Controller
     {
-        private readonly IAPIClient<Angler> _anglerApiClient;
-        public AnglerController(IAPIClient<Angler> anglerApiClient)
+        private readonly IAPIClient<AnglerDTO> _anglerApiClient;
+
+        public AnglerController(IAPIClient<AnglerDTO> anglerApiClient)
         {
             _anglerApiClient = anglerApiClient;
         }
+
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var anglers = _anglerApiClient.GetAll();
+            var anglers = await _anglerApiClient.GetAllAsync();
             return View(anglers);
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(Booking booking)
+        public async Task<IActionResult> Create(BookingDTO booking)
         {
             return View();
         }
 
 
         [HttpGet]
-        public IActionResult Details(int? anglerId)
+        public async Task<IActionResult> Details(int? anglerId)
         {
             if (!anglerId.HasValue)
             {
                 return View();
             }
 
-            var angler = _anglerApiClient.GetOne(anglerId.Value);
+            var angler = await _anglerApiClient.GetOneAsync(anglerId.Value);
             if (angler == null)
             {
                 return NotFound();

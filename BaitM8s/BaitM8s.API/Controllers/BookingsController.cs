@@ -72,8 +72,7 @@ namespace BaitM8s.API.Controllers
             {
                 int newId = await _bookingDAO.CreateBookingAsync(booking);
 
-                // Returnerer HTTP 201 + Location header
-                return CreatedAtAction(nameof(GetBookingById), new { Id = newId }, newId);
+                return Ok(newId);
             }
             catch (Exception ex)
             {

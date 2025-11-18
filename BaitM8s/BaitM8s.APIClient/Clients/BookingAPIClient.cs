@@ -1,4 +1,5 @@
 ﻿using BaitM8s.APIClient.Interfaces;
+using BaitM8s.DAL.DTO;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BaitM8s.APIClient.Clients
 {
-    public class BookingAPIClient<T> : IAPIClient<T>
+    public class BookingAPIClient : IAPIClient<BookingDTO>
     {
         private readonly string _apiBaseUri;
         private readonly RestClient _restClient;
@@ -19,10 +20,10 @@ namespace BaitM8s.APIClient.Clients
             _restClient = new RestClient(_apiBaseUri);
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<BookingDTO>> GetAllAsync()
         {
             var request = new RestRequest("bookings", Method.Get);
-            var response = await _restClient.ExecuteAsync<IEnumerable<T>>(request);
+            var response = await _restClient.ExecuteAsync<IEnumerable<BookingDTO>>(request);
 
             if (!response.IsSuccessful || response.Data == null)
             {
@@ -32,12 +33,12 @@ namespace BaitM8s.APIClient.Clients
             return response.Data;
         }
 
-        public async Task<T?> GetOneAsync(int id)
+        public async Task<BookingDTO?> GetOneAsync(int id)
         {
             var request = new RestRequest("bookings/{id}", Method.Get);
             request.AddUrlSegment("id", id); 
 
-            var response = await _restClient.ExecuteAsync<T>(request);
+            var response = await _restClient.ExecuteAsync<BookingDTO>(request);
 
             if (!response.IsSuccessful || response.Data == null)
             {
@@ -62,10 +63,10 @@ namespace BaitM8s.APIClient.Clients
             return response.Data;
         }
 
-        public async Task<int> CreateAsync(Booking booking)
+        public async Task<int> CreateAsync(BookingDTO booking)
         {
             var request = new RestRequest("bookings", Method.Post);
-            request.AddJsonBody(booking);
+            request.AddJsonBody<BookingDTO>(booking);
 
             var response = await _restClient.ExecuteAsync<int>(request);
 
