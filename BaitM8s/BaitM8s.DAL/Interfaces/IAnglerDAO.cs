@@ -9,8 +9,7 @@ namespace BaitM8s.DAL.Interface
 {
     public interface IAnglerDAO
     {
-        Angler? GetAngler(int id);
+        Angler? GetAngler(int Id);
         IEnumerable<Angler> GetAnglers();
-
     }
 }

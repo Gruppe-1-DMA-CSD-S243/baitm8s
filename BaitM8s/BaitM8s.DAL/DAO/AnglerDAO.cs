@@ -26,5 +26,6 @@ namespace BaitM8s.DAL.DAO
             using var connection = CreateConnection();
             return connection.QuerySingleOrDefault<Angler>(query, new { Id = id });
         }
+
     }
 }

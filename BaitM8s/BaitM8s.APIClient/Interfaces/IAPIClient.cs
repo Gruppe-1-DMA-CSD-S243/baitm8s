@@ -11,5 +11,6 @@ namespace BaitM8s.APIClient.Interfaces
     {
         IEnumerable<T> GetAll();
         T? GetOne(int id);
+        Task<int> CreateAsync(T entity);
     }
 }

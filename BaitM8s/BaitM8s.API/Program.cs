@@ -20,13 +20,13 @@ namespace BaitM8s.API
             // Add services to the container.
 
             builder.Services.AddControllers();
-            //builder.Services.AddScoped<IAnglerDAO>(AnglerDAO => new AnglerDAO("Data Source=localhost;Database=Baitm8s;Persist Security Info=True;User ID=sa;Password=@12tf56so;Trust Server Certificate=True"));
-            //builder.Services.AddScoped<IBookingDAO>(bookingDAO => new BookingDAO("Data Source=localhost;Database=Baitm8s;Persist Security Info=True;User ID=sa;Password=@12tf56so;Trust Server Certificate=True"));
-            builder.Services.AddScoped<IBookingDAO>(bookingDAO =>
-            new BookingDAO(configuration["CONNECTION_STRING"]));
+            builder.Services.AddScoped<IAnglerDAO>(AnglerDAO => new AnglerDAO("Data Source=localhost;Database=Baitm8s;Persist Security Info=True;User ID=sa;Password=@12tf56so;Trust Server Certificate=True"));
+            builder.Services.AddScoped<IBookingDAO>(bookingDAO => new BookingDAO("Data Source=localhost;Database=Baitm8s;Persist Security Info=True;User ID=sa;Password=@12tf56so;Trust Server Certificate=True"));
+            //builder.Services.AddScoped<IBookingDAO>(bookingDAO =>
+            //new BookingDAO(configuration["CONNECTION_STRING"]));
 
-            builder.Services.AddScoped<IAnglerDAO>(anglerDAO =>
-            new AnglerDAO(configuration["CONNECTION_STRING"]));
+            //builder.Services.AddScoped<IAnglerDAO>(anglerDAO =>
+            //new AnglerDAO(configuration["CONNECTION_STRING"]));
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

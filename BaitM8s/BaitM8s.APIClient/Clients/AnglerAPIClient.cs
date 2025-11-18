@@ -19,6 +19,7 @@ namespace BaitM8s.APIClient.Clients
             _apiBaseUri = apiBaseUri;
             _restClient = new RestClient(_apiBaseUri);
         }
+
         public IEnumerable<Angler> GetAll()
         {
             var request = new RestRequest("anglers", Method.Get);
@@ -32,9 +33,9 @@ namespace BaitM8s.APIClient.Clients
             return response.Data;
         }
 
-        public Angler? GetOne(int id)
+        public Angler? GetOne(int Id)
         {
-            var request = new RestRequest($"anglers/{id}", Method.Get);
+            var request = new RestRequest($"anglers/{Id}", Method.Get);
             var response = _restClient.Execute<Angler>(request);
             if (!response.IsSuccessful || response.Data == null)
             {
@@ -42,6 +43,11 @@ namespace BaitM8s.APIClient.Clients
             }
 
             return response.Data;
+        }
+
+        public async Task<int> CreateAsync(Angler angler)
+        {
+            throw new NotImplementedException();
         }
     }
 }

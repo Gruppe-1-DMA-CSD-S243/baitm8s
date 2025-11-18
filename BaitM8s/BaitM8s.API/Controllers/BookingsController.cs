@@ -17,7 +17,7 @@ namespace BaitM8s.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Booking>> Get()
+        public ActionResult<IEnumerable<Booking>> GetAllBookings()
         {
             try
             {
@@ -32,12 +32,12 @@ namespace BaitM8s.API.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<Booking> Get(int id)
+        [HttpGet("{Id}")]
+        public ActionResult<Booking> GetBookingById(int Id)
         {
             try
             {
-                var booking = _bookingDAO.GetBooking(id);
+                var booking = _bookingDAO.GetBooking(Id);
                 if (booking == null)
                 {
                     return NoContent();
@@ -53,5 +53,25 @@ namespace BaitM8s.API.Controllers
                 //return StatusCode(500, $"An error occurred trying to retrieve the blog post with id {id}.");
             }
         }
+
+        [HttpPost]
+        public async Task<ActionResult<int>> CreateBookingAsync([FromBody] Booking booking)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                int newId = await _bookingDAO.CreateBookingAsync(booking);
+
+                // Returnerer HTTP 201 + Location header
+                return CreatedAtAction(nameof(GetBookingById), new { Id = newId }, newId);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error creating booking: {ex.Message}");
+            }
+        }
+
     }
 }

@@ -16,6 +16,6 @@ namespace BaitM8s.DAL.Model
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
         public int NumberOfPeople { get; set; }
-        public int AnglerId { get; set; }
+        public int FK_AnglerId { get; set; }
     }
 }

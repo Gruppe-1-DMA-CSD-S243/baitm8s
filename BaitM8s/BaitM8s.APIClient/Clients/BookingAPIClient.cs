@@ -20,6 +20,8 @@ namespace BaitM8s.APIClient.Clients
             _restClient = new RestClient(_apiBaseUri);
         }
 
+
+
         public IEnumerable<Booking> GetAll()
         {
             var request = new RestRequest("bookings", Method.Get);
@@ -33,14 +35,34 @@ namespace BaitM8s.APIClient.Clients
             return response.Data;
         }
 
-        public Booking? GetOne(int id)
+        public Booking? GetOne(int Id)
         {
-            var request = new RestRequest($"bookings/{id}", Method.Get);
+            var request = new RestRequest($"bookings/{Id}", Method.Get);
             var response = _restClient.Execute<Booking>(request);
 
             if (!response.IsSuccessful || response.Data == null)
             {
                 throw new Exception($"Error retrieving booking. Message was {response.StatusDescription}");
+            }
+
+            return response.Data;
+        }
+
+        public async Task<int> CreateAsync(Booking booking)
+        {
+            var request = new RestRequest("bookings", Method.Post);
+            request.AddJsonBody(booking);
+
+            var response = await _restClient.ExecuteAsync<int>(request);
+
+            if (response == null)
+            {
+                throw new Exception("No reponse from server");
+            }
+
+            if (!response.IsSuccessful)
+            {
+                throw new Exception("Server repley: Unsuccessful request");
             }
 
             return response.Data;

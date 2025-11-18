@@ -1,22 +1,89 @@
+:root {
+    --base: #812e83;
+    --lighter: oklch(from var(--base) clamp(0, l + 0.22, 1) calc(c * 0.7) h);
+    --darker: oklch(from var(--base) clamp(0, l + 0.22, 1) calc(c * 0.94) h);
+    --complement: hsl(from var(--base) calc(h-180) s l);
+}
+
 html {
-  font-size: 14px;
+    font-size: 14px;
+
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background: linear-gradient(to bottom, mediumpurple, white);
+}
+
+/* Ændr headerens højde */
+
+.navbar {
+    height: 140px;
+    align-items: center;
+    /*    background-color: dimgrey;*/
+}
+
+.navbar-nav {
+    justify-content: center;
+}
+
+
+.navbar .nav-link {
+    display: inline-block; /* gør linket som en boks */
+/*    width: 120px;*/ /* afstand inde i boksen */
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    padding: 0px 20px;
+    border: 1px solid #000000; /* kant rundt om boksen */
+    border-radius: 5px; /* afrundede hjørner */
+    margin-right: 10px; /* afstand mellem bokse */
+    background-color: var(--lighter); /* lys baggrund */
+    transition: all 0.2s ease; /* glidende effekt ved hover */
+}
+
+/* (valgfrit) centrer logoet og linkene lodret */
+.navbar-brand,
+.nav-link {
+    line-height: 100px; /* justér indtil det ser pænt ud */
+}
+
+.navbar .nav-link:hover {
+    background-color: var(--darker); /* blå baggrund ved hover */
+    color: #fff; /* hvid tekst */
+    border-color: black; /* blå kant */
+}
+
+.navbar-collapse {
+    display: flex;
+    justify-content: center; /* centrer links */
+}
+
+.vertical-center-line {
+    position: fixed; /* står fast på skærmen */
+    top: 0;
+    bottom: 0;
+    left: 50%; /* midt på skærmen */
+    width: 2px; /* tykkelse på linjen */
+    background-color: red; /* tydelig farve */
+    z-index: 9999; /* ligger ovenpå alt */
+}
+
+footer.fotter {
+    height: 20px;
 }

@@ -1,6 +1,7 @@
 ﻿using BaitM8s.DAL.Interface;
 using BaitM8s.DAL.Model;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -33,12 +34,12 @@ namespace BaitM8s.API.Controllers
         }
 
         // GET api/<ValuesController>/5
-        [HttpGet("{id}")]
-        public ActionResult<Angler> Get(int id)
+        [HttpGet("{Id}")]
+        public ActionResult<Angler> Get(int Id)
         {
             try
             {
-                var angler = _anglerDAO.GetAngler(id);
+                var angler = _anglerDAO.GetAngler(Id);
                 if (angler == null)
                 {
                     return NoContent();
