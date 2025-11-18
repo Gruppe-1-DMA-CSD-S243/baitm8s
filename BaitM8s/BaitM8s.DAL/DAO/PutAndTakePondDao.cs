@@ -48,7 +48,12 @@ namespace BaitM8s.DAL.DAO
                     FamilyFriendly = @FamilyFriendly,
                     LinkToWebsite = @LinkToWebsite
                 WHERE PutAndTakePondId = @PutAndTakePondId;";
-        private readonly string _getAllSql = "SELECT * FROM PutAndTakePond";
+        private readonly string _getAllSql = @"
+                SELECT p.FishingSpotNumber, f.Name, f.Coordinates, f.FishSpecies, f.SpotType, f.FishingLicenseRequired,
+                       p.Address, p.ZipCode, p.Email, p.PhoneNumber, p.SizeInSquareMeters,
+                       p.Toilet, p.CleanTable, p.HandicapFriendly, p.FamilyFriendly, p.LinkToWebsite
+                FROM PutAndTakePond p
+                INNER JOIN FishingSpot f ON p.FishingSpotNumber = f.FishingSpotNumber";
         private readonly string _getPutAndTakePondByIdSql = "SELECT * FROM PutAndTakePond WHERE PutAndTakePondId = @PutAndTakePondId";
 
 
@@ -137,16 +142,8 @@ namespace BaitM8s.DAL.DAO
             using var connection = new SqlConnection(_connectionString);
             var list = new List<PutAndTakePond>();
 
-            var sql = @"
-        SELECT p.FishingSpotNumber, f.Name, f.Coordinates, f.FishSpecies, f.SpotType, f.FishingLicenseRequired,
-               p.Address, p.ZipCode, p.Email, p.PhoneNumber, p.SizeInSquareMeters,
-               p.Toilet, p.CleanTable, p.HandicapFriendly, p.FamilyFriendly, p.LinkToWebsite
-        FROM PutAndTakePond p
-        INNER JOIN FishingSpot f ON p.FishingSpotNumber = f.FishingSpotNumber
-    ";
-
             await connection.OpenAsync();
-            using var command = new SqlCommand(sql, connection);
+            using var command = new SqlCommand(_getAllSql, connection);
             using var reader = await command.ExecuteReaderAsync();
 
             while (await reader.ReadAsync())
