@@ -11,12 +11,22 @@ namespace BaitM8s.DAL.DAO
 {
     public class PutAndTakePondDao : IPutAndTakePondDao
     {
-        private readonly string _deleteSql = "DELETE FROM PutAndTakePond WHERE id = @PutAndTakePondId";
-        private readonly string _createPutAndTakePondSql = "INSERT INTO PutAndTakePond (Name, Coordinates, FishSpecies, SpotType, FishingLicenseRequired, Address, ZipCode, Email, PhoneNumber, SizeInSquareMeters, Toilet, CleanTable, HandicapFriendly, FamilyFriendly, LinkToWebsite) VALUES (@Name, @Coordinates, @FishSpecies, @SpotType, @FishingLicenseRequired, @Address, @ZipCode, @Email, @PhoneNumber, @SizeInSquareMeters, @Toilet, @CleanTable, @HandicapFriendly, @FamilyFriendly, @LinkToWebsite); SELECT CAST(SCOPE_IDENTITY() as int)";
-        private readonly string _createFishingSpotSql = "INSERT INTO FishingSpots (Name, Coordinates, FishSpecies, SpotType, FishingLicenseRequired) VALUES (@Name, @Coordinates, @FishSpecies, @SpotType, @FishingLicenseRequired); SELECT CAST(SCOPE_IDENTITY() as int)";
-        private readonly string _updateSql = "UPDATE PutAndTakePond SET Name = @Name, Coordinates = @Coordinates, FishSpecies = @FishSpecies, SpotType = @SpotType, FishingLicenseRequired = @FishingLicenseRequired, Address = @Address, ZipCode = @ZipCode, Email = @Email, PhoneNumber = @PhoneNumber, SizeInSquareMeters = @SizeInSquareMeters, Toilet = @Toilet, CleanTable = @CleanTable, HandicapFriendly = @HandicapFriendly, FamilyFriendly = @FamilyFriendly, LinkToWebsite = @LinkToWebsite WHERE id = @PutAndTakePondId";
+        private readonly string _deleteSql = @"DELETE FROM PutAndTakePond WHERE PutAndTakePondId = @PutAndTakePondId";
+        private readonly string _createPutAndTakePondSql = @"
+                INSERT INTO PutAndTakePond 
+                    (FishingSpotNumber, Address, ZipCode, Email, PhoneNumber, SizeInSquareMeters,
+                    Toilet, CleanTable, HandicapFriendly, FamilyFriendly, LinkToWebsite)
+                VALUES 
+                    (@FishingSpotNumber, @Address, @ZipCode, @Email, @PhoneNumber, @SizeInSquareMeters,
+                    @Toilet, @CleanTable, @HandicapFriendly, @FamilyFriendly, @LinkToWebsite);
+                SELECT CAST(SCOPE_IDENTITY() AS INT);";
+        private readonly string _createFishingSpotSql = @"
+                INSERT INTO FishingSpot (Name, Coordinates, FishSpecies, SpotType, FishingLicenseRequired)
+                VALUES (@Name, @Coordinates, @FishSpecies, @SpotType, @FishingLicenseRequired);
+                SELECT CAST(SCOPE_IDENTITY() AS INT);";
+        private readonly string _updateSql = @"UPDATE PutAndTakePond SET Name = @Name, Coordinates = @Coordinates, FishSpecies = @FishSpecies, SpotType = @SpotType, FishingLicenseRequired = @FishingLicenseRequired, Address = @Address, ZipCode = @ZipCode, Email = @Email, PhoneNumber = @PhoneNumber, SizeInSquareMeters = @SizeInSquareMeters, Toilet = @Toilet, CleanTable = @CleanTable, HandicapFriendly = @HandicapFriendly, FamilyFriendly = @FamilyFriendly, LinkToWebsite = @LinkToWebsite WHERE PutAndTakePondId = @PutAndTakePondId";
         private readonly string _getAllSql = "SELECT * FROM PutAndTakePond";
-        private readonly string _getPutAndTakePondByIdSql = "SELECT * FROM PutAndTakePond WHERE id = @PutAndTakePondId";
+        private readonly string _getPutAndTakePondByIdSql = "SELECT * FROM PutAndTakePond WHERE PutAndTakePondId = @PutAndTakePondId";
 
 
         private readonly string _connectionString;
@@ -28,33 +38,51 @@ namespace BaitM8s.DAL.DAO
         public async Task<int> CreatePutAndTakePondAsync(PutAndTakePond pond)
         {
             using var connection = new SqlConnection(_connectionString);
+
             try
             {
                 await connection.OpenAsync();
-                SqlCommand command = new SqlCommand(_createFishingSpotSql, connection);
-                command.Parameters.AddWithValue("@Name", pond.Name);
-                command.Parameters.AddWithValue("@Coordinates", pond.Coordinates);
-                command.Parameters.AddWithValue("@FishSpecies", pond.FishSpecies);
-                command.Parameters.AddWithValue("@SpotType", pond.SpotType);
-                command.Parameters.AddWithValue("@FishingLicenseRequired", pond.FishingLicenseRequired);
-                int fishingSpotId = (int)await command.ExecuteScalarAsync();
-                SqlCommand pondCommand = new SqlCommand(_createPutAndTakePondSql, connection);
-                pondCommand.Parameters.AddWithValue("@Name", pond.Name);
-                pondCommand.Parameters.AddWithValue("@Coordinates", pond.Coordinates);
-                pondCommand.Parameters.AddWithValue("@FishSpecies", pond.FishSpecies);
-                pondCommand.Parameters.AddWithValue("@SpotType", pond.SpotType);
-                pondCommand.Parameters.AddWithValue("@FishingLicenseRequired", pond.FishingLicenseRequired);
-                pondCommand.Parameters.AddWithValue("@Address", pond.Address);
-                pondCommand.Parameters.AddWithValue("@ZipCode", pond.ZipCode);
-                pondCommand.Parameters.AddWithValue("@Email", pond.Email);
-                pondCommand.Parameters.AddWithValue("@PhoneNumber", pond.PhoneNumber);
-                pondCommand.Parameters.AddWithValue("@SizeInSquareMeters", pond.SizeInSquareMeters);
-                pondCommand.Parameters.AddWithValue("@Toilet", pond.Toilet);
-                pondCommand.Parameters.AddWithValue("@CleanTable", pond.CleanTable);
-                pondCommand.Parameters.AddWithValue("@HandicapFriendly", pond.HandicapFriendly);
-                pondCommand.Parameters.AddWithValue("@FamilyFriendly", pond.FamilyFriendly);
-                pondCommand.Parameters.AddWithValue("@LinkToWebsite", pond.LinkToWebsite);
-                int putAndTakePondId = (int)await pondCommand.ExecuteScalarAsync();
+
+                // 1. Opret FishingSpot og hent ID
+                int fishingSpotId;
+                using (var command = new SqlCommand(_createFishingSpotSql, connection))
+                {
+                    command.Parameters.AddWithValue("@Name", pond.Name);
+                    command.Parameters.AddWithValue("@Coordinates", pond.Coordinates);
+                    command.Parameters.AddWithValue("@FishSpecies", pond.FishSpecies);
+                    command.Parameters.AddWithValue("@SpotType", pond.SpotType);
+                    command.Parameters.AddWithValue("@FishingLicenseRequired", pond.FishingLicenseRequired);
+
+                    var result = await command.ExecuteScalarAsync();
+                    if (result == null || result == DBNull.Value)
+                        throw new Exception("Failed to insert FishingSpot.");
+
+                    fishingSpotId = Convert.ToInt32(result);
+                }
+
+                // 2. Opret PutAndTakePond og hent ID
+                int putAndTakePondId;
+                using (var pondCommand = new SqlCommand(_createPutAndTakePondSql, connection))
+                {
+                    pondCommand.Parameters.AddWithValue("@FishingSpotNumber", fishingSpotId);
+                    pondCommand.Parameters.AddWithValue("@Address", pond.Address);
+                    pondCommand.Parameters.AddWithValue("@ZipCode", pond.ZipCode);
+                    pondCommand.Parameters.AddWithValue("@Email", pond.Email);
+                    pondCommand.Parameters.AddWithValue("@PhoneNumber", pond.PhoneNumber);
+                    pondCommand.Parameters.AddWithValue("@SizeInSquareMeters", pond.SizeInSquareMeters);
+                    pondCommand.Parameters.AddWithValue("@Toilet", pond.Toilet);
+                    pondCommand.Parameters.AddWithValue("@CleanTable", pond.CleanTable);
+                    pondCommand.Parameters.AddWithValue("@HandicapFriendly", pond.HandicapFriendly);
+                    pondCommand.Parameters.AddWithValue("@FamilyFriendly", pond.FamilyFriendly);
+                    pondCommand.Parameters.AddWithValue("@LinkToWebsite", pond.LinkToWebsite ?? (object)DBNull.Value);
+
+                    var pondResult = await pondCommand.ExecuteScalarAsync();
+                    if (pondResult == null || pondResult == DBNull.Value)
+                        throw new Exception("Failed to insert PutAndTakePond.");
+
+                    putAndTakePondId = Convert.ToInt32(pondResult);
+                }
+
                 return putAndTakePondId;
             }
             catch (Exception ex)
@@ -62,6 +90,7 @@ namespace BaitM8s.DAL.DAO
                 throw new Exception("Error creating PutAndTakePond", ex);
             }
         }
+
 
         public async Task DeletePutAndTakePondAsync(int pondNumber)
         {
@@ -79,20 +108,69 @@ namespace BaitM8s.DAL.DAO
             }
         }
 
+        //public async Task<IEnumerable<PutAndTakePond>> GetAllPutAndTakePondsAsync()
+        //{
+        //    using var connection = new SqlConnection(_connectionString);
+        //    try
+        //    {
+        //        await connection.OpenAsync();
+        //        SqlCommand command = new SqlCommand(_getAllSql, connection);
+        //        SqlDataReader reader = await command.ExecuteReaderAsync();
+        //        return DataReaderToPutAndTakePonds(reader);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("Error retrieving PutAndTakePonds", ex);
+        //    }
+        //}
+
+        
         public async Task<IEnumerable<PutAndTakePond>> GetAllPutAndTakePondsAsync()
         {
             using var connection = new SqlConnection(_connectionString);
-            try
+            var list = new List<PutAndTakePond>();
+
+            var sql = @"
+        SELECT p.FishingSpotNumber, f.Name, f.Coordinates, f.FishSpecies, f.SpotType, f.FishingLicenseRequired,
+               p.Address, p.ZipCode, p.Email, p.PhoneNumber, p.SizeInSquareMeters,
+               p.Toilet, p.CleanTable, p.HandicapFriendly, p.FamilyFriendly, p.LinkToWebsite
+        FROM PutAndTakePond p
+        INNER JOIN FishingSpot f ON p.FishingSpotNumber = f.FishingSpotNumber
+    ";
+
+            await connection.OpenAsync();
+            using var command = new SqlCommand(sql, connection);
+            using var reader = await command.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
             {
-                await connection.OpenAsync();
-                SqlCommand command = new SqlCommand(_getAllSql, connection);
-                SqlDataReader reader = await command.ExecuteReaderAsync();
-                return DataReaderToPutAndTakePonds(reader);
+                var pond = new PutAndTakePond
+                {
+                    FishingSpotNumber = reader.GetInt32(reader.GetOrdinal("FishingSpotNumber")),
+                    Name = reader.GetString(reader.GetOrdinal("Name")),
+                    Coordinates = reader.GetString(reader.GetOrdinal("Coordinates")),
+                    FishSpecies = reader.GetString(reader.GetOrdinal("FishSpecies")),
+                    SpotType = reader.GetString(reader.GetOrdinal("SpotType")),
+                    FishingLicenseRequired = reader.GetBoolean(reader.GetOrdinal("FishingLicenseRequired")),
+
+                    Address = reader.GetString(reader.GetOrdinal("Address")),
+                    ZipCode = reader.GetString(reader.GetOrdinal("ZipCode")),
+                    Email = reader.GetString(reader.GetOrdinal("Email")),
+                    PhoneNumber = reader.GetString(reader.GetOrdinal("PhoneNumber")),
+                    SizeInSquareMeters = reader.GetInt32(reader.GetOrdinal("SizeInSquareMeters")),
+                    Toilet = reader.GetBoolean(reader.GetOrdinal("Toilet")),
+                    CleanTable = reader.GetBoolean(reader.GetOrdinal("CleanTable")),
+                    HandicapFriendly = reader.GetBoolean(reader.GetOrdinal("HandicapFriendly")),
+                    FamilyFriendly = reader.GetBoolean(reader.GetOrdinal("FamilyFriendly")),
+                    LinkToWebsite = reader.IsDBNull(reader.GetOrdinal("LinkToWebsite"))
+                        ? null
+                        : reader.GetString(reader.GetOrdinal("LinkToWebsite"))
+                };
+
+                list.Add(pond);
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Error retrieving PutAndTakePonds", ex);
-            }
+
+            return list;
         }
 
         public async Task<PutAndTakePond> GetPutAndTakePondByIdAsync(int pondNumber)
@@ -118,6 +196,8 @@ namespace BaitM8s.DAL.DAO
                 throw new Exception("Error retrieving PutAndTakePond by ID", ex);
             }
         }
+
+
 
         public async Task UpdatePutAndTakePondAsync(PutAndTakePond pond)
         {
@@ -160,26 +240,50 @@ namespace BaitM8s.DAL.DAO
             return ponds;
         }
 
+        //private PutAndTakePond SingleDataReaderToPutAndTakePonds(SqlDataReader reader)
+        //{
+        //    PutAndTakePond pond = new PutAndTakePond();
+        //    pond.FishingSpotNumber = reader.GetInt32(reader.GetOrdinal("FishingSpotNumber"));
+        //    pond.Name = reader.GetString(reader.GetOrdinal("Name"));
+        //    pond.Coordinates = reader.GetString(reader.GetOrdinal("Coordinates"));
+        //    pond.FishSpecies = reader.GetString(reader.GetOrdinal("FishSpecies"));
+        //    pond.SpotType = reader.GetString(reader.GetOrdinal("SpotType"));
+        //    pond.FishingLicenseRequired = reader.GetBoolean(reader.GetOrdinal("FishingLicenseRequired"));
+        //    pond.Address = reader.GetString(reader.GetOrdinal("Address"));
+        //    pond.ZipCode = reader.GetString(reader.GetOrdinal("ZipCode"));
+        //    pond.Email = reader.GetString(reader.GetOrdinal("Email"));
+        //    pond.PhoneNumber = reader.GetString(reader.GetOrdinal("PhoneNumber"));
+        //    pond.SizeInSquareMeters = reader.GetInt32(reader.GetOrdinal("SizeInSquareMeters"));
+        //    pond.Toilet = reader.GetBoolean(reader.GetOrdinal("Toilet"));
+        //    pond.CleanTable = reader.GetBoolean(reader.GetOrdinal("CleanTable"));
+        //    pond.HandicapFriendly = reader.GetBoolean(reader.GetOrdinal("HandicapFriendly"));
+        //    pond.FamilyFriendly = reader.GetBoolean(reader.GetOrdinal("FamilyFriendly"));
+        //    pond.LinkToWebsite = reader.GetString(reader.GetOrdinal("LinkToWebsite"));
+        //    return pond;
+        //}
+
         private PutAndTakePond SingleDataReaderToPutAndTakePonds(SqlDataReader reader)
         {
             PutAndTakePond pond = new PutAndTakePond();
-            pond.FishingSpotNumber = reader.GetInt32(reader.GetOrdinal("FishingSpotNumber"));
-            pond.Name = reader.GetString(reader.GetOrdinal("Name"));
-            pond.Coordinates = reader.GetString(reader.GetOrdinal("Coordinates"));
-            pond.FishSpecies = reader.GetString(reader.GetOrdinal("FishSpecies"));
-            pond.SpotType = reader.GetString(reader.GetOrdinal("SpotType"));
-            pond.FishingLicenseRequired = reader.GetBoolean(reader.GetOrdinal("FishingLicenseRequired"));
-            pond.Address = reader.GetString(reader.GetOrdinal("Address"));
-            pond.ZipCode = reader.GetString(reader.GetOrdinal("ZipCode"));
-            pond.Email = reader.GetString(reader.GetOrdinal("Email"));
-            pond.PhoneNumber = reader.GetString(reader.GetOrdinal("PhoneNumber"));
-            pond.SizeInSquareMeters = reader.GetInt32(reader.GetOrdinal("SizeInSquareMeters"));
-            pond.Toilet = reader.GetBoolean(reader.GetOrdinal("Toilet"));
-            pond.CleanTable = reader.GetBoolean(reader.GetOrdinal("CleanTable"));
-            pond.HandicapFriendly = reader.GetBoolean(reader.GetOrdinal("HandicapFriendly"));
-            pond.FamilyFriendly = reader.GetBoolean(reader.GetOrdinal("FamilyFriendly"));
-            pond.LinkToWebsite = reader.GetString(reader.GetOrdinal("LinkToWebsite"));
+            pond.FishingSpotNumber = (int)reader["FishingSpotNumber"];
+            pond.Name = (string)reader["Name"];
+            pond.Coordinates = (string)reader["Coordinates"];
+            pond.FishSpecies = (string)reader["FishSpecies"];
+            pond.SpotType = (string)reader["SpotType"];
+            pond.FishingLicenseRequired = (bool)reader["FishingLicenseRequired"];
+            pond.Address = (string)reader["Address"];
+            pond.ZipCode = (string)reader["ZipCode"];
+            pond.Email = (string)reader["Email"];
+            pond.PhoneNumber = (string)reader["PhoneNumber"];
+            pond.SizeInSquareMeters = (int)reader["SizeInSquareMeters"];
+            pond.Toilet = (bool)reader["Toilet"];
+            pond.CleanTable = (bool)reader["CleanTable"];
+            pond.HandicapFriendly = (bool)reader["HandicapFriendly"];
+            pond.FamilyFriendly = (bool)reader["FamilyFriendly"];
+            pond.LinkToWebsite = (string)reader["LinkToWebsite"];
+
             return pond;
         }
+
     }
 }

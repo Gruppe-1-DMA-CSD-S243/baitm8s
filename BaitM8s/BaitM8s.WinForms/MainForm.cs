@@ -18,7 +18,7 @@ namespace BaitM8s.WinForms
         private async void btnUpdate_Click(object sender, EventArgs e) => await UpdatePondAsync();
         private async void btnDelete_Click(object sender, EventArgs e) => await DeletePondAsync();
 
-        private async Task LoadPondsAsync()
+        public async Task LoadPondsAsync()
         {
             lstPonds.Items.Clear();
             var ponds = await _putAndTakePondApiClient.GetAllPutAndTakePondsAsync();
@@ -30,7 +30,7 @@ namespace BaitM8s.WinForms
         }
 
 
-        private void UpdateUI()
+        public void UpdateUI()
         {
             bool hasSelected = lstPonds.SelectedIndex != -1;
             btnUpdate.Enabled = hasSelected;
@@ -60,7 +60,7 @@ namespace BaitM8s.WinForms
 
         }
 
-        private void ClearFields()
+        public void ClearFields()
         {
             txtSpotNumber.Clear();
             txtName.Clear();
@@ -79,7 +79,7 @@ namespace BaitM8s.WinForms
             chkToilet.Checked = false;
         }
 
-        private async Task CreatePondAsync()
+        public async Task CreatePondAsync()
         {
             try
             {
@@ -102,6 +102,7 @@ namespace BaitM8s.WinForms
                     Toilet = chkToilet.Checked
                 };
                 await _putAndTakePondApiClient.CreatePutAndTakePondAsync(newPond);
+                MessageBox.Show("Pond created successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 await LoadPondsAsync();
             }
             catch (Exception ex)
@@ -111,15 +112,62 @@ namespace BaitM8s.WinForms
         }
 
 
-        private async Task UpdatePondAsync()
+        public async Task UpdatePondAsync()
         {
-            throw new NotImplementedException();
+            if (lstPonds.SelectedItem == null)
+            {
+                return;
+            }
+            try
+            {
+                var selectedPond = (PutAndTakePond)lstPonds.SelectedItem;
+                selectedPond.FishingSpotNumber = int.Parse(txtSpotNumber.Text);
+                selectedPond.Name = txtName.Text;
+                selectedPond.Coordinates = txtCoordinates.Text;
+                selectedPond.FishSpecies = txtFishSpecies.Text;
+                selectedPond.Address = txtAddress.Text;
+                selectedPond.Email = txtEmail.Text;
+                selectedPond.PhoneNumber = txtPhoneNumber.Text;
+                selectedPond.SizeInSquareMeters = int.Parse(txtSize.Text);
+                selectedPond.LinkToWebsite = txtWebsite.Text;
+                selectedPond.ZipCode = txtZipCode.Text;
+                selectedPond.CleanTable = chkCleanTable.Checked;
+                selectedPond.FamilyFriendly = chkFamily.Checked;
+                selectedPond.FishingLicenseRequired = chkFishingLicense.Checked;
+                selectedPond.HandicapFriendly = chkHandicap.Checked;
+                selectedPond.Toilet = chkToilet.Checked;
+                await _putAndTakePondApiClient.UpdatePutAndTakePondAsync(selectedPond);
+                MessageBox.Show("Pond updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                await LoadPondsAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error updating pond: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
 
-        private async Task DeletePondAsync()
+        public async Task DeletePondAsync()
         {
-            throw new NotImplementedException();
+            if (lstPonds.SelectedItem == null)
+            {
+                return;
+            }
+            if (MessageBox.Show("Are you sure you want to delete this pond?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+            {
+                return;
+            }
+            try
+            {
+                var selectedPond = (PutAndTakePond)lstPonds.SelectedItem;
+                await _putAndTakePondApiClient.DeletePutAndTakePondAsync(selectedPond.FishingSpotNumber);
+                MessageBox.Show("Pond deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                await LoadPondsAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error deleting pond: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

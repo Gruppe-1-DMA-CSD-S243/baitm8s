@@ -63,7 +63,7 @@ namespace BaitM8s.API.Controllers
             catch (Exception ex)
             {
                 // This line is used for debugging.
-                return StatusCode(500, $"Error:{id} {ex.Message}");
+                return StatusCode(500, $"Error: {ex.Message}");
                 //return StatusCode(500, $"An error occurred trying to create a new put and take pond.");
             }
 

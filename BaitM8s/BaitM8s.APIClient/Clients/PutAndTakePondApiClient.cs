@@ -42,15 +42,24 @@ namespace BaitM8s.APIClient.Clients
 
         }
 
+        
         public async Task<IEnumerable<PutAndTakePond>> GetAllPutAndTakePondsAsync()
         {
             var request = new RestRequest("PutAndTakePonds", Method.Get);
             var response = await _restClient.ExecuteAsync<IEnumerable<PutAndTakePond>>(request);
-            if (!response.IsSuccessful)
+            if(response==null)
+            {
+                throw new Exception("Response is null");
+            }
+            if(response.IsSuccessStatusCode)
+            {
+                return response.Data;
+            }
+            else
             {
                 throw new Exception($"Error retrieving PutAndTakePonds: {response.StatusCode} - {response.Content}");
             }
-            return response.Data;
+
         }
 
         public async Task<PutAndTakePond> GetPutAndTakePondByIdAsync(int pondNumber)
