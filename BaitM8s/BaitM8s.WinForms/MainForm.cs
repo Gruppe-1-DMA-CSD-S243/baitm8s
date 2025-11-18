@@ -10,10 +10,11 @@ namespace BaitM8s.WinForms
         public MainForm()
         {
             InitializeComponent();
+            LoadPondsAsync();
         }
 
         private async void MainForm_Load(object sender, EventArgs e) => await LoadPondsAsync();
-        private void lstPonds_SelectecdIndexChanged(object sender, EventArgs e) => UpdateUI();
+        private void lstPonds_SelectedIndexChanged(object sender, EventArgs e) => UpdateUI();
         private async void btnCreate_Click(object sender, EventArgs e) => await CreatePondAsync();
         private async void btnUpdate_Click(object sender, EventArgs e) => await UpdatePondAsync();
         private async void btnDelete_Click(object sender, EventArgs e) => await DeletePondAsync();
@@ -50,6 +51,7 @@ namespace BaitM8s.WinForms
             txtEmail.Text = selectedPond.Email;
             txtPhoneNumber.Text = selectedPond.PhoneNumber;
             txtSize.Text = selectedPond.SizeInSquareMeters.ToString();
+            txtSpotType.Text = selectedPond.SpotType;
             txtWebsite.Text = selectedPond.LinkToWebsite;
             txtZipCode.Text = selectedPond.ZipCode;
             chkCleanTable.Checked = selectedPond.CleanTable;
@@ -66,6 +68,7 @@ namespace BaitM8s.WinForms
             txtName.Clear();
             txtCoordinates.Clear();
             txtFishSpecies.Clear();
+            txtSpotType.Clear();
             txtAddress.Clear();
             txtEmail.Clear();
             txtPhoneNumber.Clear();
@@ -89,6 +92,7 @@ namespace BaitM8s.WinForms
                     Name = txtName.Text,
                     Coordinates = txtCoordinates.Text,
                     FishSpecies = txtFishSpecies.Text,
+                    SpotType = txtSpotType.Text,
                     Address = txtAddress.Text,
                     Email = txtEmail.Text,
                     PhoneNumber = txtPhoneNumber.Text,
@@ -131,6 +135,7 @@ namespace BaitM8s.WinForms
                 selectedPond.SizeInSquareMeters = int.Parse(txtSize.Text);
                 selectedPond.LinkToWebsite = txtWebsite.Text;
                 selectedPond.ZipCode = txtZipCode.Text;
+                selectedPond.SpotType = txtSpotType.Text;
                 selectedPond.CleanTable = chkCleanTable.Checked;
                 selectedPond.FamilyFriendly = chkFamily.Checked;
                 selectedPond.FishingLicenseRequired = chkFishingLicense.Checked;

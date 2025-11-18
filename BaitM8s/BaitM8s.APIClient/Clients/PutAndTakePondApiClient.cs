@@ -21,7 +21,7 @@ namespace BaitM8s.APIClient.Clients
         }
         public async Task<int> CreatePutAndTakePondAsync(PutAndTakePond pond)
         {
-            var request = new RestRequest("PutAndTakePonds", Method.Post);
+            var request = new RestRequest("PutAndTakePond", Method.Post);
             request.AddJsonBody(pond);
             var response = await _restClient.ExecuteAsync<int>(request);
             if (!response.IsSuccessful)
@@ -33,7 +33,7 @@ namespace BaitM8s.APIClient.Clients
 
         public async Task DeletePutAndTakePondAsync(int pondNumber)
         {
-            var request = new RestRequest($"PutAndTakePonds/{pondNumber}", Method.Delete);
+            var request = new RestRequest($"PutAndTakePond/{pondNumber}", Method.Delete);
             var response = await _restClient.ExecuteAsync(request);
             if (!response.IsSuccessful)
             {
@@ -45,7 +45,7 @@ namespace BaitM8s.APIClient.Clients
         
         public async Task<IEnumerable<PutAndTakePond>> GetAllPutAndTakePondsAsync()
         {
-            var request = new RestRequest("PutAndTakePonds", Method.Get);
+            var request = new RestRequest("PutAndTakePond", Method.Get);
             var response = await _restClient.ExecuteAsync<IEnumerable<PutAndTakePond>>(request);
             if(response==null)
             {
@@ -64,7 +64,7 @@ namespace BaitM8s.APIClient.Clients
 
         public async Task<PutAndTakePond> GetPutAndTakePondByIdAsync(int pondNumber)
         {
-            var request = new RestRequest($"PutAndTakePonds/{pondNumber}", Method.Get);
+            var request = new RestRequest($"PutAndTakePond/{pondNumber}", Method.Get);
             var response = await _restClient.ExecuteAsync<PutAndTakePond>(request);
             if (!response.IsSuccessful)
             {
@@ -75,7 +75,7 @@ namespace BaitM8s.APIClient.Clients
 
         public async Task UpdatePutAndTakePondAsync(PutAndTakePond pond)
         {
-            var request = new RestRequest($"PutAndTakePonds/{pond.FishingSpotNumber}", Method.Put);
+            var request = new RestRequest($"PutAndTakePond/{pond.FishingSpotNumber}", Method.Put);
             request.AddJsonBody(pond);
             var response = await _restClient.ExecuteAsync(request);
             if (!response.IsSuccessful)

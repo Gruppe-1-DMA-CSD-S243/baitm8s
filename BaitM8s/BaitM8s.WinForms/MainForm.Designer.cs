@@ -40,10 +40,6 @@
             lblEmail = new Label();
             lblPhoneNumber = new Label();
             lblSize = new Label();
-            lblToilet = new Label();
-            lblCleanTable = new Label();
-            lblHandicapFriendly = new Label();
-            lblFamilyFriendly = new Label();
             lblWebsite = new Label();
             txtSpotNumber = new TextBox();
             txtName = new TextBox();
@@ -63,6 +59,8 @@
             chkCleanTable = new CheckBox();
             chkHandicap = new CheckBox();
             chkFamily = new CheckBox();
+            txtSpotType = new TextBox();
+            lblSpotType = new Label();
             SuspendLayout();
             // 
             // lstPonds
@@ -72,6 +70,7 @@
             lstPonds.Name = "lstPonds";
             lstPonds.Size = new Size(415, 484);
             lstPonds.TabIndex = 0;
+            lstPonds.SelectedIndexChanged += lstPonds_SelectedIndexChanged;
             // 
             // lblPutAndTakePonds
             // 
@@ -90,6 +89,7 @@
             btnCreate.TabIndex = 2;
             btnCreate.Text = "Create";
             btnCreate.UseVisualStyleBackColor = true;
+            btnCreate.Click += btnCreate_Click;
             // 
             // btnUpdate
             // 
@@ -99,6 +99,7 @@
             btnUpdate.TabIndex = 3;
             btnUpdate.Text = "Update";
             btnUpdate.UseVisualStyleBackColor = true;
+            btnUpdate.Click += btnUpdate_Click;
             // 
             // btnDelete
             // 
@@ -108,6 +109,7 @@
             btnDelete.TabIndex = 4;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
             // 
             // lblSpotNumber
             // 
@@ -171,42 +173,6 @@
             lblSize.Size = new Size(128, 32);
             lblSize.TabIndex = 11;
             lblSize.Text = "Size (m^2)";
-            // 
-            // lblToilet
-            // 
-            lblToilet.AutoSize = true;
-            lblToilet.Location = new Point(460, 491);
-            lblToilet.Name = "lblToilet";
-            lblToilet.Size = new Size(72, 32);
-            lblToilet.TabIndex = 12;
-            lblToilet.Text = "Toilet";
-            // 
-            // lblCleanTable
-            // 
-            lblCleanTable.AutoSize = true;
-            lblCleanTable.Location = new Point(460, 536);
-            lblCleanTable.Name = "lblCleanTable";
-            lblCleanTable.Size = new Size(136, 32);
-            lblCleanTable.TabIndex = 13;
-            lblCleanTable.Text = "Clean Table";
-            // 
-            // lblHandicapFriendly
-            // 
-            lblHandicapFriendly.AutoSize = true;
-            lblHandicapFriendly.Location = new Point(460, 581);
-            lblHandicapFriendly.Name = "lblHandicapFriendly";
-            lblHandicapFriendly.Size = new Size(206, 32);
-            lblHandicapFriendly.TabIndex = 14;
-            lblHandicapFriendly.Text = "Handicap Friendly";
-            // 
-            // lblFamilyFriendly
-            // 
-            lblFamilyFriendly.AutoSize = true;
-            lblFamilyFriendly.Location = new Point(460, 626);
-            lblFamilyFriendly.Name = "lblFamilyFriendly";
-            lblFamilyFriendly.Size = new Size(174, 32);
-            lblFamilyFriendly.TabIndex = 15;
-            lblFamilyFriendly.Text = "Family Friendly";
             // 
             // lblWebsite
             // 
@@ -303,9 +269,8 @@
             lblFishingLicense.AutoSize = true;
             lblFishingLicense.Location = new Point(460, 446);
             lblFishingLicense.Name = "lblFishingLicense";
-            lblFishingLicense.Size = new Size(175, 32);
+            lblFishingLicense.Size = new Size(0, 32);
             lblFishingLicense.TabIndex = 31;
-            lblFishingLicense.Text = "Fishing License";
             // 
             // txtWebsite
             // 
@@ -317,58 +282,76 @@
             // chkFishingLicense
             // 
             chkFishingLicense.AutoSize = true;
-            chkFishingLicense.Location = new Point(721, 445);
+            chkFishingLicense.Location = new Point(483, 500);
             chkFishingLicense.Name = "chkFishingLicense";
-            chkFishingLicense.Size = new Size(159, 36);
+            chkFishingLicense.Size = new Size(207, 36);
             chkFishingLicense.TabIndex = 35;
-            chkFishingLicense.Text = "checkBox1";
+            chkFishingLicense.Text = "Fishing License";
             chkFishingLicense.UseVisualStyleBackColor = true;
             // 
             // chkToilet
             // 
             chkToilet.AutoSize = true;
-            chkToilet.Location = new Point(721, 490);
+            chkToilet.Location = new Point(721, 500);
             chkToilet.Name = "chkToilet";
-            chkToilet.Size = new Size(159, 36);
+            chkToilet.Size = new Size(104, 36);
             chkToilet.TabIndex = 36;
-            chkToilet.Text = "checkBox2";
+            chkToilet.Text = "Toilet";
             chkToilet.UseVisualStyleBackColor = true;
             // 
             // chkCleanTable
             // 
             chkCleanTable.AutoSize = true;
-            chkCleanTable.Location = new Point(721, 535);
+            chkCleanTable.Location = new Point(483, 553);
             chkCleanTable.Name = "chkCleanTable";
-            chkCleanTable.Size = new Size(159, 36);
+            chkCleanTable.Size = new Size(168, 36);
             chkCleanTable.TabIndex = 37;
-            chkCleanTable.Text = "checkBox3";
+            chkCleanTable.Text = "Clean Table";
             chkCleanTable.UseVisualStyleBackColor = true;
             // 
             // chkHandicap
             // 
             chkHandicap.AutoSize = true;
-            chkHandicap.Location = new Point(721, 580);
+            chkHandicap.Location = new Point(721, 553);
             chkHandicap.Name = "chkHandicap";
-            chkHandicap.Size = new Size(159, 36);
+            chkHandicap.Size = new Size(238, 36);
             chkHandicap.TabIndex = 38;
-            chkHandicap.Text = "checkBox4";
+            chkHandicap.Text = "Handicap Friendly";
             chkHandicap.UseVisualStyleBackColor = true;
             // 
             // chkFamily
             // 
             chkFamily.AutoSize = true;
-            chkFamily.Location = new Point(721, 625);
+            chkFamily.Location = new Point(721, 604);
             chkFamily.Name = "chkFamily";
-            chkFamily.Size = new Size(159, 36);
+            chkFamily.Size = new Size(206, 36);
             chkFamily.TabIndex = 39;
-            chkFamily.Text = "checkBox5";
+            chkFamily.Text = "Family Friendly";
             chkFamily.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // txtSpotType
+            // 
+            txtSpotType.Location = new Point(721, 438);
+            txtSpotType.Name = "txtSpotType";
+            txtSpotType.Size = new Size(315, 39);
+            txtSpotType.TabIndex = 40;
+            // 
+            // lblSpotType
+            // 
+            lblSpotType.AutoSize = true;
+            lblSpotType.Location = new Point(460, 445);
+            lblSpotType.Name = "lblSpotType";
+            lblSpotType.Size = new Size(121, 32);
+            lblSpotType.TabIndex = 41;
+            lblSpotType.Text = "Spot Type";
+            // 
+            // MainForm
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1045, 732);
+            Controls.Add(lblSpotType);
+            Controls.Add(txtSpotType);
             Controls.Add(chkFamily);
             Controls.Add(chkHandicap);
             Controls.Add(chkCleanTable);
@@ -388,10 +371,6 @@
             Controls.Add(txtName);
             Controls.Add(txtSpotNumber);
             Controls.Add(lblWebsite);
-            Controls.Add(lblFamilyFriendly);
-            Controls.Add(lblHandicapFriendly);
-            Controls.Add(lblCleanTable);
-            Controls.Add(lblToilet);
             Controls.Add(lblSize);
             Controls.Add(lblPhoneNumber);
             Controls.Add(lblEmail);
@@ -404,7 +383,7 @@
             Controls.Add(btnCreate);
             Controls.Add(lblPutAndTakePonds);
             Controls.Add(lstPonds);
-            Name = "Form1";
+            Name = "MainForm";
             Text = "Form1";
             ResumeLayout(false);
             PerformLayout();
@@ -424,10 +403,6 @@
         private Label lblEmail;
         private Label lblPhoneNumber;
         private Label lblSize;
-        private Label lblToilet;
-        private Label lblCleanTable;
-        private Label lblHandicapFriendly;
-        private Label lblFamilyFriendly;
         private Label lblWebsite;
         private TextBox txtSpotNumber;
         private TextBox txtName;
@@ -447,5 +422,7 @@
         private CheckBox chkCleanTable;
         private CheckBox chkHandicap;
         private CheckBox chkFamily;
+        private TextBox txtSpotType;
+        private Label lblSpotType;
     }
 }
