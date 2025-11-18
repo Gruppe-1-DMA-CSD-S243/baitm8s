@@ -36,26 +36,26 @@ namespace BaitM8s.MVC.Controllers
         //}
 
 
-        [HttpGet]
-        public IActionResult Manage(string phoneNumber)
-        {
-            //TODO: try catch
-            Console.WriteLine(phoneNumber + "number?");
-            return View(_putAndTakePondAPIClient.GetOne(phoneNumber));
-        }
+        //[HttpGet]
+        //public IActionResult Manage(string phoneNumber)
+        //{
+        //    //TODO: try catch
+        //    Console.WriteLine(phoneNumber + "number?");
+        //    return View(_putAndTakePondAPIClient.GetOne(phoneNumber));
+        //}
 
-        [HttpPost]
-        public IActionResult Manage(PutAndTakePond putAndTakePond)
-        {
-            if (ModelState.IsValid)
-            {
-                //TODO: try catch
-                _putAndTakePondAPIClient.Update(putAndTakePond);
-                return RedirectToAction("Manage", "PutAndTakePond", new { putAndTakePond.PondNumber });
-            }
-            //TODO: giv fejlbesked
-            return View(putAndTakePond);
-        }
+        //[HttpPost]
+        //public IActionResult Manage(PutAndTakePond putAndTakePond)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        //TODO: try catch
+        //        _putAndTakePondAPIClient.Update(putAndTakePond);
+        //        return RedirectToAction("Manage", "PutAndTakePond", new { putAndTakePond.PondNumber });
+        //    }
+        //    //TODO: giv fejlbesked
+        //    return View(putAndTakePond);
+        //}
 
         //[HttpGet]
         //public IActionResult Delete(int id)

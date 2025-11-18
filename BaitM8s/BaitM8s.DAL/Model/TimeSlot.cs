@@ -8,13 +8,12 @@ namespace BaitM8s.DAL.Model
 {
     public class TimeSlot
     {
-        public int Id { get; set; }
+        //TODO: Change variable name for timeslot number
         public string TimeSlotNumber { get; set; }
-        public DateTime Date { get; set; }
+        public int WeekNumber { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public bool IsAvailable { get; set; }
+        public bool IsAvaliable { get; set; }
         public int Capacity { get; set; }
-        public int FK_PutAndTakePondId { get; set; }
     }
 }

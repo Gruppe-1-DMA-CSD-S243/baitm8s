@@ -1,34 +1,31 @@
-﻿using BaitM8s.DAL.DTO;
-using BaitM8s.DAL.Interfaces;
-using Microsoft.AspNetCore.Http;
+﻿using BaitM8s.DAL.Interfaces;
+using BaitM8s.DAL.Model;
+using BaitM8s.DAL.SQLServer;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BaitM8s.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class TimeSlotsController : ControllerBase
+    [Route("[controller]")]
+    public class TimeSlotsController : Controller
     {
-        private readonly ITimeSlotDAO _timeSlotDAO;
-
-        public TimeSlotsController(ITimeSlotDAO timeSlotDAO)
+        ITimeSlotsDAO _timeSlotsDAO;
+        public TimeSlotsController(ITimeSlotsDAO timeSlotsDAO)
         {
-            _timeSlotDAO = timeSlotDAO;
+            _timeSlotsDAO = timeSlotsDAO;
         }
-
+        
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TimeSlotDTO>>> GetAsync()
+        public ActionResult<IEnumerable<TimeSlot>> Get()
         {
             try
             {
-                return Ok(await _timeSlotDAO.GetAllTimeSlotsAsync());
+                return Ok(_timeSlotsDAO.GetAll());
             }
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, $"An error occurred trying to retrieve all blog posts.");
             }
         }
-
-        
     }
 }
