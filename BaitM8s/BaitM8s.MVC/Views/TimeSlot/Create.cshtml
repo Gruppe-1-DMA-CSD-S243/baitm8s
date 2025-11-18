@@ -1,4 +1,4 @@
-﻿@model BaitM8s.MVC.Models.TempTimeSlot
+﻿@model BaitM8s.DAL.Model.TimeSlot
 
 @{
     ViewData["Title"] = "Create";
@@ -6,32 +6,51 @@
 
 <h1>Create</h1>
 
-<h4>TempTimeSlot</h4>
+<h4>TimeSlot</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
+                <label asp-for="TimeSlotNumber" class="control-label"></label>
+                <input asp-for="TimeSlotNumber" class="form-control" />
+                <span asp-validation-for="TimeSlotNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WeekNumber" class="control-label"></label>
+                <input asp-for="WeekNumber" class="form-control" />
+                <span asp-validation-for="WeekNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="StartTime" class="control-label"></label>
-                <select asp-for="StartTime" asp-items="ViewBag.TimeOptions" class="form-control"></select>
+                <input asp-for="StartTime" class="form-control" />
                 <span asp-validation-for="StartTime" class="text-danger"></span>
             </div>
-
             <div class="form-group">
                 <label asp-for="EndTime" class="control-label"></label>
-                <select asp-for="EndTime" asp-items="ViewBag.TimeOptions" class="form-control"></select>
+                <input asp-for="EndTime" class="form-control" />
                 <span asp-validation-for="EndTime" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsAvaliable" /> @Html.DisplayNameFor(model => model.IsAvaliable)
+                </label>
             </div>
             <div class="form-group">
                 <label asp-for="Capacity" class="control-label"></label>
                 <input asp-for="Capacity" class="form-control" />
                 <span asp-validation-for="Capacity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FK_pond_id" class="control-label"></label>
+                <input asp-for="FK_pond_id" class="form-control" />
+                <span asp-validation-for="FK_pond_id" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -41,6 +60,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Manage">Back to List</a>
 </div>
 

@@ -1,6 +1,6 @@
 ﻿using BaitM8s.DAL.Interfaces;
 using BaitM8s.DAL.Model;
-using BaitM8s.DAL.SQLServer;
+using BaitM8s.DAL.DAO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BaitM8s.API.Controllers
@@ -25,6 +25,19 @@ namespace BaitM8s.API.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"An error occurred trying to retrieve all blog posts.");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult<int> Create(TimeSlot timeSlot)
+        {
+            try
+            {
+                return Ok(_timeSlotsDAO.Create(timeSlot));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred trying to create the blog post.");
             }
         }
     }

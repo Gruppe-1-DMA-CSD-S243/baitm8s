@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BaitM8s.DAL.SQLServer
+namespace BaitM8s.DAL.DAO
 {
     public class TimeSlotDAO : BaseDAO, ITimeSlotsDAO
     {
@@ -15,9 +15,15 @@ namespace BaitM8s.DAL.SQLServer
         {
         }
 
-        public int Create(TimeSlot putAndTakePond)
+        public int Create(TimeSlot timeSlot)
         {
-            throw new NotImplementedException();
+            //TODO: move to database with default value for CreationDate
+            
+            var query = @"INSERT INTO Timeslots (timeslot_number, address, FK_pond_id, StartTime, EndTime)
+                      OUTPUT INSERTED.id
+                      VALUES (@TimeSlotNumber, @Address, @FK_pond_id, @StartTime, @EndTime);";
+            using var connection = CreateConnection();
+            return connection.QuerySingle<int>(query, new { timeSlot.TimeSlotNumber, timeSlot.Address, timeSlot.FK_pond_id, timeSlot.StartTime, timeSlot.EndTime });
         }
 
         public bool Delete(int id)

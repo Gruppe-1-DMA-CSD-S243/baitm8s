@@ -25,9 +25,15 @@ namespace BaitM8s.APIClient
         }
         #endregion
 
-        public int Create(TimeSlot putAndTakePond)
+        public int Create(TimeSlot timeSlot)
         {
-            throw new NotImplementedException();
+            var request = new RestRequest("timeslots", Method.Post);
+            request.AddJsonBody(timeSlot);
+
+            var response = _restClient.Execute<int>(request);
+            if (response == null) throw new Exception("NO response from server");
+            if (!response.IsSuccessStatusCode) throw new Exception("Server reply: Unsuccessful request");
+            return response.Data;
         }
 
         public bool Delete(int id)

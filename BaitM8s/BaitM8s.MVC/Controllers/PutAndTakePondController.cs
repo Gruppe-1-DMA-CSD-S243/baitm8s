@@ -7,7 +7,7 @@ namespace BaitM8s.MVC.Controllers
 {
     public class PutAndTakePondController : Controller
     {
-        IPutAndTakePondDAO _putAndTakePondAPIClient = new PutAndTakePondAPIClient("https://localhost:7182");
+        IPutAndTakePondDAO _putAndTakePondAPIClient = new PutAndTakePondAPIClient("https://localhost:8888");
         public IActionResult Overview(int id)
         {
             //return View(_putAndTakePondAPIClient.GetByPondOwner(id));

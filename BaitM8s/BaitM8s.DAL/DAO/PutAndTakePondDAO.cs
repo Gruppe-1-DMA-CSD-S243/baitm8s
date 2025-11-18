@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Dapper;
 using static Dapper.SqlMapper;
 
-namespace BaitM8s.DAL.SQLServer
+namespace BaitM8s.DAL.DAO
 {
     public class PutAndTakePondDAO : BaseDAO, IPutAndTakePondDAO
     {
