@@ -11,7 +11,5 @@ namespace BaitM8s.DAL.Interface
     {
         Task<Angler?> GetAnglerAsync(int Id);
         Task<IEnumerable<Angler>> GetAnglersAsync();
-
-        Task<IEnumerable<Booking>> GetBookingsByAnglerId(int Id);
     }
 }

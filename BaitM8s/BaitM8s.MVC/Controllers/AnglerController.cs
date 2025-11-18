@@ -8,15 +8,17 @@ namespace BaitM8s.MVC.Controllers
 {
     public class AnglerController : Controller
     {
-        private readonly IAPIClient<Angler> _anglerApiClient;
-        public AnglerController(IAPIClient<Angler> anglerApiClient)
+        private readonly IAnglerAPIClient _anglerAPIClient;
+        private readonly IBookingAPIClient _bookingAPIClient;
+        public AnglerController(IAnglerAPIClient anglerAPIClient, IBookingAPIClient bookingAPIClient)
         {
-            _anglerApiClient = anglerApiClient;
+            _anglerAPIClient = anglerAPIClient;
+            _bookingAPIClient = bookingAPIClient;
         }
         [HttpGet]
         public IActionResult Index()
         {
-            var anglers = _anglerApiClient.GetAll();
+            var anglers = _anglerAPIClient.GetAllAsync();
             return View(anglers);
         }
 
@@ -33,19 +35,36 @@ namespace BaitM8s.MVC.Controllers
         }
 
 
+        //[HttpGet]
+        //public IActionResult Details(int? anglerId)
+        //{
+        //    if (!anglerId.HasValue)
+        //    {
+        //        return View();
+        //    }
+
+        //    var angler = _anglerApiClient.GetOne(anglerId.Value);
+        //    if (angler == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(angler);
+        //}
+
         [HttpGet]
-        public IActionResult Details(int? anglerId)
+        public async Task<IActionResult> Details(int? anglerId)
         {
             if (!anglerId.HasValue)
-            {
                 return View();
-            }
 
-            var angler = _anglerApiClient.GetOne(anglerId.Value);
+            var angler = await _anglerAPIClient.GetOneAsync(anglerId.Value);
             if (angler == null)
-            {
                 return NotFound();
-            }
+
+            var bookings = await _bookingAPIClient.GetBookingsForAnglerAsync(anglerId.Value);
+
+            ViewBag.Bookings = bookings;
 
             return View(angler);
         }

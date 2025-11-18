@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BaitM8s.APIClient.Clients
 {
-    public class BookingAPIClient : IAPIClient<Booking>
+    public class BookingAPIClient : IBookingAPIClient
     {
         private readonly string _apiBaseUri;
         private readonly RestClient _restClient;
@@ -19,8 +19,6 @@ namespace BaitM8s.APIClient.Clients
             _apiBaseUri = apiBaseUri;
             _restClient = new RestClient(_apiBaseUri);
         }
-
-
 
         public IEnumerable<Booking> GetAll()
         {
@@ -64,6 +62,17 @@ namespace BaitM8s.APIClient.Clients
             {
                 throw new Exception("Server repley: Unsuccessful request");
             }
+
+            return response.Data;
+        }
+
+        public async Task<IEnumerable<Booking>> GetBookingsForAnglerAsync(int Id)
+        {
+            var request = new RestRequest($"bookings/angler/{Id}", Method.Get);
+            var response = await _restClient.ExecuteAsync<IEnumerable<Booking>>(request);
+
+            if (!response.IsSuccessful || response.Data == null)
+                throw new Exception("Error fetching bookings");
 
             return response.Data;
         }

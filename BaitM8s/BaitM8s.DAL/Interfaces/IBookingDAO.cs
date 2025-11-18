@@ -12,5 +12,7 @@ namespace BaitM8s.DAL.Interfaces
         Booking? GetBooking(int id);
         IEnumerable<Booking> GetAllBookings();
         Task<int> CreateBookingAsync(Booking booking);
+        Task<IEnumerable<Booking>> GetBookingsByAnglerId(int Id);
+
     }
 }

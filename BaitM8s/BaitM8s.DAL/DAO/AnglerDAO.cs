@@ -26,15 +26,5 @@ namespace BaitM8s.DAL.DAO
             using var connection = CreateConnection();
             return await connection.QuerySingleOrDefaultAsync<Angler>(query, new { Id = id });
         }
-
-        public async Task<IEnumerable<Booking>> GetBookingsByAnglerId(int Id)
-        {
-            var sql = "SELECT * FROM Bookings WHERE FK_AnglerId = @Id";
-
-            using var connection = CreateConnection();
-
-            return await connection.QueryAsync<Booking>(sql, new { Id });
-        }
-
     }
 }

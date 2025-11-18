@@ -21,11 +21,12 @@ namespace BaitM8s.API.Controllers
 
         // GET: api/<ValuesController>
         [HttpGet]
-        public ActionResult<IEnumerable<Angler>> Get()
+        public async Task<ActionResult<IEnumerable<Angler>>> GetAsync()
         {
             try
             {
-                return Ok(_anglerDAO.GetAnglers());
+                var anglers = await _anglerDAO.GetAnglersAsync();
+                return  Ok(anglers);
             }
             catch (Exception ex)
             {
@@ -35,11 +36,11 @@ namespace BaitM8s.API.Controllers
 
         // GET api/<ValuesController>/5
         [HttpGet("{Id}")]
-        public ActionResult<Angler> Get(int Id)
+        public async Task<ActionResult<Angler>> GetAsync(int Id)
         {
             try
             {
-                var angler = _anglerDAO.GetAngler(Id);
+                var angler = await _anglerDAO.GetAnglerAsync(Id);
                 if (angler == null)
                 {
                     return NoContent();

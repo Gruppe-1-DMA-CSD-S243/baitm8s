@@ -73,5 +73,10 @@ namespace BaitM8s.API.Controllers
             }
         }
 
+        [HttpGet("angler/{Id}")]
+        public async Task<IEnumerable<Booking>> GetBookingByAnglerId(int Id)
+        {
+            return await _bookingDAO.GetBookingsByAnglerId(Id);
+        }
     }
 }

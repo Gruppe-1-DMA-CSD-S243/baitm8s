@@ -2,21 +2,22 @@
 using BaitM8s.APIClient.Interfaces;
 using BaitM8s.DAL.Model;
 using Microsoft.AspNetCore.Mvc;
+using RestSharp;
 
 namespace BaitM8s.MVC.Controllers
 {
     public class BookingController : Controller
     {
-        private readonly IAPIClient<Booking> _bookingApiClient;
+        private readonly IAPIClient<Booking> _bookingAPIClient;
 
-        public BookingController(IAPIClient<Booking> bookingApiClient)
+        public BookingController(IAPIClient<Booking> bookingAPIClient)
         {
-            _bookingApiClient = bookingApiClient;
+            _bookingAPIClient = bookingAPIClient;
         }
 
         public IActionResult Calendar()
         {
-            var bookings = _bookingApiClient.GetAll();
+            var bookings = _bookingAPIClient.GetAll();
 
             var calendarEvents = bookings.Select(booking => new
             {
@@ -44,7 +45,7 @@ namespace BaitM8s.MVC.Controllers
             if (ModelState.IsValid)
             {
                 //TODO: try catch
-                var newId = await _bookingApiClient.CreateAsync(booking);
+                var newId = await _bookingAPIClient.CreateAsync(booking);
 
                 return RedirectToAction("Details", "Booking", new { id = newId });
             }
@@ -54,7 +55,7 @@ namespace BaitM8s.MVC.Controllers
 
         public IActionResult Index()
         {
-            return View(_bookingApiClient.GetAll());
+            return View(_bookingAPIClient.GetAll());
         }
 
         [HttpGet]
@@ -65,7 +66,7 @@ namespace BaitM8s.MVC.Controllers
                 return View();
             }
 
-            var booking = _bookingApiClient.GetOne(Id.Value);
+            var booking = _bookingAPIClient.GetOne(Id.Value);
             if (booking == null)
             {
                 return NotFound();
@@ -73,27 +74,6 @@ namespace BaitM8s.MVC.Controllers
 
             return View(booking);
         }
-
-        //[HttpPost]
-        //public async Task<IActionResult> CreateAsync(Booking booking)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return View(booking); // vis formular igen
-
-        //    try
-        //    {
-        //        int newId = await _bookingApiClient.CreateAsync(booking);
-
-        //        return RedirectToAction("Details", "Booking", new { id = newId });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ModelState.AddModelError(string.Empty, $"Error creating booking: {ex.Message}");
-        //        return View(booking);
-        //    }
-        //}
-
-
 
     }
 }

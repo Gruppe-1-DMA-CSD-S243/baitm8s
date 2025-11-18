@@ -1,4 +1,6 @@
 ﻿using BaitM8s.APIClient.Interfaces;
+using BaitM8s.DAL.DAO;
+using BaitM8s.DAL.Interfaces;
 using BaitM8s.DAL.Model;
 using RestSharp;
 using System;
@@ -44,6 +46,7 @@ namespace BaitM8s.APIClient.Clients
 
             return response.Data;
         }
+
 
         public async Task<int> CreateAsync(Angler angler)
         {

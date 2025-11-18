@@ -18,8 +18,8 @@ namespace BaitM8s.MVC
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddScoped<IAPIClient<Booking>>(booking => new BookingAPIClient("https://localhost:8888/api"));
-            builder.Services.AddScoped<IAPIClient<Angler>>(angler => new AnglerAPIClient("https://localhost:8888/api"));
+            builder.Services.AddScoped<IBookingAPIClient>(booking => new BookingAPIClient("https://localhost:8888/api"));
+            builder.Services.AddScoped<IAnglerAPIClient>(angler => new AnglerAPIClient("https://localhost:8888/api"));
             //builder.Services.AddScoped<IAPIClient<Booking>>(_ => new BookingAPIClient(configuration["API_BASE_URI"]));
 
             var app = builder.Build();
