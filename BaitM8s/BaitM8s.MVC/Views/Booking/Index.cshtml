@@ -1,114 +1,83 @@
-﻿﻿@{
-    ViewData["Title"] = "Booking";
+﻿@model IEnumerable<BaitM8s.DAL.Model.Booking>
+
+@{
+    ViewData["Title"] = "Index";
 }
 
-@section Styles {
-    <link rel="stylesheet" href="~/css/Booking.css" asp-append-version="true" />
-}
+<h1>Index</h1>
 
-<!-- View (Index.cshtml) -->
-@* <div id="calendar" style="height:700px;"></div>
-
-@section Scripts {
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var events = @Html.Raw(ViewBag.BookingJson);
-            console.log(events); // Debug
-
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'timeGridWeek',
-                timeZone: 'Europe/Copenhagen',
-                locale: 'da',
-                events: events
-            });
-            calendar.render();
-        });
-    </script>
-} *@
-
-@* @model IEnumerable<BaitM8s.DAL.Model.Booking>
-
-<h2>Bookings</h2>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
-            <th>Booking Number</th>
-            <th>Pond</th>
-            <th>Date</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>People</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pond)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeSlots)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfPeople)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FK_AnglerId)
+            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var booking in Model)
-        {
-            <tr>
-                <td>@booking.BookingNumber</td>
-                <td>@booking.Pond</td>
-                <td>@booking.Date.ToShortDateString()</td>
-                <td>@booking.StartTime</td>
-                <td>@booking.EndTime</td>
-                <td>@booking.NumberOfPeople</td>
-            </tr>
-        }
-    </tbody>
-</table> *@
-
-<pre>@Html.Raw(ViewBag.BookingJson)</pre>
-
-<div class="booking-page">
-    <div class="info-box">
-        <h2>information</h2>
-        <p>her kan du senere vise detaljer om bookinger, tider, osv.</p>
-    </div>
-
-    <!--<div class="calendar-container">
-        <div class="top-box">
-            <h3>top boks</h3>
-            <p>her kan du vise fx filter, opsummering eller andet indhold.</p>
-    </div>-->
-
-    <div id="calendar"></div>
-</div>
-
-
-
-<div id="calendar" style="height:700px;"></div>
-
-@section Scripts {
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var events = @Html.Raw(ViewBag.BookingJson);
-
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'timeGridWeek',
-                timeZone: 'Europe/Copenhagen',
-                locale: 'da',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                },
-                slotMinTime: "06:00:00",
-                slotMaxTime: "23:59:59",
-                slotLabelFormat: [{
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false
-                }],
-                events: events,
-                eventClick: function(info) {
-                    alert('Du klikkede på: ' + info.event.title);
-                },
-                dateClick: function(info) {
-                    calendar.changeView('timeGridWeek', info.date);
-                }
-            });
-
-            calendar.render();
-        });
-    </script>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookingNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pond)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeSlots)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfPeople)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FK_AnglerId)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
 }
+    </tbody>
+</table>

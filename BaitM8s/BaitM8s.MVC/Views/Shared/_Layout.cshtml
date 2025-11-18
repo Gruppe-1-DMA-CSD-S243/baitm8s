@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Baitm8s </title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/fishingman.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Baitm8sUISetup.styles.css" asp-append-version="true" />
 
@@ -20,7 +21,32 @@
     <header class="main-header">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Baitm8s</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <div class="logo-container">
+                        <div class="word-container">
+                            <div class="figure-text">BaitM&nbsp;s</div>
+                            <div class="figure-container">
+                                <div class="catch-phrase">More baits, more mates</div>
+                                <div class="stick-figure">
+                                    <div class="head"></div>
+                                    <div class="body"></div>
+                                    <div class="arm-left"></div>
+                                    <div class="arm-right"></div>
+                                    <div class="leg-left-upper"></div>
+                                    <div class="leg-right-upper"></div>
+                                    <div class="leg-left-lower"></div>
+                                    <div class="leg-right-lower"></div>
+                                    <div class="rod"></div>
+                                    <div class="anchor">
+                                        <div class="line"></div>
+                                        <div class="bobber">8</div>
+                                        <div class="water-line"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -31,7 +57,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="FishingSpots" asp-action="Index">Fiske steder</a>
                         </li> *@
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Booking" asp-action="Index">Booking</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Booking" asp-action="Calendar">Booking</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="TimeSlot" asp-action="Index">TimeSlot</a>
@@ -42,6 +68,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Index">Profil</a>
                         </li> *@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Angler" asp-action="Details">Test login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Angler" asp-action="Index">View Anglers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Booking" asp-action="Create">Make booking</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Booking" asp-action="Index">View List Of Bookings</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -54,9 +92,9 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - Baitm8sUISetup - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+@*         <div class="container">
+            &copy; 2025 - Baitm8s - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div> *@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

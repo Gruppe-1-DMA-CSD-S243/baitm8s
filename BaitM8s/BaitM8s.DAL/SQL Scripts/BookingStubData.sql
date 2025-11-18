@@ -1,4 +1,4 @@
-﻿﻿-- Indsæt eksempeldata
+﻿
 INSERT INTO Booking (BookingNumber, Pond, TimeSlots, Date, StartTime, EndTime, NumberOfPeople)
 VALUES
 ('BKG-2025-001', 'Søndersø', 'Morning', '2025-05-12', '06:00', '10:00', 2),

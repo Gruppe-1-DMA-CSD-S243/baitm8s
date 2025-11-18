@@ -24,6 +24,8 @@ namespace BaitM8s.MVC
             builder.Services.AddScoped<IAPIClient<TimeSlotDTO>>(apiClient =>
             new TimeSlotAPIClient<TimeSlotDTO>(configuration["API_BASE_URI"]));
 
+            builder.Services.AddScoped<IAPIClient<Angler>>(angler => new AnglerAPIClient("https://localhost:8888/api"));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

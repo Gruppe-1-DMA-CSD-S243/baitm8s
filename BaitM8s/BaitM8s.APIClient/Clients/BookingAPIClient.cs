@@ -26,7 +26,7 @@ namespace BaitM8s.APIClient.Clients
 
             if (!response.IsSuccessful || response.Data == null)
             {
-                throw new Exception($"Error getting all bookings. Message was {response.StatusDescription}");
+                throw new Exception($"Error retrieving all bookings. Message was {response.StatusDescription}");
             }
 
             return response.Data;
@@ -41,7 +41,7 @@ namespace BaitM8s.APIClient.Clients
 
             if (!response.IsSuccessful || response.Data == null)
             {
-                throw new Exception($"Error getting booking with id {id}. Message was {response.StatusDescription}");
+                throw new Exception($"Error retrieving booking with id {id}. Message was {response.StatusDescription}");
             }
 
             return response.Data;
@@ -57,6 +57,26 @@ namespace BaitM8s.APIClient.Clients
             if (!response.IsSuccessful)
             {
                 throw new Exception($"Error deleting booking with id {id}. Message was {response.StatusDescription}");
+            }
+
+            return response.Data;
+        }
+
+        public async Task<int> CreateAsync(Booking booking)
+        {
+            var request = new RestRequest("bookings", Method.Post);
+            request.AddJsonBody(booking);
+
+            var response = await _restClient.ExecuteAsync<int>(request);
+
+            if (response == null)
+            {
+                throw new Exception("No reponse from server");
+            }
+
+            if (!response.IsSuccessful)
+            {
+                throw new Exception("Server repley: Unsuccessful request");
             }
 
             return response.Data;

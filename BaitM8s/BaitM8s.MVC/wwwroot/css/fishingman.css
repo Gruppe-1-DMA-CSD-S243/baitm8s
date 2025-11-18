@@ -1,0 +1,410 @@
+﻿.logo-container {
+    transform: scale(0.3);
+    position: absolute;
+    left: -150px;
+    top: -50px;
+    width: 50%;
+    height: 300px;
+/*    border: 3px, solid, black;*/
+}
+
+.figure-text {
+    position: absolute;
+    font-size: 300px;
+    font-weight: bold;
+    /*    color: #222;*/
+    letter-spacing: 2px;
+    font-family: sans-serif;
+}
+
+.catch-phrase {
+    position: absolute;
+    left: -650px;
+    top: 280px;
+    font-size: 50px;
+    font-weight: bold;
+    /*    color: #222;*/
+    letter-spacing: 1px;
+    font-family: sans-serif;
+    /*    border: 3px, solid, black;*/
+}
+
+.figure-container {
+    position: absolute;
+    left: 766px;
+    top: -125px;
+    width: 100px;
+    height: 100px;
+    background: transparent;
+}
+
+.stick-figure {
+    position: relative;
+    width: 200px;
+    height: 100px;
+}
+
+.head {
+    width: 20px;
+    height: 20px;
+    border: 3px solid black;
+    border-radius: 50%;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+}
+
+.body {
+    width: 3px;
+    height: 30px;
+    background: black;
+    position: absolute;
+    top: 30px;
+    left: 28px;
+}
+
+.arm-left {
+    width: 25px;
+    height: 3px;
+    background: black;
+    position: absolute;
+    top: 35px;
+    left: 30px;
+    transform: rotate(-5deg);
+    transform-origin: right center;
+}
+
+.arm-right {
+    width: 28px;
+    height: 3px;
+    background: black;
+    position: absolute;
+    top: 35px;
+    left: 28px;
+    transform: rotate(-10deg);
+    transform-origin: left center;
+}
+
+.leg-left-upper {
+    width: 3px;
+    height: 15px;
+    background: black;
+    position: absolute;
+    top: 60px;
+    left: 30px;
+    transform: rotate(-50deg);
+    transform-origin: top center;
+}
+
+.leg-left-lower {
+    width: 3px;
+    height: 15px;
+    background: black;
+    position: absolute;
+    top: 68px;
+    left: 42px;
+    transform: rotate(25deg);
+    transform-origin: top center;
+}
+
+.leg-right-upper {
+    width: 3px;
+    height: 20px;
+    background: black;
+    position: absolute;
+    top: 60px;
+    left: 30px;
+    transform: rotate(-60deg);
+    transform-origin: top center;
+}
+
+.leg-right-lower {
+    width: 3px;
+    height: 20px;
+    background: black;
+    position: absolute;
+    top: 68px;
+    left: 46px;
+    transform: rotate(2deg);
+    transform-origin: top center;
+}
+
+.rod {
+    width: 77px;
+    height: 2px;
+    background: black;
+    position: absolute;
+    top: 40px;
+    left: 50px;
+    transform: rotate(-55deg);
+    transform-origin: left center;
+}
+
+.anchor {
+    position: relative;
+    top: -20px;
+    left: 0px;
+    width: 200px;
+    height: 297px;
+    background: transparent;
+    overflow: hidden;
+}
+
+.line {
+    width: 2px;
+    height: 15px;
+    background: grey;
+    position: absolute;
+    top: -20px;
+    left: 95px;
+    transform: translateX(-50%);
+    transform-origin: top;
+    animation: stretch 2s infinite ease-in-out;
+}
+
+.bobber {
+    width: 0px;
+    font-size: 250px;
+    background: red;
+    position: absolute;
+    top: 130px;
+    left: 28px;
+    line-height: 0.5;
+    animation: bob 2s infinite ease-in-out;
+    clip-path: circle(200%);
+}
+
+.water-line {
+    /*    background: transparten;
+    transform: rotate(180deg);
+    width: 130px;
+    height: 50px;
+    position: absolute;
+    top: 280px;
+    left: 35px;*/
+}
+
+@keyframes bob {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(60px);
+    }
+}
+
+@keyframes stretch {
+    0%, 100% {
+        height: 150px;
+    }
+
+    50% {
+        height: 210px;
+    }
+}
+
+.line {
+    animation: stretch 2s infinite ease-in-out;
+}
+
+.bobber {
+    animation: bob 2s infinite ease-in-out;
+}
+
+/*/*/ * /*.stick-figure-container {
+    position: absolute;*/ /* relative to .anchor-m */
+/*left: 915px; 
+    top: 100px; 
+    transform: translateX(-50%);
+    width: 200px;
+    height: 200px;
+}
+
+.stick-figure {
+    position: relative;
+    width: 0px;
+    height: 100px;
+}
+
+.figure-text {
+    position: absolute;
+    top: 50px;*/ /* adjust based on stick figure height */
+/*left: 50px;
+    right: 100%;
+    transform: translateX(-50%);
+    font-size: 300px;
+    font-weight: bold;
+    color: #222;
+    letter-spacing: 2px;
+    font-family: sans-serif;
+}
+
+.head {
+    width: 20px;
+    height: 20px;
+    border: 3px solid black;
+    border-radius: 50%;
+    position: absolute;
+    top: 10px;
+    left: 20px;
+}*/
+/* Body, arms, legs, rod, line, bobber */
+/*.body {
+    width: 3px;
+    height: 30px;
+    background: black;
+    position: absolute;
+    top: 30px;
+    left: 28px;
+}
+
+.arm-left {
+    width: 25px;
+    height: 3px;
+    background: black;
+    position: absolute;
+    top: 35px;
+    left: 30px;
+    transform: rotate(-5deg);
+    transform-origin: right center;
+}
+
+.arm-right {
+    width: 25px;
+    height: 3px;
+    background: black;
+    position: absolute;
+    top: 35px;
+    left: 28px;
+    transform: rotate(-10deg);
+    transform-origin: left center;
+}
+
+.leg-left-upper {
+    width: 3px;
+    height: 15px;
+    background: black;
+    position: absolute;
+    top: 60px;
+    left: 30px;
+    transform: rotate(-50deg);
+    transform-origin: top center;
+}
+
+.leg-left-lower {
+    width: 3px;
+    height: 15px;
+    background: black;
+    position: absolute;
+    top: 68px;
+    left: 42px;
+    transform: rotate(25deg);
+    transform-origin: top center;
+}
+
+.leg-right-upper {
+    width: 3px;
+    height: 20px;
+    background: black;
+    position: absolute;
+    top: 60px;
+    left: 30px;
+    transform: rotate(-60deg);
+    transform-origin: top center;
+}
+
+.leg-right-lower {
+    width: 3px;
+    height: 20px;
+    background: black;
+    position: absolute;
+    top: 68px;
+    left: 46px;
+    transform: rotate(2deg);
+    transform-origin: top center;
+}
+
+.rod {
+    width: 77px;
+    height: 2px;
+    background: black;
+    position: absolute;
+    top: 40px;
+    left: 50px;
+    transform: rotate(-55deg);
+    transform-origin: left center;
+}
+
+.anchor {
+    position: relative;
+    top: 0px;
+    left: 0px;
+}
+
+.line {
+    width: 2px;
+    height: 150px;
+    background: black;
+    position: absolute;
+    top: -20px;
+    left: 95px;
+    transform: translateX(-50%);
+    transform-origin: top;*/ /* very important */
+/*animation: stretch 2s infinite ease-in-out;
+}
+
+.bobber {*/
+/*    width: 8px;
+    height: 8px;*/
+/*font-size: 250px;*/
+/*background: red;*/
+/*border-radius: 50%;
+    position: absolute;
+    top: 130px;
+    left: 28px;
+    transform: rotate();
+    line-height: 0.5;
+    animation: bob 2s infinite ease-in-out;
+}
+
+.under-line {
+    background: white;
+    width: 130px;
+    height: 90px;
+    position: absolute;
+    transform: rotate(180);
+    top: 282px;
+    left: 35px;
+    clip-path: inset(0px 0px 0px 0px);
+}
+
+@keyframes bob {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(60px);
+    }*/
+/* match line height increase */
+/*}
+
+@keyframes stretch {
+    0%, 100% {
+        height: 150px;
+    }
+
+    50% {
+        height: 210px;
+    }*/
+/* same as bobber movement */
+/*}
+
+.line {
+    animation: stretch 2s infinite ease-in-out;
+}
+
+.bobber {
+    animation: bob 2s infinite ease-in-out;
+}*/

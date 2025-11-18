@@ -11,5 +11,6 @@ namespace BaitM8s.APIClient.Interfaces
         Task<IEnumerable<T>> GetAllAsync();
         Task<T?> GetOneAsync(int id);
         Task<bool> DeleteAsync(int id);
+        Task<int> CreateAsync(T entity);
     }
 }
