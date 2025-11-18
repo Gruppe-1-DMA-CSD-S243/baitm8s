@@ -9,7 +9,9 @@ namespace BaitM8s.DAL.Interface
 {
     public interface IAnglerDAO
     {
-        Angler? GetAngler(int Id);
-        IEnumerable<Angler> GetAnglers();
+        Task<Angler?> GetAnglerAsync(int Id);
+        Task<IEnumerable<Angler>> GetAnglersAsync();
+
+        Task<IEnumerable<Booking>> GetBookingsByAnglerId(int Id);
     }
 }

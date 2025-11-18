@@ -13,18 +13,27 @@ namespace BaitM8s.DAL.DAO
     {
         public AnglerDAO(string connectionString) : base(connectionString) { }
 
-        public IEnumerable<Angler> GetAnglers()
+        public async Task<IEnumerable<Angler>> GetAnglersAsync()
         {
             var query = "SELECT * FROM Angler";
             using var connection = CreateConnection();
-            return connection.Query<Angler>(query);
+            return await connection.QueryAsync<Angler>(query);
         }
 
-        public Angler? GetAngler(int id)
+        public async Task<Angler?> GetAnglerAsync(int id)
         {
             var query = "SELECT * FROM Angler WHERE id = @id";
             using var connection = CreateConnection();
-            return connection.QuerySingleOrDefault<Angler>(query, new { Id = id });
+            return await connection.QuerySingleOrDefaultAsync<Angler>(query, new { Id = id });
+        }
+
+        public async Task<IEnumerable<Booking>> GetBookingsByAnglerId(int Id)
+        {
+            var sql = "SELECT * FROM Bookings WHERE FK_AnglerId = @Id";
+
+            using var connection = CreateConnection();
+
+            return await connection.QueryAsync<Booking>(sql, new { Id });
         }
 
     }
