@@ -6,7 +6,7 @@ namespace BaitM8s.WinForms
 {
     public partial class MainForm : Form
     {
-        IPutAndTakePondDao _putAndTakePondApiClient = new PutAndTakePondApiClient("https://localhost:8888/api/");
+        IPutAndTakePondDAO _putAndTakePondApiClient = new PutAndTakePondApiClient("https://localhost:8888/api/");
         public MainForm()
         {
             InitializeComponent();
@@ -174,5 +174,6 @@ namespace BaitM8s.WinForms
                 MessageBox.Show($"Error deleting pond: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
     }
 }

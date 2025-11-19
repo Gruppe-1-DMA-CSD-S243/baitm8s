@@ -12,7 +12,7 @@ namespace BaitM8s.APIClient.Interfaces
         Task<IEnumerable<PutAndTakePond>> GetAllPutAndTakePondsAsync();
         Task<PutAndTakePond> GetPutAndTakePondByIdAsync(int pondNumber);
         Task<int> CreatePutAndTakePondAsync(PutAndTakePond pond);
-        Task UpdatePutAndTakePondAsync(PutAndTakePond pond);
-        Task DeletePutAndTakePondAsync(int pondNumber);
+        Task<bool> UpdatePutAndTakePondAsync(PutAndTakePond pond);
+        Task<bool> DeletePutAndTakePondAsync(int pondNumber);
     }
 }

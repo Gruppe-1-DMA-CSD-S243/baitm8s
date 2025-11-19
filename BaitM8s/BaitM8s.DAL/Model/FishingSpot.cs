@@ -8,27 +8,29 @@ namespace BaitM8s.DAL.Model
 {
     public class FishingSpot
     {
-        public int FishingSpotNumber { get; set; }
+        public int Id { get; set; }
+        public string FishingSpotNumber { get; set; }
         public string Name { get; set; }
-        public string Coordinates { get; set; }
-        public string FishSpecies { get; set; }
+        public Coordinate Location { get; set; }
+        public List<string> FishSpecies { get; set; }
         public string SpotType { get; set; }
         public bool FishingLicenseRequired { get; set; }
 
-        public FishingSpot(int fishingSpotNumber, string name, string coordinates, string fishSpecies, string spotType, bool fishingLicenseRequired)
+        public FishingSpot(int id, string fishingSpotNumber, string name, Coordinate location, List<string> fishSpecies, string spotType, bool fishingLicenseRequired)
         {
+            Id = id;
             FishingSpotNumber = fishingSpotNumber;
             Name = name;
-            Coordinates = coordinates;
+            Location = location;
             FishSpecies = fishSpecies;
             SpotType = spotType;
             FishingLicenseRequired = fishingLicenseRequired;
         }
 
-        public FishingSpot(string name, string coordinates, string fishSpecies, string spotType, bool fishingLicenseRequired)
+        public FishingSpot(int id, string name, Coordinate location, List<string> fishSpecies, string spotType, bool fishingLicenseRequired)
         {
             Name = name;
-            Coordinates = coordinates;
+            Location = location;
             FishSpecies = fishSpecies;
             SpotType = spotType;
             FishingLicenseRequired = fishingLicenseRequired;

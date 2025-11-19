@@ -6,7 +6,6 @@ namespace BaitM8s.API
 {
     public class Program
     {
-        private const string _connectionString = "Data Source=localhost;Database=BaitM8sTest;Persist Security Info=True;User ID=sa;Password=@12tf56so;Encrypt=True;Trust Server Certificate=True";
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -23,8 +22,8 @@ namespace BaitM8s.API
 
             //builder.Services.AddScoped<IBookingDAO>(bookingDAO =>
             //new BookingDAO(configuration["CONNECTION_STRING"]));
-            builder.Services.AddScoped<IPutAndTakePondDao>(putAndTakePondDao =>
-            new PutAndTakePondDao(_connectionString));
+            builder.Services.AddScoped<IPutAndTakePondDAO>(putAndTakePondDao =>
+            new InMemoryPutAndTakePondDAO("connectionString"));
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
