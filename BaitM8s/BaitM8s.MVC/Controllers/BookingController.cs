@@ -7,40 +7,12 @@ namespace BaitM8s.MVC.Controllers
 {
     public class BookingController : Controller
     {
-        private readonly IAPIClient<BookingDTO> _bookingApiClient;
+        private readonly IBookingAPIClient _bookingApiClient;
 
-        public BookingController(IAPIClient<BookingDTO> bookingApiClient)
+        public BookingController(IBookingAPIClient bookingApiClient)
         {
             _bookingApiClient = bookingApiClient;
         }
-
-        //public async Task<IActionResult> Index()
-        //{
-        //    var bookings = await _bookingApiClient.GetAllAsync();
-
-        //    var calendarEvents = bookings
-        //        .SelectMany(booking => booking.TimeSlots.Select(ts => new
-        //        {
-        //            title = $"Booking #{booking.BookingNumber} ({booking.Pond})",
-
-        //            start = ts.StartTime.ToString("o"),
-        //            end = ts.EndTime.ToString("o"),
-
-        //            id = $"{booking.Id}-{ts.Id}",
-
-        //            extendedProps = new
-        //            {
-        //                bookingNumber = booking.BookingNumber,
-        //                pond = booking.Pond,
-        //                people = booking.NumberOfPeople,
-        //                timeSlotNumber = ts.TimeSlotNumber,
-        //                capacity = ts.Capacity
-        //            }
-        //        }));
-
-        //    ViewBag.BookingJson = System.Text.Json.JsonSerializer.Serialize(calendarEvents);
-        //    return View();
-        //}
 
         public async Task<IActionResult> Calendar()
         {
@@ -48,12 +20,12 @@ namespace BaitM8s.MVC.Controllers
 
             var calendarEvents = bookings.Select(booking => new
             {
-                title = $"Booking #{booking.BookingNumber} ({booking.Pond})",
-                start = $"{booking.Date:yyyy-MM-dd}T{booking.StartTime}",
-                end = $"{booking.Date:yyyy-MM-dd}T{booking.EndTime}",
-                id = booking.Id,
+                //title = $"Booking #{booking.BookingNumber} ({booking.Pond})",
+                //start = $"{booking.Date:yyyy-MM-dd}T{booking.StartTime}",
+                //end = $"{booking.Date:yyyy-MM-dd}T{booking.EndTime}",
+                //id = booking.Id,
 
-                anglerId = booking.FK_AnglerId
+                //anglerId = booking.FK_AnglerId
             });
 
             ViewBag.BookingJson = System.Text.Json.JsonSerializer.Serialize(calendarEvents);
@@ -101,19 +73,6 @@ namespace BaitM8s.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(BookingDTO booking)
         {
-            //TODO: Få lige fixet det her hack!
-            booking = new BookingDTO
-            {
-                Id = 99,
-                BookingNumber = "BK-NEWNUMB",
-                Pond = "NewPond",
-                TimeSlots = new List<BaitM8s.DAL.Model.TimeSlot>(),
-                Date = DateTime.Now,
-                StartTime = TimeSpan.FromMinutes(80),
-                EndTime = TimeSpan.FromMinutes(100),
-                NumberOfPeople = 3,
-                FK_AnglerId = 1
-            };
             if (ModelState.IsValid)
             {
                 //TODO: try catch
@@ -125,7 +84,6 @@ namespace BaitM8s.MVC.Controllers
             return View();
         }
 
-        //TODO: Få kigget på det her.Der er to index actions!
         public async Task<IActionResult> Index()
         {
             return View(await _bookingApiClient.GetAllAsync());

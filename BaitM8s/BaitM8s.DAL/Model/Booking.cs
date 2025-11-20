@@ -9,13 +9,12 @@ namespace BaitM8s.DAL.Model
     public class Booking
     {
         public int Id { get; set; }
-        public string BookingNumber { get; set; }
-        public string Pond { get; set; }
-        public List<TimeSlot> TimeSlots { get; set; }
-        public DateTime Date { get; set; }
-        public TimeSpan StartTime { get; set; }
-        public TimeSpan EndTime { get; set; }
         public int NumberOfPeople { get; set; }
+        public string Day { get; set; }
+        public string Month { get; set; }
+        public int Year { get; set; }
+        public int WeekNumber { get; set; }
         public int FK_AnglerId { get; set; }
+        public int FK_FishingSpotId { get; set; }
     }
 }

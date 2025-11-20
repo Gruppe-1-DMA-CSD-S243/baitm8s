@@ -8,9 +8,9 @@ namespace BaitM8s.MVC.Controllers
 {
     public class AnglerController : Controller
     {
-        private readonly IAPIClient<AnglerDTO> _anglerApiClient;
+        private readonly IAnglerAPIClient _anglerApiClient;
 
-        public AnglerController(IAPIClient<AnglerDTO> anglerApiClient)
+        public AnglerController(IAnglerAPIClient anglerApiClient)
         {
             _anglerApiClient = anglerApiClient;
         }
