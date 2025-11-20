@@ -8,5 +8,14 @@ namespace BaitM8s.DAL.Model
 {
     public class FishingSpot
     {
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string ZipCode { get; set; }
+        public float Longitude { get; set; }
+        public float Latitude { get; set; }
+        public int Capacity { get; set; }
+        public List<string> FishSpecies { get; set; }
+        public bool HandicapFriendly { get; set; }
+
     }
 }
