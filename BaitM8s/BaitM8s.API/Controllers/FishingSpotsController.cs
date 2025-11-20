@@ -6,6 +6,7 @@ namespace BaitM8s.API.Controllers
     [ApiController]
     public class FishingSpotsController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
         {
             return View();

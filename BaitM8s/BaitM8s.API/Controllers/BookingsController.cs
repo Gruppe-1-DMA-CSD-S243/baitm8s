@@ -73,24 +73,24 @@ namespace BaitM8s.API.Controllers
             try
             {
                 //TODO: Lav en hjælpemetode!!!
-                Booking booking = new Booking
-                {
-                    Id = dto.Id,
-                    BookingNumber = dto.BookingNumber,
-                    Pond = dto.Pond,
-                    TimeSlots = dto.TimeSlots,
-                    Date = dto.Date,
-                    StartTime = dto.StartTime,
-                    EndTime = dto.EndTime,
-                    NumberOfPeople = dto.NumberOfPeople,
-                    FK_AnglerId = dto.FK_AnglerId
-                };
+                //Booking booking = new Booking
+                //{
+                //    Id = dto.Id,
+                //    BookingNumber = dto.BookingNumber,
+                //    Pond = dto.Pond,
+                //    TimeSlots = dto.TimeSlots,
+                //    Date = dto.Date,
+                //    StartTime = dto.StartTime,
+                //    EndTime = dto.EndTime,
+                //    NumberOfPeople = dto.NumberOfPeople,
+                //    FK_AnglerId = dto.FK_AnglerId
+                //};
 
-                int newId = await _bookingDAO.CreateBookingAsync(booking);
+                //int newId = await _bookingDAO.CreateBookingAsync(booking);
 
                 await _notificationService.SendNotificationAsync("hej");
 
-                return Ok(newId);
+                return Ok(/*newId*/);
             }
             catch (Exception ex)
             {

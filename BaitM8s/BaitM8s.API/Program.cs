@@ -23,12 +23,6 @@ namespace BaitM8s.API
 
             builder.Services.AddControllers();
 
-            //builder.Services.AddScoped<IAnglerDAO>(AnglerDAO => 
-            //new AnglerDAO(configuration["env var"] ?? "Data Source=localhost;Database=BaitM8s;Persist Security Info=True;User ID=sa;Password=@12tf56so;Trust Server Certificate=True"));
-
-            //builder.Services.AddScoped<IBookingDAO>(bookingDAO => 
-            //new BookingDAO(configuration["CONNECTION_STRING"] ?? "Data Source=localhost;Database=BaitM8s;Persist Security Info=True;User ID=sa;Password=@12tf56so;Trust Server Certificate=True"));
-
             builder.Services.AddScoped<IAnglerDAO>(anglerDAO =>
             new AnglerDAO("Data Source = localhost; Database = BaitM8s; Persist Security Info = True; User ID = sa; Password =@12tf56so; Trust Server Certificate = True"));
 

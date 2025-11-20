@@ -36,11 +36,11 @@ namespace BaitM8s.API.Controllers
 
         // GET api/<ValuesController>/5
         [HttpGet("{Id}")]
-        public async Task<ActionResult<Angler>> GetAsync(int Id)
+        public async Task<ActionResult<AnglerDTO>> GetAsync(int Id)
         {
             try
             {
-                var angler = await _anglerDAO.GetAnglerAsync(Id);
+                Angler angler = await _anglerDAO.GetAnglerAsync(Id);
                 if (angler == null)
                 {
                     return NoContent();

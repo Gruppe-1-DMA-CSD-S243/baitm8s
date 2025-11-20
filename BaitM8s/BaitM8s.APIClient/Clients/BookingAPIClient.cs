@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BaitM8s.APIClient.Clients
 {
-    public class BookingAPIClient : IAPIClient<BookingDTO>
+    public class BookingAPIClient : IBookingAPIClient
     {
         private readonly string _apiBaseUri;
         private readonly RestClient _restClient;

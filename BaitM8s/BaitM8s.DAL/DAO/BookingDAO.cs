@@ -79,14 +79,15 @@ namespace BaitM8s.DAL.DAO
                         var newId = await connection.ExecuteScalarAsync<int>(sql,
                             new
                             {
-                                booking.BookingNumber,
-                                booking.Pond,
-                                booking.TimeSlots,
-                                booking.Date,
-                                booking.StartTime,
-                                booking.EndTime,
-                                booking.NumberOfPeople,
-                                booking.FK_AnglerId
+                                //TODO: fix this!
+                                //booking.BookingNumber,
+                                //booking.Pond,
+                                //booking.TimeSlots,
+                                //booking.Date,
+                                //booking.StartTime,
+                                //booking.EndTime,
+                                //booking.NumberOfPeople,
+                                //booking.FK_AnglerId
                             },
                                 transaction);
 

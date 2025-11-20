@@ -15,7 +15,7 @@ namespace BaitM8s.DAL.DAO
 
         public async Task<IEnumerable<Angler>> GetAnglersAsync()
         {
-            var query = "SELECT * FROM Angler";
+            var query = "SELECT * FROM Angler JOIN ZipCode ON Angler.FK_ZipCodeId = ZipCode.Id;";
             using var connection = CreateConnection();
             return await connection.QueryAsync<Angler>(query);
         }
@@ -24,7 +24,7 @@ namespace BaitM8s.DAL.DAO
         {
             var query = @"SELECT Angler.Id, FirstName, LastName, Address, zipcode, Email, PhoneNumber, UserName, Password " +
                 "FROM Angler JOIN ZipCode ON Angler.FK_ZipCodeId = ZipCode.Id " +
-                "WHERE Angler.Id = @Id";
+                "WHERE Angler.Id = @Id;";
                          
             using var connection = CreateConnection();
             return await connection.QuerySingleOrDefaultAsync<Angler>(query, new { Id = id });
