@@ -22,7 +22,9 @@ namespace BaitM8s.DAL.DAO
 
         public async Task<Angler?> GetAnglerAsync(int id)
         {
-            var query = "SELECT Id, FirstName, LastName, Address, Zipcode.zipcode, Email, PhoneNumber, UserName, Password FROM Angler JOIN ZipCode ON Angler.FK_ZipCodeId = ZipCode.Id WHERE Angler.Id = @id";
+            var query = @"SELECT Angler.Id, FirstName, LastName, Address, zipcode, Email, PhoneNumber, UserName, Password " +
+                "FROM Angler JOIN ZipCode ON Angler.FK_ZipCodeId = ZipCode.Id " +
+                "WHERE Angler.Id = @Id";
                          
             using var connection = CreateConnection();
             return await connection.QuerySingleOrDefaultAsync<Angler>(query, new { Id = id });
