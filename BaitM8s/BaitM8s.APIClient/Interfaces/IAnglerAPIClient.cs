@@ -1,4 +1,5 @@
-﻿using BaitM8s.DAL.Model;
+﻿using BaitM8s.DAL.DTO;
+using BaitM8s.DAL.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,7 @@ namespace BaitM8s.APIClient.Interfaces
 {
     public interface IAnglerAPIClient
     {
-        IEnumerable<Angler> GetAllAsync();
-        Angler? GetOneAsync(int id);
-        bool DeleteAsync(int id);
-        int CreateAsync(Angler angler);
+        Task<IEnumerable<AnglerDTO>> GetAllAsync();
+        Task<AnglerDTO?> GetOneAsync(int id);
     }
 }

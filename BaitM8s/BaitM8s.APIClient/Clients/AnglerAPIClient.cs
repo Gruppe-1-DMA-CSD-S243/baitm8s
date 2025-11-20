@@ -1,5 +1,6 @@
 ﻿using BaitM8s.APIClient.Interfaces;
 using BaitM8s.DAL.DTO;
+using BaitM8s.DAL.Model;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BaitM8s.APIClient.Clients
 {
-    public class AnglerAPIClient<AnglerDTO> : IAPIClient<AnglerDTO>
+    public class AnglerAPIClient : IAnglerAPIClient
     {
         private readonly string _apiBaseUri;
         private readonly RestClient _restClient;
@@ -45,16 +46,6 @@ namespace BaitM8s.APIClient.Clients
             }
 
             return response.Data;
-        }
-
-        public async Task<bool> DeleteAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<int> CreateAsync(AnglerDTO angler)
-        {
-            throw new NotImplementedException();
         }
     }
 }

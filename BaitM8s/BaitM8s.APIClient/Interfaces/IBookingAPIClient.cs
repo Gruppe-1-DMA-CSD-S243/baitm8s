@@ -1,4 +1,4 @@
-﻿using BaitM8s.DAL.Model;
+﻿using BaitM8s.DAL.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +9,9 @@ namespace BaitM8s.APIClient.Interfaces
 {
     public interface IBookingAPIClient
     {
-        IEnumerable<Booking> GetAllAsync();
-        Booking? GetOneAsync(int id);
-        bool DeleteAsync(int id);
-        int CreateAsync(Booking booking);
+        Task<IEnumerable<BookingDTO>> GetAllAsync();
+        Task<BookingDTO?> GetOneAsync(int id);
+        Task<bool> DeleteAsync(int id);
+        Task<int> CreateAsync(BookingDTO bookingDTO);
     }
 }
