@@ -3,6 +3,7 @@ using BaitM8s.DAL.DAO;
 using BaitM8s.DAL.Interfaces;
 using BaitM8s.Services.Notifications;
 using BaitM8s.Services.Notifications.Interfaces;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BaitM8s.API
 {
@@ -23,16 +24,16 @@ namespace BaitM8s.API
             builder.Services.AddControllers();
 
             //builder.Services.AddScoped<IAnglerDAO>(AnglerDAO => 
-            //new AnglerDAO(configuration["env var"] ?? "Data Source=localhost;Database=Baitm8s;Persist Security Info=True;User ID=sa;Password=@12tf56so;Trust Server Certificate=True"));
+            //new AnglerDAO(configuration["env var"] ?? "Data Source=localhost;Database=BaitM8s;Persist Security Info=True;User ID=sa;Password=@12tf56so;Trust Server Certificate=True"));
 
             //builder.Services.AddScoped<IBookingDAO>(bookingDAO => 
-            //new BookingDAO(configuration["CONNECTION_STRING"] ?? "Data Source=localhost;Database=Baitm8s;Persist Security Info=True;User ID=sa;Password=@12tf56so;Trust Server Certificate=True"));
+            //new BookingDAO(configuration["CONNECTION_STRING"] ?? "Data Source=localhost;Database=BaitM8s;Persist Security Info=True;User ID=sa;Password=@12tf56so;Trust Server Certificate=True"));
 
             builder.Services.AddScoped<IAnglerDAO>(anglerDAO =>
-            new InMemoryAnglerDAO("connectionString"));
+            new AnglerDAO("Data Source = localhost; Database = BaitM8s; Persist Security Info = True; User ID = sa; Password =@12tf56so; Trust Server Certificate = True"));
 
             builder.Services.AddScoped<IBookingDAO>(bookingDAO =>
-            new InMemoryBookingDAO("connectionString"));
+            new BookingDAO("Data Source = localhost; Database = BaitM8s; Persist Security Info = True; User ID = sa; Password =@12tf56so; Trust Server Certificate = True"));
 
             builder.Services.AddScoped<INotificationService>(service =>
             new TelegramNotificationService("https://api.telegram.org", "8230947150:AAHn8ZkyVU4DLGMvtGY06u0ZDz1lnVtHpKY", "-1003297586522"));
