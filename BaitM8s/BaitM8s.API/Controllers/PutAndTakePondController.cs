@@ -7,13 +7,13 @@ namespace BaitM8s.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PutAndTakePondsController : ControllerBase
+    public class PutAndTakePondController : ControllerBase
     {
-        private readonly IPutAndTakePondDAO _putAndTakePondDAO;
+        private readonly IPutAndTakePondDao _putAndTakePondDao;
 
-        public PutAndTakePondsController(IPutAndTakePondDAO dataAccessLayer)
+        public PutAndTakePondController(IPutAndTakePondDao dataAccessLayer)
         {
-            _putAndTakePondDAO = dataAccessLayer;
+            _putAndTakePondDao = dataAccessLayer;
         }
 
         [HttpGet]
@@ -21,7 +21,7 @@ namespace BaitM8s.API.Controllers
         {
             try
             {
-                var ponds = await _putAndTakePondDAO.GetAllPutAndTakePondsAsync();
+                var ponds = await _putAndTakePondDao.GetAllPutAndTakePondsAsync();
                 return Ok(ponds);
             }
             catch (Exception ex)
@@ -37,7 +37,7 @@ namespace BaitM8s.API.Controllers
         {
             try
             {
-                var pond = await _putAndTakePondDAO.GetPutAndTakePondByIdAsync(id);
+                var pond = await _putAndTakePondDao.GetPutAndTakePondByIdAsync(id);
                 if (pond == null)
                 {
                     return NoContent();
@@ -57,7 +57,7 @@ namespace BaitM8s.API.Controllers
         {
             try
             {
-                var createdPondId = await _putAndTakePondDAO.CreatePutAndTakePondAsync(pond);
+                var createdPondId = await _putAndTakePondDao.CreatePutAndTakePondAsync(pond);
                 return CreatedAtAction(nameof(Get), new { id = createdPondId }, createdPondId);
             }
             catch (Exception ex)
@@ -70,11 +70,11 @@ namespace BaitM8s.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>> Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             try
             {
-                await _putAndTakePondDAO.DeletePutAndTakePondAsync(id);
+                await _putAndTakePondDao.DeletePutAndTakePondAsync(id);
                 return NoContent();
             }
             catch (Exception ex)
@@ -86,15 +86,15 @@ namespace BaitM8s.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<bool>> Put(int id, [FromBody] PutAndTakePond pond)
+        public async Task<ActionResult> Put(int id, [FromBody] PutAndTakePond pond)
         {
             try
             {
-                if (id != pond.Id)
+                if (id != pond.FishingSpotNumber)
                 {
                     return BadRequest("Pond ID mismatch.");
                 }
-                await _putAndTakePondDAO.UpdatePutAndTakePondAsync(pond);
+                await _putAndTakePondDao.UpdatePutAndTakePondAsync(pond);
                 return NoContent();
             }
             catch (Exception ex)

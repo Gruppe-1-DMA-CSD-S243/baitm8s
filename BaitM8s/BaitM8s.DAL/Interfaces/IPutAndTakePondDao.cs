@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace BaitM8s.DAL.Interfaces
 {
-    public interface IPutAndTakePondDAO
+    public interface IPutAndTakePondDao
     {
         Task<IEnumerable<PutAndTakePond>> GetAllPutAndTakePondsAsync();
         Task<PutAndTakePond> GetPutAndTakePondByIdAsync(int pondNumber);
         Task<int> CreatePutAndTakePondAsync(PutAndTakePond pond);
-        Task<bool> UpdatePutAndTakePondAsync(PutAndTakePond pond);
-        Task<bool> DeletePutAndTakePondAsync(int pondNumber);
+        Task UpdatePutAndTakePondAsync(PutAndTakePond pond);
+        Task DeletePutAndTakePondAsync(int pondNumber);
     }
 }

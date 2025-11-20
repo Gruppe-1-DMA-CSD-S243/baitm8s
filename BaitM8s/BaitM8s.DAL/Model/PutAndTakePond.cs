@@ -18,8 +18,10 @@ namespace BaitM8s.DAL.Model
         public bool HandicapFriendly { get; set; }
         public bool FamilyFriendly { get; set; }
         public string LinkToWebsite { get; set; }
+        public IEnumerable<TimeSlot> ?TimeSlots { get; set; }
+        public int FK_FishingSpotId { get; }
 
-        public PutAndTakePond(int id, string fishingSpotNumber, string name, Coordinate location, List<string> fishSpecies, string spotType, bool fishingLicenseRequired, string address, string zipCode, string email, string phoneNumber, int sizeInSquareMeters, bool toilet, bool cleanTable, bool handicapFriendly, bool familyFriendly, string linkToWebsite, int fk_FishingSpotId) : base(id, fishingSpotNumber, name, location, fishSpecies, spotType, fishingLicenseRequired)
+        public PutAndTakePond(int fishingSpotNumber, string name, string coordinates, string fishSpecies, string spotType, bool fishingLicenseRequired, string address, string zipCode, string email, string phoneNumber, int sizeInSquareMeters, bool toilet, bool cleanTable, bool handicapFriendly, bool familyFriendly, string linkToWebsite, int fk_FishingSpotId) : base(fishingSpotNumber, name, coordinates, fishSpecies, spotType, fishingLicenseRequired)
         {
             Address = address;
             ZipCode = zipCode;
@@ -31,6 +33,7 @@ namespace BaitM8s.DAL.Model
             HandicapFriendly = handicapFriendly;
             FamilyFriendly = familyFriendly;
             LinkToWebsite = linkToWebsite;
+            FK_FishingSpotId = fk_FishingSpotId;
         }
 
         public PutAndTakePond()
