@@ -37,9 +37,6 @@ namespace BaitM8s.API
             builder.Services.AddScoped<INotificationService>(service =>
             new TelegramNotificationService("https://api.telegram.org", "8230947150:AAHn8ZkyVU4DLGMvtGY06u0ZDz1lnVtHpKY", "-1003297586522"));
 
-            builder.Services.AddScoped<ITimeSlotDAO>(timeSlotDAO =>
-            new InMemoryTimeSlotDAO("connectionString"));
-
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

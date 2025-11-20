@@ -22,9 +22,6 @@ namespace BaitM8s.MVC
             builder.Services.AddScoped<IAPIClient<BookingDTO>>(apiClient => 
             new BookingAPIClient(configuration["API_BASE_URI"] ?? "https://localhost:8888/api"));
 
-            builder.Services.AddScoped<IAPIClient<TimeSlotDTO>>(apiClient =>
-            new TimeSlotAPIClient<TimeSlotDTO>(configuration["API_BASE_URI"] ?? "https://localhost:8888/api"));
-
             builder.Services.AddScoped<IAPIClient<AnglerDTO>>(angler => 
             new AnglerAPIClient<AnglerDTO>("https://localhost:8888/api"));
 
