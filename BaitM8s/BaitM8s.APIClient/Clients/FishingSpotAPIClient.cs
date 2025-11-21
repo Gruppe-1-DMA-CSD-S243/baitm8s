@@ -10,7 +10,7 @@ namespace BaitM8s.APIClient.Clients
 {
     public class FishingSpotAPIClient : IFishingSpotDAO
     {
-        public async Task<int> CreateFishingSpotAsync(FishingSpot fishingSpot)
+        public async Task<int> CreateFishingSpotAsync(FishingSpot fishingSpot, int pondOwnerId)
         {
             throw new NotImplementedException();
         }
@@ -41,6 +41,11 @@ namespace BaitM8s.APIClient.Clients
         }
 
         public async Task<FishingSpot> RemoveOwnershipOnFishingSpotAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> UpdateFishingSpotAsync(int id, FishingSpot fishingSpot)
         {
             throw new NotImplementedException();
         }
