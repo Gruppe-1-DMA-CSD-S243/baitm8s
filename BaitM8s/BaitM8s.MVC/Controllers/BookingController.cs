@@ -37,11 +37,11 @@ namespace BaitM8s.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<BookingDTO>> Delete(int id)
+        public async Task<ActionResult<BookingDTO>> Delete(int bookingId)
         {
             try
             {
-                return View(await _bookingApiClient.GetOneAsync(id));
+                return View(await _bookingApiClient.GetOneAsync(bookingId));
             }
             catch (Exception ex)
             {
@@ -50,18 +50,18 @@ namespace BaitM8s.MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(int id, BookingDTO booking)
+        public async Task<IActionResult> Delete(BookingDTO booking, int bookingId)
         {
             try
             {
-                bool deleted = await _bookingApiClient.DeleteAsync(id);
+                bool deleted = await _bookingApiClient.DeleteAsync(bookingId);
 
                 if (deleted)
                 {
                     return RedirectToAction("Index", "Booking");
                 }
 
-                return RedirectToAction("Delete", new { id = id });
+                return RedirectToAction("Delete", new { id = bookingId });
             }
             catch (Exception ex)
             {
@@ -98,7 +98,7 @@ namespace BaitM8s.MVC.Controllers
         {
             if (!bookingId.HasValue)
             {
-                //TODO: Return 404 view
+
                 return View();
             }
 
