@@ -40,7 +40,7 @@ public class TestBookingDAO
 
         // Act
         Booking? foundBooking = await DAO.GetBookingAsync(id);
-
+        
         // Assert
         Assert.NotNull(foundBooking);
         Assert.True(foundBooking.Id == id);
@@ -61,18 +61,30 @@ public class TestBookingDAO
         Assert.True(isDeleted);
     }
 
-    //[Test]
-    //public async Task TestCreateBookingAsync()
-    //{
-    //    Arrange
-    //   IBookingDAO DAO = new BookingDAO(_testConnectionString);
+    [Test]
+    public async Task TestCreateBookingAsync()
+    {
+        //Arrange
+        IBookingDAO DAO = new BookingDAO(_testConnectionString);
+        IEnumerable<Booking> allBookings = await DAO.GetAllBookingsAsync();
+        int highestId = allBookings.Max(booking => booking.Id);
 
-    //    Act
-    //    IEnumerable<Booking> allBookings = await DAO.GetAllBookingsAsync();
+        //Act
+        Booking newBooking = new Booking
+        {
+            NumberOfPeople = 2,
+            Day = 21,
+            Month = 11,
+            Year = 2025,
+            WeekNumber = 47,
+            FK_AnglerId = 1, //TODO: Kig lige på de her id's
+            FK_FishingSpotId = 1 //TODO: Kig lige på de her id's
+        };
 
-    //    Assert
-    //    Assert.NotNull(allBookings);
-    //    Assert.True(allBookings.Count() > 0);
-    //}
+        int newId = await DAO.CreateBookingAsync(newBooking);
+        
+        //Assert
+        Assert.That(newId > highestId);
+    }
 
 }
