@@ -16,28 +16,25 @@
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BookingNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pond)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TimeSlots)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndTime)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.NumberOfPeople)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Day)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Month)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WeekNumber)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.FK_AnglerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FK_FishingSpotId)
             </th>
             <th></th>
         </tr>
@@ -49,28 +46,25 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BookingNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pond)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeSlots)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndTime)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.NumberOfPeople)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Day)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Month)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WeekNumber)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.FK_AnglerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FK_FishingSpotId)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
