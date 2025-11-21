@@ -14,7 +14,6 @@ namespace BaitM8s.DAL.DTO
         public int Day { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }
-        public int WeekNumber { get; set; }
         public int FK_AnglerId { get; set; }
         public int FK_FishingSpotId { get; set; }
     }
