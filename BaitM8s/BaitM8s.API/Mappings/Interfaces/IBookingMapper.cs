@@ -5,6 +5,6 @@ namespace BaitM8s.API.Mappings.Interfaces
 {
     public interface IBookingMapper
     {
-        public Task<Booking> ToModel(BookingDTO dto);
+        public Booking ToModel(BookingDTO dto);
     }
 }

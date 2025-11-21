@@ -10,8 +10,8 @@ namespace BaitM8s.DAL.Model
     {
         public int Id { get; set; }
         public int NumberOfPeople { get; set; }
-        public string Day { get; set; }
-        public string Month { get; set; }
+        public int Day { get; set; }
+        public int Month { get; set; }
         public int Year { get; set; }
         public int WeekNumber { get; set; }
         public int FK_AnglerId { get; set; }

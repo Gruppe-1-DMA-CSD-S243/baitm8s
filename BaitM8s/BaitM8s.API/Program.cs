@@ -1,4 +1,6 @@
 
+using BaitM8s.API.Mappings;
+using BaitM8s.API.Mappings.Interfaces;
 using BaitM8s.DAL.DAO;
 using BaitM8s.DAL.Interfaces;
 using BaitM8s.Services.Notifications;
@@ -29,8 +31,11 @@ namespace BaitM8s.API
             builder.Services.AddScoped<IBookingDAO>(bookingDAO =>
             new BookingDAO("Data Source = localhost; Database = BaitM8s; Persist Security Info = True; User ID = sa; Password =@12tf56so; Trust Server Certificate = True"));
 
-            builder.Services.AddScoped<INotificationService>(service =>
+            builder.Services.AddScoped<INotificationService>(notificationService =>
             new TelegramNotificationService("https://api.telegram.org", "8230947150:AAHn8ZkyVU4DLGMvtGY06u0ZDz1lnVtHpKY", "-1003297586522"));
+
+            builder.Services.AddScoped<IBookingMapper>(bookingMapper =>
+            new BookingMapper());
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
