@@ -25,8 +25,9 @@
 
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'timeGridWeek',
+                initialView: 'dayGridWeek',
                 timeZone: 'Europe/Copenhagen',
+                firstDay: 1,
                 locale: 'da',
                 headerToolbar: {
                     left: 'prev,next today',
@@ -42,11 +43,10 @@
                 }],
                 events: events,
                 eventClick: function(info) {
-                    alert(
-                        'Du klikkede på: ' + info.event.title +
-                        ' Id: ' + info.event.id +
-                        ' AnglerId' + info.event.extendedProps.anglerId
-                    );
+                    // info.jsEvent.preventDefault();
+                    var bookingId = info.event.id;
+                    window.location.replace("Details?bookingId="+bookingId);
+                              
                 },
                 dateClick: function(info) {
                     calendar.changeView('timeGridWeek', info.date);

@@ -1,6 +1,7 @@
 
 using BaitM8s.APIClient.Interfaces;
 using BaitM8s.DAL.DTO;
+using BaitM8s.DAL.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BaitM8s.MVC.Controllers
@@ -18,14 +19,17 @@ namespace BaitM8s.MVC.Controllers
         {
             var bookings = await _bookingApiClient.GetAllAsync();
 
-            var calendarEvents = bookings.Select(booking => new
+            var calendarEvents = bookings.Select(booking =>
             {
-                //title = $"Booking #{booking.BookingNumber} ({booking.Pond})",
-                //start = $"{booking.Date:yyyy-MM-dd}T{booking.StartTime}",
-                //end = $"{booking.Date:yyyy-MM-dd}T{booking.EndTime}",
-                //id = booking.Id,
-
-                //anglerId = booking.FK_AnglerId
+                var date = DateTime.Parse($"{booking.Day}-{booking.Month}-{booking.Year}");
+                var enddate = date.AddDays(1);
+                return new
+                {
+                    id = booking.Id,
+                    title = booking.Id,
+                    start = date.ToString("yyyy-MM-dd"),
+                    end = enddate.ToString("yyyy-MM-dd")
+                };
             });
 
             ViewBag.BookingJson = System.Text.Json.JsonSerializer.Serialize(calendarEvents);
@@ -90,14 +94,15 @@ namespace BaitM8s.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int? Id)
+        public async Task<IActionResult> Details(int? bookingId)
         {
-            if (!Id.HasValue)
+            if (!bookingId.HasValue)
             {
+                //TODO: Return 404 view
                 return View();
             }
 
-            var booking = await _bookingApiClient.GetOneAsync(Id.Value);
+            var booking = await _bookingApiClient.GetOneAsync(bookingId.Value);
             if (booking == null)
             {
                 return NotFound();
