@@ -1,6 +1,7 @@
 ﻿using BaitM8s.API.Mappings.Interfaces;
 using BaitM8s.DAL.DTO;
 using BaitM8s.DAL.Model;
+using System.Globalization;
 
 namespace BaitM8s.API.Mappings
 {
@@ -8,6 +9,9 @@ namespace BaitM8s.API.Mappings
     {
         public Booking ToModel(BookingDTO dto)
         {
+            CultureInfo cultureInfo = CultureInfo.CurrentCulture;
+            DateTime date = new DateTime(dto.Year, dto.Month, dto.Day);
+
             Booking booking = new Booking
             {
                 Id = dto.Id,
@@ -15,7 +19,9 @@ namespace BaitM8s.API.Mappings
                 Day = dto.Day,
                 Month = dto.Month,
                 Year = dto.Year,
-                WeekNumber = dto.WeekNumber,
+                WeekNumber = cultureInfo.Calendar.GetWeekOfYear(date, 
+                    cultureInfo.DateTimeFormat.CalendarWeekRule, 
+                    cultureInfo.DateTimeFormat.FirstDayOfWeek),
                 FK_AnglerId = dto.FK_AnglerId,
                 FK_FishingSpotId = dto.FK_FishingSpotId
             };
