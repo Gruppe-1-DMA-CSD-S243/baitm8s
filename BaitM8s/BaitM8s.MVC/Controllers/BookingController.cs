@@ -50,7 +50,7 @@ namespace BaitM8s.MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(BookingDTO booking, int bookingId)
+        public async Task<IActionResult> Delete(int bookingId, BookingDTO booking)
         {
             try
             {
