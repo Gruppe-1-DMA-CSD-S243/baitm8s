@@ -1,5 +1,4 @@
-﻿using BaitM8s.API.Mappings.Interfaces;
-using BaitM8s.DAL.DTO;
+﻿using BaitM8s.DAL.DTO;
 using BaitM8s.DAL.Interfaces;
 using BaitM8s.DAL.Model;
 using BaitM8s.Services.Notifications.Interfaces;
@@ -14,12 +13,10 @@ namespace BaitM8s.API.Controllers
     {
         private readonly IBookingDAO _bookingDAO;
         private readonly INotificationService _notificationService;
-        private readonly IBookingMapper _bookingMapper;
-        public BookingsController(IBookingDAO bookingDAO, INotificationService notificationService, IBookingMapper bookingMapper)
+        public BookingsController(IBookingDAO bookingDAO, INotificationService notificationService)
         {
             _bookingDAO = bookingDAO;
             _notificationService = notificationService;
-            _bookingMapper = bookingMapper;
         }
 
         [HttpGet]
@@ -75,7 +72,19 @@ namespace BaitM8s.API.Controllers
 
             try
             {
-                Booking booking = _bookingMapper.ToModel(dto);
+                //TODO: Lav en hjælpemetode!!!
+                Booking booking = new Booking
+                {
+                    Month = dto.Month,
+                    Day = dto.Day,
+                    Year = dto.Year,
+                    WeekNumber = dto.WeekNumber,
+                    //Date = dto.Date,
+                    FK_FishingSpotId = dto.FK_FishingSpotId,
+                    EndTime = dto.EndTime,
+                    NumberOfPeople = dto.NumberOfPeople,
+                    FK_AnglerId = dto.FK_AnglerId
+                };
 
                 int newId = await _bookingDAO.CreateBookingAsync(booking);
 

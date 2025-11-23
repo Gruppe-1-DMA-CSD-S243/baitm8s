@@ -1,31 +1,31 @@
-﻿@model BaitM8s.DAL.Model.Booking
+﻿@model BaitM8s.DAL.DTO.BookingDTO
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "BookAvailableTime";
 }
 
-<h1>Create</h1>
+<h1>BookAvailableTime</h1>
 
-<h4>Booking</h4>
+<h4>BookingDTO</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="BookAvailableTime">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Month" class="control-label"></label>
+                <input asp-for="Month" class="form-control" />
+                <span asp-validation-for="Month" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="BookingNumber" class="control-label"></label>
                 <input asp-for="BookingNumber" class="form-control" />
                 <span asp-validation-for="BookingNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Pond" class="control-label"></label>
-                <input asp-for="Pond" class="form-control" />
-                <span asp-validation-for="Pond" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TimeSlots" class="control-label"></label>
-                <input asp-for="TimeSlots" class="form-control" />
-                <span asp-validation-for="TimeSlots" class="text-danger"></span>
+                <label asp-for="Year" class="control-label"></label>
+                <input asp-for="Year" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Day" class="control-label"></label>
@@ -33,14 +33,14 @@
                 <span asp-validation-for="Day" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StartTime" class="control-label"></label>
-                <input asp-for="StartTime" class="form-control" />
-                <span asp-validation-for="StartTime" class="text-danger"></span>
+                <label asp-for="WeekNumber" class="control-label"></label>
+                <input asp-for="WeekNumber" class="form-control" />
+                <span asp-validation-for="WeekNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EndTime" class="control-label"></label>
-                <input asp-for="EndTime" class="form-control" />
-                <span asp-validation-for="EndTime" class="text-danger"></span>
+                <label asp-for="FK_FishingSpotId" class="control-label"></label>
+                <input asp-for="FK_FishingSpotId" class="form-control" />
+                <span asp-validation-for="FK_FishingSpotId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NumberOfPeople" class="control-label"></label>
@@ -59,10 +59,8 @@
     </div>
 </div>
 
-
-
 <div>
-    <a asp-action="View">Back to List</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

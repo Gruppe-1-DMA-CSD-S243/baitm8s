@@ -18,5 +18,7 @@ namespace BaitM8s.DAL.DTO
         public List<string>? FishSpecies { get; set; }
         public bool HandicapFriendly { get; set; }
         public bool IsAwaitingApproval { get; set; }
+        public int StartAvailableHours { get; set; }
+        public int EndAvailableHours { get; set; }
     }
 }
