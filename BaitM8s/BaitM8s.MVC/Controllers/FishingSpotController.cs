@@ -18,8 +18,6 @@ namespace BaitM8s.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> OwnerOverview(int id)
         {
-            //TODO: Remove hardcoded id, this is just temp until angler login is made
-            id = 1;
             var fishingSpots = await _fishingSpotApiClient.GetFishingSpotsByPondOwnerAsync(id);
             return View(fishingSpots);
         }
@@ -31,39 +29,39 @@ namespace BaitM8s.MVC.Controllers
             return View(fishingSpots);
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> OwnerDetails()
-        //{
-        //    var fishingSpots = await _fishingSpotApiClient.GetAllFishingSpotsAsync();
-        //    return View(fishingSpots);
-        //}
+        [HttpGet]
+        public async Task<IActionResult> OwnerDetails()
+        {
+            var fishingSpots = await _fishingSpotApiClient.GetAllFishingSpotsAsync();
+            return View(fishingSpots);
+        }
 
-        //[HttpGet]
-        //public async Task<IActionResult> RegisterOwnership()
-        //{
-        //    var fishingSpots = await _fishingSpotApiClient.GetAllFishingSpotsAsync();
-        //    return View(fishingSpots);
-        //}
+        [HttpGet]
+        public async Task<IActionResult> RegisterOwnership()
+        {
+            var fishingSpots = await _fishingSpotApiClient.GetAllFishingSpotsAsync();
+            return View(fishingSpots);
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> RegisterOwnership(int id)
-        //{
-        //    var fishingSpots = await _fishingSpotApiClient.GetAllFishingSpotsAsync();
-        //    return View(fishingSpots);
-        //}
+        [HttpPost]
+        public async Task<IActionResult> RegisterOwnership(int id)
+        {
+            var fishingSpots = await _fishingSpotApiClient.GetAllFishingSpotsAsync();
+            return View(fishingSpots);
+        }
 
-        //[HttpGet]
-        //public async Task<IActionResult> RemoveOwnership()
-        //{
-        //    var fishingSpots = await _fishingSpotApiClient.GetAllFishingSpotsAsync();
-        //    return View(fishingSpots);
-        //}
+        [HttpGet]
+        public async Task<IActionResult> RemoveOwnership()
+        {
+            var fishingSpots = await _fishingSpotApiClient.GetAllFishingSpotsAsync();
+            return View(fishingSpots);
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> RemoveOwnership(int id)
-        //{
-        //    var fishingSpots = await _fishingSpotApiClient.GetAllFishingSpotsAsync();
-        //    return View(fishingSpots);
-        //}
+        [HttpPost]
+        public async Task<IActionResult> RemoveOwnership(int id)
+        {
+            var fishingSpots = await _fishingSpotApiClient.GetAllFishingSpotsAsync();
+            return View(fishingSpots);
+        }
     }
 }
