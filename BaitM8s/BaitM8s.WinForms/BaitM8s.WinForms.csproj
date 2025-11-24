@@ -8,4 +8,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BaitM8s.APIClient\BaitM8s.APIClient.csproj" />
+  </ItemGroup>
+
 </Project>

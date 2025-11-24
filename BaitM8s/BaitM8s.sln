@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaitM8s.Services", "BaitM8s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainTest", "MainTest\MainTest.csproj", "{0B17603C-B0AD-4E56-BF98-C6254E4644CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaitM8s.WinForms", "BaitM8s.WinForms\BaitM8s.WinForms.csproj", "{0C3C5EC5-1D9F-8CCC-DE18-20F02458D93C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{0B17603C-B0AD-4E56-BF98-C6254E4644CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B17603C-B0AD-4E56-BF98-C6254E4644CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B17603C-B0AD-4E56-BF98-C6254E4644CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C3C5EC5-1D9F-8CCC-DE18-20F02458D93C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C3C5EC5-1D9F-8CCC-DE18-20F02458D93C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C3C5EC5-1D9F-8CCC-DE18-20F02458D93C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C3C5EC5-1D9F-8CCC-DE18-20F02458D93C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

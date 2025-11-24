@@ -36,7 +36,7 @@ namespace BaitM8s.DAL.Model
 
         public override string ToString()
         {
-            return $"FishingSpot(Id={Id}, Name={Name}, Address={Address}, ZipCode={ZipCode}, Longitude={Longitude}, Latitude={Latitude}, Capacity={Capacity}, HandicapFriendly={HandicapFriendly}, FishSpecies=[{string.Join(", ", FishSpecies)}])";
+            return $"FishingSpot(Id={Id}, Name={Name}";
         }
     }
 }

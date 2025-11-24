@@ -11,13 +11,13 @@ namespace BaitM8s.APIClient.Clients
 {
     public class FishingSpotAPIClient : IFishingSpotDAO
     {
-        private readonly RestClient _restClient;
         private readonly string _apiBaseUri;
+        private readonly RestClient _restClient;
 
-        public FishingSpotAPIClient(RestClient restClient, string apiBaseUri)
+        public FishingSpotAPIClient(string apiBaseUri)
         {
-            _restClient = restClient;
             _apiBaseUri = apiBaseUri;
+            _restClient = new RestClient(_apiBaseUri);
         }
 
         public async Task<int> CreateFishingSpotAsync(FishingSpot fishingSpot, int pondOwnerId)

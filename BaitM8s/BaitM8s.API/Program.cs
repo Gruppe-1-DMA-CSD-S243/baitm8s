@@ -39,6 +39,8 @@ namespace BaitM8s.API
 
             builder.Services.AddScoped<ITimeSlotDAO>(timeSlotDAO =>
             new InMemoryTimeSlotDAO("connectionString"));
+            builder.Services.AddScoped<IFishingSpotDAO>(fishingSpotDAO =>
+            new FishingSpotDAO("Data Source=localhost;Database=BaitM8sTest;Persist Security Info=True;User ID=sa;Password=@12tf56so;Encrypt=True;Trust Server Certificate=True"));
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
