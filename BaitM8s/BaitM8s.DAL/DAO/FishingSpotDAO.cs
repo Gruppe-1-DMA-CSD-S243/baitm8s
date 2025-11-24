@@ -60,9 +60,7 @@ namespace BaitM8s.DAL.DAO
         {
             var query = @"UPDATE FishingSpot
                       SET Name = @Name,
-                          Capacity = @Capacity,
-                          StartAvailableHours = @StartAvailableHours,
-                          EndAvailableHours = @EndAvailableHours
+                          Capacity = @Capacity
                       WHERE Id = @Id;";
 
             using (var connection = CreateConnection())
@@ -78,9 +76,7 @@ namespace BaitM8s.DAL.DAO
                             {
                                 Name = fishingSpot.Name,
                                 Capacity = fishingSpot.Capacity,
-                                Id = fishingSpot.Id,
-                                StartAvailableHours = fishingSpot.StartAvailableHours,
-                                EndAvailableHours = fishingSpot.EndAvailableHours
+                                Id = fishingSpot.Id
                             },
                             transaction);
 

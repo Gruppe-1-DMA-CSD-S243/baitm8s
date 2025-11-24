@@ -74,6 +74,15 @@ namespace BaitM8s.MVC.Controllers
             }
 
             return RedirectToAction("Owner/Manage", new { fishingSpot.Id });
+
+            //try
+            //{
+                
+            //}
+            //catch (Exception ex)
+            //{
+            //    return RedirectToAction("Error");
+            //}
         }
 
         //[HttpGet]
