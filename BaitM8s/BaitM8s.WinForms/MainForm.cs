@@ -11,7 +11,6 @@ namespace BaitM8s.WinForms
         public MainForm()
         {
             InitializeComponent();
-            LoadFishingSpotsAsync();
         }
 
         private async void MainForm_Load(object sender, EventArgs e) => await LoadFishingSpotsAsync();
@@ -19,7 +18,7 @@ namespace BaitM8s.WinForms
         async void btnCreate_Click(object sender, EventArgs e) => await CreateFishingSpotAsync();
         async void btnUpdate_Click(object sender, EventArgs e) => await UpdateFishingSpotAsync();
         async void btnDelete_Click(object sender, EventArgs e) => await DeleteFishingSpotAsync();
-        
+
         public async Task LoadFishingSpotsAsync()
         {
             lstFishingSpots.Items.Clear();
@@ -35,7 +34,7 @@ namespace BaitM8s.WinForms
             bool hasSelected = lstFishingSpots.SelectedItem != null;
             btnUpdate.Enabled = hasSelected;
             btnDelete.Enabled = hasSelected;
-            if(!hasSelected)
+            if (!hasSelected)
             {
                 ClearFields();
                 return;
@@ -150,6 +149,6 @@ namespace BaitM8s.WinForms
                 MessageBox.Show($"Error deleting Fishing Spot: {ex.Message}");
             }
         }
-        
+
     }
 }

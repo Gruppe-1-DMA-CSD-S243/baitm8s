@@ -46,7 +46,7 @@ namespace BaitM8s.APIClient.Clients
 
         public async Task<IEnumerable<FishingSpot>> GetAllFishingSpotsAsync()
         {
-            var request = new RestRequest("FishingSpot", Method.Get);
+            var request = new RestRequest("FishingSpots", Method.Get);
             var response = await _restClient.ExecuteAsync<IEnumerable<FishingSpot>>(request);
             if (response == null)
             {
@@ -64,7 +64,7 @@ namespace BaitM8s.APIClient.Clients
 
         public async Task<FishingSpot?> GetFishingSpotAsync(int id)
         {
-            var request = new RestRequest($"FishingSpot/{id}", Method.Get);
+            var request = new RestRequest($"FishingSpots/{id}", Method.Get);
             var response = await _restClient.ExecuteAsync<FishingSpot>(request);
             if (!response.IsSuccessful)
             {

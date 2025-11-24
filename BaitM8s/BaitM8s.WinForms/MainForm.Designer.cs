@@ -57,25 +57,30 @@
             // lstFishingSpots
             // 
             lstFishingSpots.FormattingEnabled = true;
-            lstFishingSpots.Location = new Point(12, 74);
+            lstFishingSpots.Location = new Point(7, 46);
+            lstFishingSpots.Margin = new Padding(2, 2, 2, 2);
             lstFishingSpots.Name = "lstFishingSpots";
-            lstFishingSpots.Size = new Size(462, 292);
+            lstFishingSpots.Size = new Size(286, 184);
             lstFishingSpots.TabIndex = 0;
             lstFishingSpots.SelectedIndexChanged += lstFishingSpots_SelectedIndexChanged;
             // 
             // lstPendingFishingSpots
             // 
             lstPendingFishingSpots.FormattingEnabled = true;
-            lstPendingFishingSpots.Location = new Point(12, 445);
+            lstPendingFishingSpots.Location = new Point(7, 278);
+            lstPendingFishingSpots.Margin = new Padding(2, 2, 2, 2);
             lstPendingFishingSpots.Name = "lstPendingFishingSpots";
-            lstPendingFishingSpots.Size = new Size(462, 324);
+            lstPendingFishingSpots.Size = new Size(286, 204);
             lstPendingFishingSpots.TabIndex = 1;
+            //TODO: Kig lige på det her
+            //lstPendingFishingSpots.SelectedIndexChanged = lstFishingSpots_SelectedIndexChanged;
             // 
             // btnCreate
             // 
-            btnCreate.Location = new Point(12, 801);
+            btnCreate.Location = new Point(7, 501);
+            btnCreate.Margin = new Padding(2, 2, 2, 2);
             btnCreate.Name = "btnCreate";
-            btnCreate.Size = new Size(150, 46);
+            btnCreate.Size = new Size(92, 29);
             btnCreate.TabIndex = 2;
             btnCreate.Text = "Create";
             btnCreate.UseVisualStyleBackColor = true;
@@ -83,9 +88,10 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(168, 801);
+            btnUpdate.Location = new Point(103, 501);
+            btnUpdate.Margin = new Padding(2, 2, 2, 2);
             btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(150, 46);
+            btnUpdate.Size = new Size(92, 29);
             btnUpdate.TabIndex = 3;
             btnUpdate.Text = "Update";
             btnUpdate.UseVisualStyleBackColor = true;
@@ -93,9 +99,10 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(324, 801);
+            btnDelete.Location = new Point(199, 501);
+            btnDelete.Margin = new Padding(2, 2, 2, 2);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(150, 46);
+            btnDelete.Size = new Size(92, 29);
             btnDelete.TabIndex = 4;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = true;
@@ -104,83 +111,94 @@
             // lblFishingSpots
             // 
             lblFishingSpots.AutoSize = true;
-            lblFishingSpots.Location = new Point(12, 39);
+            lblFishingSpots.Location = new Point(7, 24);
+            lblFishingSpots.Margin = new Padding(2, 0, 2, 0);
             lblFishingSpots.Name = "lblFishingSpots";
-            lblFishingSpots.Size = new Size(227, 32);
+            lblFishingSpots.Size = new Size(140, 20);
             lblFishingSpots.TabIndex = 5;
             lblFishingSpots.Text = "Saved Fishing Spots";
             // 
             // lblPendingFishingSpots
             // 
             lblPendingFishingSpots.AutoSize = true;
-            lblPendingFishingSpots.Location = new Point(12, 410);
+            lblPendingFishingSpots.Location = new Point(7, 256);
+            lblPendingFishingSpots.Margin = new Padding(2, 0, 2, 0);
             lblPendingFishingSpots.Name = "lblPendingFishingSpots";
-            lblPendingFishingSpots.Size = new Size(250, 32);
+            lblPendingFishingSpots.Size = new Size(153, 20);
             lblPendingFishingSpots.TabIndex = 6;
             lblPendingFishingSpots.Text = "Pending Fishing Spots";
             // 
             // txtId
             // 
-            txtId.Location = new Point(1037, 74);
+            txtId.Location = new Point(638, 46);
+            txtId.Margin = new Padding(2, 2, 2, 2);
             txtId.Name = "txtId";
-            txtId.Size = new Size(341, 39);
+            txtId.Size = new Size(211, 27);
             txtId.TabIndex = 7;
             // 
             // txtName
             // 
-            txtName.Location = new Point(1037, 119);
+            txtName.Location = new Point(638, 74);
+            txtName.Margin = new Padding(2, 2, 2, 2);
             txtName.Name = "txtName";
-            txtName.Size = new Size(341, 39);
+            txtName.Size = new Size(211, 27);
             txtName.TabIndex = 8;
             // 
             // txtAddress
             // 
-            txtAddress.Location = new Point(1037, 164);
+            txtAddress.Location = new Point(638, 102);
+            txtAddress.Margin = new Padding(2, 2, 2, 2);
             txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(341, 39);
+            txtAddress.Size = new Size(211, 27);
             txtAddress.TabIndex = 9;
             // 
             // txtZipCode
             // 
-            txtZipCode.Location = new Point(1037, 209);
+            txtZipCode.Location = new Point(638, 131);
+            txtZipCode.Margin = new Padding(2, 2, 2, 2);
             txtZipCode.Name = "txtZipCode";
-            txtZipCode.Size = new Size(341, 39);
+            txtZipCode.Size = new Size(211, 27);
             txtZipCode.TabIndex = 10;
             // 
             // txtLongitude
             // 
-            txtLongitude.Location = new Point(1037, 254);
+            txtLongitude.Location = new Point(638, 159);
+            txtLongitude.Margin = new Padding(2, 2, 2, 2);
             txtLongitude.Name = "txtLongitude";
-            txtLongitude.Size = new Size(341, 39);
+            txtLongitude.Size = new Size(211, 27);
             txtLongitude.TabIndex = 11;
             // 
             // txtLatitude
             // 
-            txtLatitude.Location = new Point(1037, 299);
+            txtLatitude.Location = new Point(638, 187);
+            txtLatitude.Margin = new Padding(2, 2, 2, 2);
             txtLatitude.Name = "txtLatitude";
-            txtLatitude.Size = new Size(341, 39);
+            txtLatitude.Size = new Size(211, 27);
             txtLatitude.TabIndex = 12;
             // 
             // txtCapacity
             // 
-            txtCapacity.Location = new Point(1037, 344);
+            txtCapacity.Location = new Point(638, 215);
+            txtCapacity.Margin = new Padding(2, 2, 2, 2);
             txtCapacity.Name = "txtCapacity";
-            txtCapacity.Size = new Size(341, 39);
+            txtCapacity.Size = new Size(211, 27);
             txtCapacity.TabIndex = 13;
             // 
             // txtFishSpecies
             // 
-            txtFishSpecies.Location = new Point(1037, 389);
+            txtFishSpecies.Location = new Point(638, 243);
+            txtFishSpecies.Margin = new Padding(2, 2, 2, 2);
             txtFishSpecies.Name = "txtFishSpecies";
-            txtFishSpecies.Size = new Size(341, 39);
+            txtFishSpecies.Size = new Size(211, 27);
             txtFishSpecies.TabIndex = 14;
             // 
             // chkHandicapFriendly
             // 
             chkHandicapFriendly.AutoSize = true;
-            chkHandicapFriendly.Location = new Point(1073, 434);
+            chkHandicapFriendly.Location = new Point(660, 271);
+            chkHandicapFriendly.Margin = new Padding(2, 2, 2, 2);
             chkHandicapFriendly.Name = "chkHandicapFriendly";
-            chkHandicapFriendly.Size = new Size(249, 36);
+            chkHandicapFriendly.Size = new Size(158, 24);
             chkHandicapFriendly.TabIndex = 15;
             chkHandicapFriendly.Text = "Handicap Friendly?";
             chkHandicapFriendly.UseVisualStyleBackColor = true;
@@ -188,80 +206,88 @@
             // lblId
             // 
             lblId.AutoSize = true;
-            lblId.Location = new Point(879, 81);
+            lblId.Location = new Point(541, 51);
+            lblId.Margin = new Padding(2, 0, 2, 0);
             lblId.Name = "lblId";
-            lblId.Size = new Size(42, 32);
+            lblId.Size = new Size(27, 20);
             lblId.TabIndex = 16;
             lblId.Text = "ID:";
             // 
             // lblName
             // 
             lblName.AutoSize = true;
-            lblName.Location = new Point(879, 126);
+            lblName.Location = new Point(541, 79);
+            lblName.Margin = new Padding(2, 0, 2, 0);
             lblName.Name = "lblName";
-            lblName.Size = new Size(83, 32);
+            lblName.Size = new Size(52, 20);
             lblName.TabIndex = 17;
             lblName.Text = "Name:";
             // 
             // lblAddress
             // 
             lblAddress.AutoSize = true;
-            lblAddress.Location = new Point(879, 171);
+            lblAddress.Location = new Point(541, 107);
+            lblAddress.Margin = new Padding(2, 0, 2, 0);
             lblAddress.Name = "lblAddress";
-            lblAddress.Size = new Size(103, 32);
+            lblAddress.Size = new Size(65, 20);
             lblAddress.TabIndex = 18;
             lblAddress.Text = "Address:";
             // 
             // lblZipCode
             // 
             lblZipCode.AutoSize = true;
-            lblZipCode.Location = new Point(879, 216);
+            lblZipCode.Location = new Point(541, 135);
+            lblZipCode.Margin = new Padding(2, 0, 2, 0);
             lblZipCode.Name = "lblZipCode";
-            lblZipCode.Size = new Size(109, 32);
+            lblZipCode.Size = new Size(69, 20);
             lblZipCode.TabIndex = 19;
             lblZipCode.Text = "ZipCode:";
             // 
             // lblLongitude
             // 
             lblLongitude.AutoSize = true;
-            lblLongitude.Location = new Point(879, 261);
+            lblLongitude.Location = new Point(541, 163);
+            lblLongitude.Margin = new Padding(2, 0, 2, 0);
             lblLongitude.Name = "lblLongitude";
-            lblLongitude.Size = new Size(127, 32);
+            lblLongitude.Size = new Size(79, 20);
             lblLongitude.TabIndex = 20;
             lblLongitude.Text = "Longitude:";
             // 
             // lblLatitude
             // 
             lblLatitude.AutoSize = true;
-            lblLatitude.Location = new Point(879, 306);
+            lblLatitude.Location = new Point(541, 191);
+            lblLatitude.Margin = new Padding(2, 0, 2, 0);
             lblLatitude.Name = "lblLatitude";
-            lblLatitude.Size = new Size(105, 32);
+            lblLatitude.Size = new Size(66, 20);
             lblLatitude.TabIndex = 21;
             lblLatitude.Text = "Latitude:";
             // 
             // lblCapacity
             // 
             lblCapacity.AutoSize = true;
-            lblCapacity.Location = new Point(879, 351);
+            lblCapacity.Location = new Point(541, 219);
+            lblCapacity.Margin = new Padding(2, 0, 2, 0);
             lblCapacity.Name = "lblCapacity";
-            lblCapacity.Size = new Size(109, 32);
+            lblCapacity.Size = new Size(69, 20);
             lblCapacity.TabIndex = 22;
             lblCapacity.Text = "Capacity:";
             // 
             // lblFishSpecies
             // 
             lblFishSpecies.AutoSize = true;
-            lblFishSpecies.Location = new Point(879, 396);
+            lblFishSpecies.Location = new Point(541, 248);
+            lblFishSpecies.Margin = new Padding(2, 0, 2, 0);
             lblFishSpecies.Name = "lblFishSpecies";
-            lblFishSpecies.Size = new Size(148, 32);
+            lblFishSpecies.Size = new Size(91, 20);
             lblFishSpecies.TabIndex = 23;
             lblFishSpecies.Text = "Fish Species:";
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(13F, 32F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1390, 859);
+            ClientSize = new Size(855, 537);
             Controls.Add(lblFishSpecies);
             Controls.Add(lblCapacity);
             Controls.Add(lblLatitude);
@@ -286,13 +312,15 @@
             Controls.Add(btnCreate);
             Controls.Add(lstPendingFishingSpots);
             Controls.Add(lstFishingSpots);
+            Margin = new Padding(2, 2, 2, 2);
             Name = "MainForm";
             Text = "BaitM8s Administrator Panel";
+            Load += MainForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
 
-        
+
 
         #endregion
 
