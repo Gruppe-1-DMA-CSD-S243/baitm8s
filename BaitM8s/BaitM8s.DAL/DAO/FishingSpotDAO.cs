@@ -1,5 +1,6 @@
 ﻿using BaitM8s.DAL.Interfaces;
 using BaitM8s.DAL.Model;
+using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,17 +27,23 @@ namespace BaitM8s.DAL.DAO
 
         public async Task<IEnumerable<FishingSpot>> GetAllFishingSpotsAsync()
         {
-            throw new NotImplementedException();
+            var query = "SELECT * FROM FishingSpot";
+            using var connection = CreateConnection();
+            return await connection.QueryAsync<FishingSpot>(query);
         }
 
         public async Task<FishingSpot?> GetFishingSpotAsync(int id)
         {
-            throw new NotImplementedException();
+            var query = @"SELECT * FROM FishingSpot WHERE = @Id";
+            using var connection = CreateConnection();
+            return await connection.QuerySingleOrDefaultAsync<FishingSpot>(query, new { Id = id });
         }
 
         public async Task<IEnumerable<FishingSpot>> GetFishingSpotsByPondOwnerAsync(int id)
         {
-            throw new NotImplementedException();
+            var query = @"SELECT * FROM FishingSpot WHERE FK_PondOwner = @Id";
+            using var connection = CreateConnection();
+            return await connection.QueryAsync<FishingSpot>(query, new { Id = id });
         }
 
         public async Task<FishingSpot> RegisterFishingSpotAsync(int id)
