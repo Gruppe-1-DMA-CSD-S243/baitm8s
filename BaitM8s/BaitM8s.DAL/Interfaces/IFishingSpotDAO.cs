@@ -1,4 +1,4 @@
-﻿using BaitM8s.DAL.Model;
+﻿using BaitM8s.DAL.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +9,13 @@ namespace BaitM8s.DAL.Interfaces
 {
     public interface IFishingSpotDAO
     {
-        Task<FishingSpot?> GetFishingSpotAsync(int id);
-        Task<IEnumerable<FishingSpot>> GetAllFishingSpotsAsync();
-        Task<IEnumerable<FishingSpot>> GetFishingSpotsByPondOwnerAsync(int id);
-        Task<FishingSpot> RemoveOwnershipOnFishingSpotAsync(int id);
+        Task<FishingSpotDTO?> GetFishingSpotAsync(int id);
+        Task<IEnumerable<FishingSpotDTO>> GetAllFishingSpotsAsync();
+        Task<IEnumerable<FishingSpotDTO>> GetFishingSpotsByPondOwnerAsync(int id);
+        Task<FishingSpotDTO> RemoveOwnershipOnFishingSpotAsync(int id);
         Task<bool> DeleteFishingSpotAsync(int id);
-        Task<FishingSpot> RegisterFishingSpotAsync(int id);
-        Task<int> CreateFishingSpotAsync(FishingSpot fishingSpot);
+        Task<FishingSpotDTO> RegisterFishingSpotAsync(int id);
+        Task<int> CreateFishingSpotAsync(FishingSpotDTO fishingSpot);
 
     }
 }

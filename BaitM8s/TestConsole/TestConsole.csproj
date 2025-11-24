@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BaitM8s.APIClient\BaitM8s.APIClient.csproj" />
+    <ProjectReference Include="..\BaitM8s.API\BaitM8s.API.csproj" />
+    <ProjectReference Include="..\BaitM8s.DAL\BaitM8s.DAL.csproj" />
+    <ProjectReference Include="..\BaitM8s.MVC\BaitM8s.MVC.csproj" />
+    <ProjectReference Include="..\BaitM8s.Services\BaitM8s.Services.csproj" />
+    <ProjectReference Include="..\BaitM8s.Test\BaitM8s.Test.csproj" />
+  </ItemGroup>
+
+</Project>
