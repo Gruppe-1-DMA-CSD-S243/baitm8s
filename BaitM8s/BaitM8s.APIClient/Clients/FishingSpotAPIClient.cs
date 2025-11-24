@@ -47,28 +47,19 @@ namespace BaitM8s.APIClient.Clients
 
         public async Task<FishingSpotDTO?> GetFishingSpotAsync(int id)
         {
-            var request = new RestRequest("fishingspots/by-id/{id}", Method.Get);
-            request.AddUrlSegment("id", id);
-
-            var response = await _restClient.ExecuteAsync<FishingSpotDTO>(request);
-            if (!response.IsSuccessful || response.Data == null)
-            {
-                throw new Exception($"Error retrieving fishing spot. Message was {response.StatusDescription}");
-            }
-
-            return response.Data;
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<FishingSpotDTO>> GetFishingSpotsByPondOwnerAsync(int id)
         {
-            var request = new RestRequest("fishingspots/by-owner/{id}", Method.Get);
+            var request = new RestRequest("fishingspots", Method.Get);
             request.AddUrlSegment("id", id);
             
             var response = await _restClient.ExecuteAsync<IEnumerable<FishingSpotDTO>>(request);
 
             if (!response.IsSuccessful || response.Data == null)
             {
-                throw new Exception($"Error retrieving all fishing spots for id {id}. Message was {response.StatusDescription}");
+                throw new Exception($"Error retrieving all fishing spots for . Message was {response.StatusDescription}");
             }
 
             return response.Data;
@@ -94,26 +85,6 @@ namespace BaitM8s.APIClient.Clients
         public async Task<FishingSpotDTO> RemoveOwnershipOnFishingSpotAsync(int id)
         {
             throw new NotImplementedException();
-        }
-
-        public async Task<bool> ManageFishingSpotAsync(FishingSpotDTO fishingSpot)
-        {
-            int id = fishingSpot.Id;
-            var request = new RestRequest("fishingspots/{id}", Method.Put);
-            request.AddUrlSegment("id", id);
-            request.AddJsonBody(fishingSpot);
-
-            var response = await _restClient.ExecuteAsync<bool>(request);
-            if (response == null)
-            {
-                throw new Exception("No response from server");
-            }
-            if (!response.IsSuccessful)
-            {
-                throw new Exception($"Error updating fishing spot with id {id}. Message was {response.StatusDescription}");
-            }
-
-            return response.Data;
         }
     }
 }

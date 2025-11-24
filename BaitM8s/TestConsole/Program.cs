@@ -1,5 +1,4 @@
 ﻿using BaitM8s.DAL.DAO;
-using BaitM8s.DAL.DTO;
 using BaitM8s.DAL.Interfaces;
 
 namespace TestConsole
@@ -13,9 +12,7 @@ namespace TestConsole
         static async Task Main(string[] args)
         {
             //await TestGetAll();
-            //await TestGetByPondOwner();
-            //await TestSpotByOwner();
-            await TestUpdate();
+            await TestGetByPondOwner();
         }
 
         public static async Task TestGetAll()
@@ -38,30 +35,6 @@ namespace TestConsole
             {
                 Console.WriteLine(item.Name);
             }
-        }
-
-        public static async Task TestSpotByOwner()
-        {
-            var fishingSpotDAO = CreateFishingSpotDAO();
-            var oneSpot = await fishingSpotDAO.GetFishingSpotAsync(2);
-
-            Console.WriteLine(oneSpot.Name);
-        }
-
-        public static async Task TestUpdate()
-        {
-            FishingSpotDTO fishingSpot = new FishingSpotDTO { Name = "Test", Capacity = 10, Id = 1 };
-
-
-            var fishingSpotDAO = CreateFishingSpotDAO();
-            var oneSpot = await fishingSpotDAO.ManageFishingSpotAsync(fishingSpot);
-
-            Console.WriteLine(oneSpot);
-
-            fishingSpot.Name = "Søen";
-            fishingSpot.Capacity = 30;
-
-            await fishingSpotDAO.ManageFishingSpotAsync(fishingSpot);
         }
     }
 }

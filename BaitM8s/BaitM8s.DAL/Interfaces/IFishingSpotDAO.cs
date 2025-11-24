@@ -16,7 +16,6 @@ namespace BaitM8s.DAL.Interfaces
         Task<bool> DeleteFishingSpotAsync(int id);
         Task<FishingSpotDTO> RegisterFishingSpotAsync(int id);
         Task<int> CreateFishingSpotAsync(FishingSpotDTO fishingSpot);
-        Task<bool> ManageFishingSpotAsync(FishingSpotDTO fishingSpot);
-        
+
     }
 }

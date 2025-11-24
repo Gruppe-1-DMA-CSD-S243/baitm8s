@@ -34,7 +34,7 @@ namespace BaitM8s.DAL.DAO
 
         public async Task<FishingSpotDTO?> GetFishingSpotAsync(int id)
         {
-            var query = @"SELECT * FROM FishingSpot WHERE Id = @Id";
+            var query = @"SELECT * FROM FishingSpot WHERE = @Id";
             using var connection = CreateConnection();
             return await connection.QuerySingleOrDefaultAsync<FishingSpotDTO>(query, new { Id = id });
         }
@@ -54,44 +54,6 @@ namespace BaitM8s.DAL.DAO
         public async Task<FishingSpotDTO> RemoveOwnershipOnFishingSpotAsync(int id)
         {
             throw new NotImplementedException();
-        }
-
-        public async Task<bool> ManageFishingSpotAsync(FishingSpotDTO fishingSpot)
-        {
-            var query = @"UPDATE FishingSpot
-                      SET Name = @Name,
-                          Capacity = @Capacity
-                      WHERE Id = @Id;";
-
-            using (var connection = CreateConnection())
-            {
-                connection.Open();
-
-                using (var transaction = connection.BeginTransaction())
-                {
-                    try
-                    {
-                        await connection.ExecuteAsync(query,
-                            new
-                            {
-                                Name = fishingSpot.Name,
-                                Capacity = fishingSpot.Capacity,
-                                Id = fishingSpot.Id
-                            },
-                            transaction);
-
-                        transaction.Commit();
-
-                        return true;
-                    }
-                    catch (Exception ex)
-                    {
-                        transaction.Rollback();
-
-                        throw new Exception($"Error updating fishing spot with id {fishingSpot.Id}. Message was {ex.Message}");
-                    }
-                }
-            }
         }
     }
 }

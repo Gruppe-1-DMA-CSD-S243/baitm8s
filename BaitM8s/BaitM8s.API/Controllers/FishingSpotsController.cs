@@ -1,5 +1,4 @@
-﻿using BaitM8s.DAL.DAO;
-using BaitM8s.DAL.DTO;
+﻿using BaitM8s.DAL.DTO;
 using BaitM8s.DAL.Interfaces;
 using BaitM8s.Services.Notifications.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -61,19 +60,6 @@ namespace BaitM8s.API.Controllers
                 return StatusCode(500, $"Error: {ex.Message}");
 
                 //return StatusCode(500, $"An error occurred trying to retrieve the fishing spots from owner id {id}.");
-            }
-        }
-
-        [HttpPut("{id}")]
-        public async Task<ActionResult<bool>> ManageFishingSpotAsync(int id, FishingSpotDTO fishingSpot)
-        {
-            try
-            {
-                return Ok(await _fishingSpotDAO.ManageFishingSpotAsync(fishingSpot));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500);
             }
         }
     }

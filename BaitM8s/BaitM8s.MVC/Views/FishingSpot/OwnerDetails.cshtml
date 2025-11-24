@@ -1,12 +1,13 @@
 ﻿@model BaitM8s.DAL.DTO.FishingSpotDTO
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "OwnerDetails";
 }
 
-<h1>Pond Details</h1>
+<h1>OwnerDetails</h1>
 
 <div>
+    <h4>FishingSpotDTO</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -54,6 +55,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Manage", "Manage", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
 </div>
