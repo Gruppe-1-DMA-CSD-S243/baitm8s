@@ -1,19 +1,57 @@
-﻿@model BaitM8s.DAL.DTO.FishingSpotDTO
+﻿@using System.Globalization
+@model FishingSpotAvailabilityViewModel
 
 @{
-    var days = new[] { $"Monday {DateTime.Today}", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
-
-    TimeSpan startTime = new TimeSpan(Model.StartAvailableHours, 0, 0);
-    TimeSpan endTime = new TimeSpan(Model.EndAvailableHours, 0, 0);
+    var days = Model.WeekDates;
+    int weekNumber = ISOWeek.GetWeekOfYear(DateTime.Now);
+    var weeks = Enumerable.Range(1, 52).Reverse();
+    int yearNumber = DateTime.Now.Year;
+    var years = Enumerable.Range(yearNumber, 2100).Reverse();
+    TimeSpan startTime = new TimeSpan(7, 0, 0);
+    TimeSpan endTime = new TimeSpan(15, 0, 0);
     TimeSpan slotDuration = new TimeSpan(1, 0, 0);
 }
+<form method="get" asp-action="AvailableTimes" asp-controller="Booking">
+    <input type="hidden" name="id" value="@Model.FishingSpot.Id" />
+
+    <select class="form-select" id="weekNumber" name="weekNumber" onchange="this.form.submit()">
+        @for (int week = 52; week >= 1; week--)
+        {
+            if (week == Model.SelectedWeek)
+            {
+                <option value="@week" selected>@week</option>
+            }
+            else
+            {
+                <option value="@week">@week</option>
+            }
+        }
+    </select>
+
+    <select class="form-select" id="year" name="year" onchange="this.form.submit()">
+        @for (int y = yearNumber; y <= 2100; y++)
+        {
+            if (y == Model.SelectedYear)
+            {
+                <option value="@y" selected>@y</option>
+            }
+            else
+            {
+                <option value="@y">@y</option>
+            }
+        }
+    </select>
+</form>
 
 <table class="table table-bordered text-center">
     <thead>
         <tr>
-            @foreach (var day in days)
+            @foreach (var date in days)
             {
-                <th>@day</th>
+                <th>
+                    @date.ToString("dddd")<br />
+                    @date.ToString("dd/MM/yyyy")
+                </th>
             }
         </tr>
     </thead>
@@ -23,12 +61,15 @@
             var timeSlot = $"{time:hh\\:mm} - {time.Add(slotDuration):hh\\:mm}";
 
             <tr>
-                @foreach (var day in days)
+                @foreach (var date in days)
                 {
                     <td>
                         <a asp-controller="Booking"
                            asp-action="BookAvailableTime"
-                           asp-route-day="@day"
+                           asp-route-id="@Model.FishingSpot.Id"
+                           asp-route-day="@date.Day"
+                           asp-route-year="@date.Year"
+                           asp-route-month="@date.Month"
                            asp-route-startTime="@time"
                            asp-route-endTime="@time.Add(slotDuration)"
                            class="btn btn-outline-primary btn-sm">

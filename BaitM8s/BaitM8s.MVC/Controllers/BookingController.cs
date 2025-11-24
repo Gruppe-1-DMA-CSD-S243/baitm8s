@@ -1,9 +1,13 @@
 
+using BaitM8s.APIClient.Clients;
 using BaitM8s.APIClient.Interfaces;
 using BaitM8s.DAL.DTO;
 using BaitM8s.DAL.Interfaces;
 using BaitM8s.DAL.Model;
+using BaitM8s.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Globalization;
 
 namespace BaitM8s.MVC.Controllers
 {
@@ -18,12 +22,9 @@ namespace BaitM8s.MVC.Controllers
             _fishingSpotApiClient = fishingSpotApiClient;
         }
 
-        public async Task<IActionResult> Calendar(int id)
+        public async Task<IActionResult> Calendar()
         {
-            //var bookings = await _bookingApiClient.GetAllAsync();
-            var fishingSpot = await _fishingSpotApiClient.GetFishingSpotAsync(id);
-
-
+            var bookings = await _bookingApiClient.GetAllAsync();
             var calendarEvents = bookings.Select(booking =>
             {
                 var date = DateTime.Parse($"{booking.Day}-{booking.Month}-{booking.Year}");
@@ -36,6 +37,14 @@ namespace BaitM8s.MVC.Controllers
                     end = enddate.ToString("yyyy-MM-dd")
                 };
             });
+
+            ViewBag.BookingJson = System.Text.Json.JsonSerializer.Serialize(calendarEvents);
+            return View();
+        }
+
+        public async Task<IActionResult> BookingCalendar(int id)
+        {
+            string calendarEvents = null;
 
             ViewBag.BookingJson = System.Text.Json.JsonSerializer.Serialize(calendarEvents);
             return View();
@@ -117,16 +126,34 @@ namespace BaitM8s.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AvailableTimes(int id)
+        public async Task<IActionResult> AvailableTimes(int id, int? weekNumber, int? year)
         {
             var fishingSpot = await _fishingSpotApiClient.GetFishingSpotAsync(id);
-            return View(fishingSpot);
+
+            // Default to current week/year if not provided
+            int selectedWeek = weekNumber ?? ISOWeek.GetWeekOfYear(DateTime.Now);
+            int selectedYear = year ?? DateTime.Now.Year;
+
+            // Get all dates of the selected week
+            var weekStart = ISOWeek.ToDateTime(selectedYear, selectedWeek, DayOfWeek.Monday);
+            var weekDates = Enumerable.Range(0, 7).Select(d => weekStart.AddDays(d)).ToArray();
+
+            var model = new FishingSpotAvailabilityViewModel
+            {
+                FishingSpot = fishingSpot,
+                WeekDates = weekDates,
+                SelectedWeek = selectedWeek,
+                SelectedYear = selectedYear
+            };
+
+            return View(model);
         }
+        //var test = BookingAPIClient.GetDatesOfWeek(2, 3);
 
         [HttpGet]
-        public async Task<IActionResult> BookAvailableTime(string day, TimeSpan startTime, TimeSpan endTime)
+        public async Task<IActionResult> BookAvailableTime(int id, int day, int month, int year)
         {
-            BookingDTO booking = new BookingDTO { /*Day = day, StartTime = startTime, EndTime = endTime*/};
+            BookingDTO booking = new BookingDTO { FK_FishingSpotId = id, Day = day, Month = month, Year = year};
             return View(booking);
         }
 

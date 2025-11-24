@@ -3,6 +3,7 @@ using BaitM8s.DAL.DTO;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -82,6 +83,22 @@ namespace BaitM8s.APIClient.Clients
             }
 
             return response.Data;
+        }
+
+        public static DateTime[] GetDatesOfWeek(int year, int weekNumber)
+        {
+            // ISO 8601: week 1 is the week with the first Thursday of the year
+            var firstThursday = new DateTime(year, 1, 4);
+            var calendar = CultureInfo.CurrentCulture.Calendar;
+
+            // Get the first Monday of week 1
+            int weekOfYear = calendar.GetWeekOfYear(firstThursday, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+            int daysOffset = (weekNumber - weekOfYear) * 7;
+
+            var mondayOfWeek = firstThursday.AddDays(daysOffset).AddDays(-3);
+
+            // Return the 7 days of the week
+            return Enumerable.Range(0, 7).Select(d => mondayOfWeek.AddDays(d)).ToArray();
         }
     }
 }

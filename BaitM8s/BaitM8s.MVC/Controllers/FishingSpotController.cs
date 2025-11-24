@@ -11,7 +11,7 @@ namespace BaitM8s.MVC.Controllers
     {
         private readonly IFishingSpotDAO _fishingSpotApiClient;
         //TODO: id currently decides if it is an angler(0) or owner(1-n) index that is returned, change hardcode later
-        private readonly int userType = 1;
+        private readonly int userType = 0;
 
         public FishingSpotController(IFishingSpotDAO fishingSpotApiClient)
         {
