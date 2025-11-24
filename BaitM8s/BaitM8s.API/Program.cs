@@ -11,8 +11,11 @@ namespace BaitM8s.API
 {
     public class Program
     {
+ 
+        private const string _connectionString = "Data Source = localhost; Database = BaitM8s; Persist Security Info = True; User ID = sa; Password =@12tf56so;Trust Server Certificate = True";
         public static void Main(string[] args)
         {
+
             var builder = WebApplication.CreateBuilder(args);
 
             var configuration = new ConfigurationBuilder()
@@ -26,10 +29,13 @@ namespace BaitM8s.API
             builder.Services.AddControllers();
 
             builder.Services.AddScoped<IAnglerDAO>(anglerDAO =>
-            new AnglerDAO("Data Source = localhost; Database = BaitM8s; Persist Security Info = True; User ID = sa; Password =@12tf56so; Trust Server Certificate = True"));
+            new AnglerDAO(_connectionString));
 
             builder.Services.AddScoped<IBookingDAO>(bookingDAO =>
-            new BookingDAO("Data Source = localhost; Database = BaitM8s; Persist Security Info = True; User ID = sa; Password =@12tf56so; Trust Server Certificate = True"));
+            new BookingDAO(_connectionString));
+
+            builder.Services.AddScoped<IFishingSpotDAO>(fishingSpotDAO =>
+            new FishingSpotDAO(_connectionString));
 
             builder.Services.AddScoped<INotificationService>(notificationService =>
             new TelegramNotificationService("https://api.telegram.org", "8230947150:AAHn8ZkyVU4DLGMvtGY06u0ZDz1lnVtHpKY", "-1003297586522"));

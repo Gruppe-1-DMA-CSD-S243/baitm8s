@@ -1,0 +1,42 @@
+﻿@model BaitM8s.DAL.DTO.FishingSpotDTO
+
+@{
+    var days = new[] { $"Monday {DateTime.Today}", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+
+    TimeSpan startTime = new TimeSpan(Model.StartAvailableHours, 0, 0);
+    TimeSpan endTime = new TimeSpan(Model.EndAvailableHours, 0, 0);
+    TimeSpan slotDuration = new TimeSpan(1, 0, 0);
+}
+
+<table class="table table-bordered text-center">
+    <thead>
+        <tr>
+            @foreach (var day in days)
+            {
+                <th>@day</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (var time = startTime; time < endTime; time = time.Add(slotDuration))
+        {
+            var timeSlot = $"{time:hh\\:mm} - {time.Add(slotDuration):hh\\:mm}";
+
+            <tr>
+                @foreach (var day in days)
+                {
+                    <td>
+                        <a asp-controller="Booking"
+                           asp-action="BookAvailableTime"
+                           asp-route-day="@day"
+                           asp-route-startTime="@time"
+                           asp-route-endTime="@time.Add(slotDuration)"
+                           class="btn btn-outline-primary btn-sm">
+                            @timeSlot
+                        </a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,43 @@
+﻿@model BaitM8s.DAL.DTO.FishingSpotDTO
+
+@{
+    ViewData["Title"] = "Manage";
+}
+
+<h1>Pond Management</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Manage">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Capacity" class="control-label"></label>
+                <input asp-for="Capacity" class="form-control" />
+                <span asp-validation-for="Capacity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartAvailableHours" class="control-label"></label>
+                <input asp-for="StartAvailableHours" class="form-control" />
+                <span asp-validation-for="StartAvailableHours" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndAvailableHours" class="control-label"></label>
+                <input asp-for="EndAvailableHours" class="form-control" />
+                <span asp-validation-for="EndAvailableHours" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

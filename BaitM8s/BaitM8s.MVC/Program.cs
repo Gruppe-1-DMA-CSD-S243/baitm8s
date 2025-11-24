@@ -1,6 +1,7 @@
 using BaitM8s.APIClient.Clients;
 using BaitM8s.APIClient.Interfaces;
 using BaitM8s.DAL.DTO;
+using BaitM8s.DAL.Interfaces;
 
 namespace BaitM8s.MVC
 {
@@ -24,6 +25,9 @@ namespace BaitM8s.MVC
 
             builder.Services.AddScoped<IAnglerAPIClient>(angler => 
             new AnglerAPIClient("https://localhost:8888/api"));
+
+            builder.Services.AddScoped<IFishingSpotDAO>(fishingSpot =>
+            new FishingSpotAPIClient("https://localhost:8888/api"));
 
             var app = builder.Build();
 

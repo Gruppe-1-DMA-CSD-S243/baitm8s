@@ -1,0 +1,62 @@
+﻿@model BaitM8s.DAL.DTO.FishingSpotDTO
+
+@{
+    ViewData["Title"] = "Calendar";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Booking.css" asp-append-version="true" />
+}
+
+@* <pre>@Html.Raw(ViewBag.BookingJson)</pre> *@
+
+<div class="booking-page">
+    <div class="info-box">
+        <h2>information</h2>
+        <p>her kan du senere vise detaljer om bookinger, tider, osv.</p>
+    </div>
+
+    <div id="calendar"></div>
+</div>
+
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var events = @Html.Raw(ViewBag.BookingJson);
+
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridWeek',
+                timeZone: 'Europe/Copenhagen',
+                firstDay: 1,
+                locale: 'da',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                slotMinTime: "06:00:00",
+                slotMaxTime: "23:59:59",
+                slotDuration: "01:00:00",
+                slotLabelFormat: [{
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                }],
+                events: events,
+                eventClick: function(info) {
+                    // info.jsEvent.preventDefault();
+                    var bookingId = info.event.id;
+                    window.location.replace("Details?bookingId="+bookingId);
+
+                },
+                dateClick: function(info) {
+                    calendar.changeView('timeGridWeek', info.date);
+                }
+            });
+
+            calendar.render();
+        });
+    </script>
+}

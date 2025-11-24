@@ -1,6 +1,7 @@
 
 using BaitM8s.APIClient.Interfaces;
 using BaitM8s.DAL.DTO;
+using BaitM8s.DAL.Interfaces;
 using BaitM8s.DAL.Model;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,15 +10,19 @@ namespace BaitM8s.MVC.Controllers
     public class BookingController : Controller
     {
         private readonly IBookingAPIClient _bookingApiClient;
+        private readonly IFishingSpotDAO _fishingSpotApiClient;
 
-        public BookingController(IBookingAPIClient bookingApiClient)
+        public BookingController(IBookingAPIClient bookingApiClient, IFishingSpotDAO fishingSpotApiClient)
         {
             _bookingApiClient = bookingApiClient;
+            _fishingSpotApiClient = fishingSpotApiClient;
         }
 
-        public async Task<IActionResult> Calendar()
+        public async Task<IActionResult> Calendar(int id)
         {
-            var bookings = await _bookingApiClient.GetAllAsync();
+            //var bookings = await _bookingApiClient.GetAllAsync();
+            var fishingSpot = await _fishingSpotApiClient.GetFishingSpotAsync(id);
+
 
             var calendarEvents = bookings.Select(booking =>
             {
@@ -109,6 +114,37 @@ namespace BaitM8s.MVC.Controllers
             }
 
             return View(booking);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AvailableTimes(int id)
+        {
+            var fishingSpot = await _fishingSpotApiClient.GetFishingSpotAsync(id);
+            return View(fishingSpot);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> BookAvailableTime(string day, TimeSpan startTime, TimeSpan endTime)
+        {
+            BookingDTO booking = new BookingDTO { /*Day = day, StartTime = startTime, EndTime = endTime*/};
+            return View(booking);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> BookAvailableTime(BookingDTO booking)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+
+                //TODO: try catch
+
+            }
+            var newId = await _bookingApiClient.CreateAsync(booking);
+
+            return RedirectToAction("AvailableTimes", "Booking", new { id = 1 });
+            //TODO: giv fejlbesked og  vis formular igen
+            return View();
         }
     }
 }

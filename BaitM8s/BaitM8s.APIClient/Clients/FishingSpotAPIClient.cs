@@ -1,5 +1,7 @@
-﻿using BaitM8s.DAL.Interfaces;
+﻿using BaitM8s.DAL.DTO;
+using BaitM8s.DAL.Interfaces;
 using BaitM8s.DAL.Model;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,16 @@ namespace BaitM8s.APIClient.Clients
 {
     public class FishingSpotAPIClient : IFishingSpotDAO
     {
-        public async Task<int> CreateFishingSpotAsync(FishingSpot fishingSpot)
+        private readonly string _apiBaseUri;
+        private readonly RestClient _restClient;
+
+        public FishingSpotAPIClient(string apiBaseUri)
+        {
+            _apiBaseUri = apiBaseUri;
+            _restClient = new RestClient(_apiBaseUri);
+        }
+
+        public async Task<int> CreateFishingSpotAsync(FishingSpotDTO fishingSpot)
         {
             throw new NotImplementedException();
         }
@@ -20,29 +31,89 @@ namespace BaitM8s.APIClient.Clients
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<FishingSpot>> GetAllFishingSpotsAsync()
+        public async Task<IEnumerable<FishingSpotDTO>> GetAllFishingSpotsAsync()
+        {
+            var request = new RestRequest("fishingspots", Method.Get);
+            var response = await _restClient.ExecuteAsync<IEnumerable<FishingSpotDTO>>(request);
+
+            if (!response.IsSuccessful || response.Data == null)
+            {
+                throw new Exception($"Error retrieving all bookings. Message was {response.StatusDescription}");
+            }
+
+            return response.Data;
+        }
+
+
+        public async Task<FishingSpotDTO?> GetFishingSpotAsync(int id)
+        {
+            var request = new RestRequest("fishingspots/by-id/{id}", Method.Get);
+            request.AddUrlSegment("id", id);
+
+            var response = await _restClient.ExecuteAsync<FishingSpotDTO>(request);
+            if (!response.IsSuccessful || response.Data == null)
+            {
+                throw new Exception($"Error retrieving fishing spot. Message was {response.StatusDescription}");
+            }
+
+            return response.Data;
+        }
+
+        public async Task<IEnumerable<FishingSpotDTO>> GetFishingSpotsByPondOwnerAsync(int id)
+        {
+            var request = new RestRequest("fishingspots/by-owner/{id}", Method.Get);
+            request.AddUrlSegment("id", id);
+
+            var response = await _restClient.ExecuteAsync<IEnumerable<FishingSpotDTO>>(request);
+
+            if (!response.IsSuccessful || response.Data == null)
+            {
+                throw new Exception($"Error retrieving all fishing spots for id {id}. Message was {response.StatusDescription}");
+            }
+
+            return response.Data;
+
+            //var request = new RestRequest("bookings/{id}", Method.Get);
+            //request.AddUrlSegment("id", id);
+
+            //var response = await _restClient.ExecuteAsync<BookingDTO>(request);
+
+            //if (!response.IsSuccessful || response.Data == null)
+            //{
+            //    throw new Exception($"Error retrieving booking with id {id}. Message was {response.StatusDescription}");
+            //}
+
+            //return response.Data;
+        }
+
+        public async Task<FishingSpotDTO> RegisterFishingSpotAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<FishingSpot?> GetFishingSpotAsync(int id)
+        public async Task<FishingSpotDTO> RemoveOwnershipOnFishingSpotAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<FishingSpot>> GetFishingSpotsByPondOwnerAsync(int id)
+        public async Task<bool> ManageFishingSpotAsync(FishingSpotDTO fishingSpot)
         {
-            throw new NotImplementedException();
-        }
+            int id = fishingSpot.Id;
+            var request = new RestRequest("fishingspots/{id}", Method.Put);
+            request.AddUrlSegment("id", id);
+            request.AddJsonBody(fishingSpot);
 
-        public async Task<FishingSpot> RegisterFishingSpotAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
+            var response = await _restClient.ExecuteAsync<bool>(request);
+            if (response == null)
+            {
+                throw new Exception("No response from server");
+            }
+            if (!response.IsSuccessful)
+            {
+                throw new Exception($"Error updating fishing spot with id {id}. Message was {response.StatusDescription}");
+            }
 
-        public async Task<FishingSpot> RemoveOwnershipOnFishingSpotAsync(int id)
-        {
-            throw new NotImplementedException();
+            return response.Data;
         }
     }
 }
