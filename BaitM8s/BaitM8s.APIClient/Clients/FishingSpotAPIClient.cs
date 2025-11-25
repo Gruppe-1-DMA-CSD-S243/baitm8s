@@ -88,16 +88,18 @@ namespace BaitM8s.APIClient.Clients
             throw new NotImplementedException();
         }
 
-        public async Task<int> UpdateFishingSpotAsync(int id, FishingSpot fishingSpot)
+        public async Task<int> UpdateFishingSpotAsync(FishingSpot fishingSpot)
         {
-            var request = new RestRequest($"FishingSpots/{id}", Method.Put);
+            var request = new RestRequest($"FishingSpots/{fishingSpot.Id}", Method.Put);
             request.AddJsonBody(fishingSpot);
             var response = await _restClient.ExecuteAsync<int>(request);
             if (!response.IsSuccessful)
             {
-                throw new Exception($"Error updating FishingSpot with ID {id}: {response.StatusCode} - {response.Content}");
+                throw new Exception($"Error updating FishingSpot with ID {fishingSpot.Id}: {response.StatusCode} - {response.Content}");
             }
             return response.Data;
         }
+
+
     }
 }

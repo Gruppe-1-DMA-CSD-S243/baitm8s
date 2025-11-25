@@ -64,20 +64,22 @@ namespace BaitM8s.API.Controllers
             }
         }
 
-        [HttpPut]
-        public async Task<ActionResult<int>> Update([FromQuery] int id, [FromBody] FishingSpot fishingSpot)
+        
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] FishingSpot fishingSpot)
         {
-            try
-            {
-                var updatedId = await _fishingSpotDAO.UpdateFishingSpotAsync(id, fishingSpot);
-                return Ok(updatedId);
-            }
-            catch (Exception ex)
-            {
-                // Log the exception (not implemented here)
-                return StatusCode(500, "Internal server error");
-            }
+            if (id != fishingSpot.Id)
+                return BadRequest("Id mismatch");
+
+            int updated = await _fishingSpotDAO.UpdateFishingSpotAsync(fishingSpot);
+
+            if (updated==null)
+                return NotFound("Fishing spot not found");
+
+            return NoContent();
         }
+
+
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)

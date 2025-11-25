@@ -183,40 +183,65 @@ namespace BaitM8s.DAL.DAO
             throw new NotImplementedException();
         }
 
-        public async Task<int> UpdateFishingSpotAsync(int id, FishingSpot fishingSpot)
+        
+        public async Task<int> UpdateFishingSpotAsync(FishingSpot spot)
         {
             using SqlConnection connection = new SqlConnection(_connectionString);
             await connection.OpenAsync();
             using var transaction = connection.BeginTransaction();
+
             try
-            {                 
-                await connection.ExecuteAsync(
+            {
+                var zipcodeId = await connection.ExecuteScalarAsync<int>(
+                    @"IF EXISTS (SELECT 1 FROM Zipcode WHERE Zipcode = @ZipCode)
+                SELECT Id FROM Zipcode WHERE Zipcode = @ZipCode
+              ELSE
+              BEGIN
+                INSERT INTO Zipcode (Zipcode) VALUES (@ZipCode);
+                SELECT CAST(SCOPE_IDENTITY() AS INT);
+              END",
+                    new { spot.ZipCode },
+                    transaction);
+
+                int rows = await connection.ExecuteAsync(
                     @"UPDATE FishingSpot
               SET Name = @Name,
                   Address = @Address,
-                  FK_zipcodeId = (SELECT Id FROM Zipcode WHERE Zipcode = @ZipCode),
+                  FK_zipcodeId = @ZipcodeId,
                   Longitude = @Longitude,
                   Latitude = @Latitude,
                   Capacity = @Capacity,
-                  HandicapFriendly = @HandicapFriendly
-              WHERE Id = @Id;",
+                  HandicapFriendly = @HandicapFriendly,
+                  FK_PondOwner = @FK_PondOwnerId
+              WHERE Id = @Id",
                     new
                     {
-                        fishingSpot.Name,
-                        fishingSpot.Address,
-                        fishingSpot.ZipCode,
-                        fishingSpot.Longitude,
-                        fishingSpot.Latitude,
-                        fishingSpot.Capacity,
-                        fishingSpot.HandicapFriendly,
-                        Id = id
+                        spot.Name,
+                        spot.Address,
+                        ZipcodeId = zipcodeId,
+                        spot.Longitude,
+                        spot.Latitude,
+                        spot.Capacity,
+                        spot.HandicapFriendly,
+                        spot.FK_PondOwnerId,
+                        spot.Id
                     },
                     transaction);
+
+                if (rows == 0)
+                {
+                    transaction.Rollback();
+                    return spot.Id;
+                }
+
+             
                 await connection.ExecuteAsync(
-                    @"DELETE FROM FishSpecies_FishingSpot WHERE FK_FishingSpotId = @Id;",
-                    new { Id = id },
+                    @"DELETE FROM FishSpecies_FishingSpot WHERE FK_FishingSpotId = @Id",
+                    new { spot.Id },
                     transaction);
-                foreach (var species in fishingSpot.FishSpecies)
+
+                
+                foreach (var species in spot.FishSpecies)
                 {
                     var speciesId = await connection.ExecuteScalarAsync<int>(
                         @"IF EXISTS (SELECT 1 FROM FishSpecies WHERE Species = @Species)
@@ -224,25 +249,27 @@ namespace BaitM8s.DAL.DAO
                   ELSE
                   BEGIN
                       INSERT INTO FishSpecies (Species) VALUES (@Species);
-                      SELECT CAST(SCOPE_IDENTITY() as int);
+                      SELECT CAST(SCOPE_IDENTITY() AS INT);
                   END",
                         new { Species = species },
                         transaction);
+
                     await connection.ExecuteAsync(
                         @"INSERT INTO FishSpecies_FishingSpot (FK_FishSpeciesId, FK_FishingSpotId)
                   VALUES (@FishSpeciesId, @FishingSpotId)",
-                        new { FishSpeciesId = speciesId, FishingSpotId = id },
+                        new { FishSpeciesId = speciesId, FishingSpotId = spot.Id },
                         transaction);
                 }
+
                 transaction.Commit();
-                return id;
+                return spot.Id;
             }
             catch
             {
                 transaction.Rollback();
                 throw;
             }
-
         }
+
     }
 }

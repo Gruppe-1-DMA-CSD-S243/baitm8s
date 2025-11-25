@@ -187,40 +187,69 @@ namespace BaitM8s.WinForms
             }
         }
 
+        
+
         public async Task UpdateFishingSpotAsync()
         {
-            if (lstFishingSpots.SelectedItem == null)
-            {
-                MessageBox.Show("No Fishing Spot selected for update.");
-                return;
-            }
+            btnUpdate.Enabled = false;
+
             try
             {
-                var selectedSpot = (FishingSpot)lstFishingSpots.SelectedItem;
-                var fishSpecies = txtFishSpecies.Text.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                                    .Select(s => s.Trim())
-                                    .ToList();
-                var updatedSpot = new FishingSpot
+                if (!int.TryParse(txtId.Text, out int id))
                 {
-                    Id = selectedSpot.Id,
-                    Name = txtName.Text,
-                    Address = txtAddress.Text,
-                    ZipCode = txtZipCode.Text,
-                    Longitude = float.Parse(txtLongitude.Text),
-                    Latitude = float.Parse(txtLatitude.Text),
-                    Capacity = int.Parse(txtCapacity.Text),
-                    FishSpecies = fishSpecies,
-                    HandicapFriendly = chkHandicapFriendly.Checked
+                    MessageBox.Show("Invalid ID");
+                    return;
+                }
+
+                if (!int.TryParse(txtCapacity.Text, out int capacity))
+                {
+                    MessageBox.Show("Invalid Capacity");
+                    return;
+                }
+
+                if (!int.TryParse(txtPondOwnerId.Text, out int pondOwnerId))
+                {
+                    MessageBox.Show("Invalid Pond Owner ID");
+                    return;
+                }
+
+                float.TryParse(txtLongitude.Text, out float longitude);
+                float.TryParse(txtLatitude.Text, out float latitude);
+
+                var species = txtFishSpecies.Text
+                    .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                    .Select(s => s.Trim())
+                    .ToList();
+
+                var spot = new FishingSpot
+                {
+                    Id = id,
+                    Name = txtName.Text.Trim(),
+                    Address = txtAddress.Text.Trim(),
+                    ZipCode = txtZipCode.Text.Trim(),
+                    Longitude = longitude,
+                    Latitude = latitude,
+                    Capacity = capacity,
+                    HandicapFriendly = chkHandicapFriendly.Checked,
+                    FK_PondOwnerId = pondOwnerId,
+                    FishSpecies = species
                 };
-                var updatedId = await _fishingSpotAPIClient.UpdateFishingSpotAsync(updatedSpot.Id, updatedSpot);
-                MessageBox.Show($"Fishing Spot updated with ID: {updatedId}");
+
+                await _fishingSpotAPIClient.UpdateFishingSpotAsync(spot);
+
+                MessageBox.Show("Fishing spot updated successfully.");
                 await LoadFishingSpotsAsync();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error updating Fishing Spot: {ex.Message}");
+                MessageBox.Show($"Error updating spot: {ex.Message}");
+            }
+            finally
+            {
+                btnUpdate.Enabled = true;
             }
         }
+
         public async Task DeleteFishingSpotAsync()
         {
             if (lstFishingSpots.SelectedItem == null)
