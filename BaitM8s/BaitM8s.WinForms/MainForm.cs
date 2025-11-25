@@ -1,13 +1,13 @@
 using BaitM8s.APIClient.Clients;
-using BaitM8s.DAL.Interfaces;
-using BaitM8s.DAL.Model;
+using BaitM8s.APIClient.Interfaces;
+using BaitM8s.DAL.DTO;
 using Microsoft.Data.SqlClient;
 
 namespace BaitM8s.WinForms
 {
     public partial class MainForm : Form
     {
-        private readonly IFishingSpotDAO _fishingSpotAPIClient = new FishingSpotAPIClient("https://localhost:8888/api/");
+        private readonly IFishingSpotAPIClient _fishingSpotAPIClient = new FishingSpotAPIClient("https://localhost:8888/api/");
 
         public MainForm()
         {
@@ -40,7 +40,7 @@ namespace BaitM8s.WinForms
                 ClearFields();
                 return;
             }
-            var selectedSpot = (FishingSpot)lstFishingSpots.SelectedItem;
+            var selectedSpot = (FishingSpotDTO)lstFishingSpots.SelectedItem;
             txtId.Text = selectedSpot.Id.ToString();
             txtName.Text = selectedSpot.Name;
             txtAddress.Text = selectedSpot.Address;
@@ -50,7 +50,7 @@ namespace BaitM8s.WinForms
             txtCapacity.Text = selectedSpot.Capacity.ToString();
             txtFishSpecies.Text = string.Join(", ", selectedSpot.FishSpecies);
             chkHandicapFriendly.Checked = selectedSpot.HandicapFriendly;
-
+            txtPondOwnerId.Text = selectedSpot.FK_PondOwnerId.ToString();
         }
         public void ClearFields()
         {
@@ -149,7 +149,7 @@ namespace BaitM8s.WinForms
                     .Where(s => !string.IsNullOrWhiteSpace(s))
                     .ToList();
 
-                var newSpot = new FishingSpot
+                var newSpot = new FishingSpotDTO
                 {
                     Name = txtName.Text.Trim(),
                     Address = txtAddress.Text.Trim(),
@@ -221,7 +221,7 @@ namespace BaitM8s.WinForms
                     .Select(s => s.Trim())
                     .ToList();
 
-                var spot = new FishingSpot
+                var spot = new FishingSpotDTO
                 {
                     Id = id,
                     Name = txtName.Text.Trim(),
@@ -235,7 +235,7 @@ namespace BaitM8s.WinForms
                     FishSpecies = species
                 };
 
-                await _fishingSpotAPIClient.UpdateFishingSpotAsync(spot);
+                await _fishingSpotAPIClient.ManageFishingSpotAsync(spot);
 
                 MessageBox.Show("Fishing spot updated successfully.");
                 await LoadFishingSpotsAsync();
@@ -263,7 +263,7 @@ namespace BaitM8s.WinForms
             }
             try
             {
-                var selectedSpot = (FishingSpot)lstFishingSpots.SelectedItem;
+                var selectedSpot = (FishingSpotDTO)lstFishingSpots.SelectedItem;
                 await _fishingSpotAPIClient.DeleteFishingSpotAsync(selectedSpot.Id);
                 MessageBox.Show($"Fishing Spot with ID: {selectedSpot.Id} deleted.");
                 await LoadFishingSpotsAsync();

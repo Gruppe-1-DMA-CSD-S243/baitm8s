@@ -20,6 +20,6 @@ namespace BaitM8s.DAL.Model
         public bool IsAwaitingApproval { get; set; }
         public int StartAvailableHours { get; set; }
         public int EndAvailableHours { get; set; }
-
+        public int FK_PondOwnerId { get; set; }
     }
 }

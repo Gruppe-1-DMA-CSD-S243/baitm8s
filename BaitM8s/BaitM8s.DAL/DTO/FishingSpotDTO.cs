@@ -21,5 +21,11 @@ namespace BaitM8s.DAL.DTO
         public bool IsAwaitingApproval { get; set; }
         public int StartAvailableHours { get; set; }
         public int EndAvailableHours { get; set; }
+        public int FK_PondOwnerId { get; set; }
+
+        public override string ToString()
+        {
+            return $"{this.Id} - {this.Name}";
+        }
     }
 }

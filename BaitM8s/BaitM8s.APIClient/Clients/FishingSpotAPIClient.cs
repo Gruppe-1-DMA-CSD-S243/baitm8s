@@ -1,5 +1,6 @@
 ﻿using BaitM8s.APIClient.Interfaces;
 using BaitM8s.DAL.DTO;
+using BaitM8s.DAL.Model;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,15 @@ namespace BaitM8s.APIClient.Clients
 
         public async Task<int> CreateFishingSpotAsync(FishingSpotDTO fishingSpot)
         {
-            throw new NotImplementedException();
+            var request = new RestRequest("FishingSpots", Method.Post);
+            request.AddJsonBody(fishingSpot);
+            var response = await _restClient.ExecuteAsync<int>(request);
+            if (!response.IsSuccessful)
+            {
+                throw new Exception($"Error creating FishingSpot:{response.StatusCode} - {response.Content}");
+            }
+            return response.Data;
+
         }
 
         public async Task<bool> DeleteFishingSpotAsync(int id)

@@ -81,5 +81,21 @@ namespace BaitM8s.API.Controllers
                 return StatusCode(500);
             }
         }
+
+        [HttpPost]
+        public async Task<ActionResult<int>> Create([FromBody] FishingSpotDTO dto)
+        {
+            try
+            {
+                FishingSpot fishingSpot = _fishingSpotMapper.ToModel(dto);
+                var newId = await _fishingSpotDAO.CreateFishingSpotAsync(fishingSpot);
+                return CreatedAtAction(nameof(Create), new { id = newId }, newId);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (not implemented here)
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }

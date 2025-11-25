@@ -21,7 +21,8 @@ namespace BaitM8s.API.Mappings
                 HandicapFriendly = dto.HandicapFriendly,
                 IsAwaitingApproval = dto.IsAwaitingApproval,
                 StartAvailableHours = dto.StartAvailableHours,
-                EndAvailableHours = dto.EndAvailableHours
+                EndAvailableHours = dto.EndAvailableHours,
+                FK_PondOwnerId = dto.FK_PondOwnerId
             };
 
             return fishingSpot;
