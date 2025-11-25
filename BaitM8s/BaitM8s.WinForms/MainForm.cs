@@ -51,6 +51,8 @@ namespace BaitM8s.WinForms
             txtFishSpecies.Text = string.Join(", ", selectedSpot.FishSpecies);
             chkHandicapFriendly.Checked = selectedSpot.HandicapFriendly;
             txtPondOwnerId.Text = selectedSpot.FK_PondOwnerId.ToString();
+            txtStartAvailableHours.Text = selectedSpot.StartAvailableHours.ToString();
+            txtEndAvailableHours.Text= selectedSpot.EndAvailableHours.ToString();
         }
         public void ClearFields()
         {
@@ -63,7 +65,9 @@ namespace BaitM8s.WinForms
             txtCapacity.Clear();
             txtFishSpecies.Clear();
             chkHandicapFriendly.Checked = false;
-
+            txtPondOwnerId.Clear();
+            txtStartAvailableHours.Clear();
+            txtEndAvailableHours.Clear();
         }
         //public async Task CreateFishingSpotAsync()
         //{
@@ -137,6 +141,18 @@ namespace BaitM8s.WinForms
                     return;
                 }
 
+                if (!int.TryParse(txtStartAvailableHours.Text.Trim(), out int startAvailableHours))
+                {
+                    MessageBox.Show("StartAvailableHours must be a valid integer.");
+                    return;
+                }
+
+                if (!int.TryParse(txtEndAvailableHours.Text, out int endAvailableHours))
+                {
+                    MessageBox.Show("EndAvailableHours must be a valid integer.");
+                    return;
+                }
+
                 if (string.IsNullOrWhiteSpace(txtZipCode.Text.Trim()))
                 {
                     MessageBox.Show("Zip Code is required.");
@@ -159,7 +175,9 @@ namespace BaitM8s.WinForms
                     Capacity = capacity,
                     HandicapFriendly = chkHandicapFriendly.Checked,
                     FishSpecies = fishSpecies,
-                    FK_PondOwnerId = pondOwnerId
+                    FK_PondOwnerId = pondOwnerId,
+                    StartAvailableHours = startAvailableHours,
+                    EndAvailableHours = endAvailableHours
                 };
 
                 var newId = await _fishingSpotAPIClient.CreateFishingSpotAsync(newSpot);
@@ -213,6 +231,18 @@ namespace BaitM8s.WinForms
                     return;
                 }
 
+                if (!int.TryParse(txtStartAvailableHours.Text.Trim(), out int startAvailableHours))
+                {
+                    MessageBox.Show("StartAvailableHours must be a valid integer.");
+                    return;
+                }
+
+                if (!int.TryParse(txtEndAvailableHours.Text, out int endAvailableHours))
+                {
+                    MessageBox.Show("EndAvailableHours must be a valid integer.");
+                    return;
+                }
+
                 float.TryParse(txtLongitude.Text, out float longitude);
                 float.TryParse(txtLatitude.Text, out float latitude);
 
@@ -232,7 +262,9 @@ namespace BaitM8s.WinForms
                     Capacity = capacity,
                     HandicapFriendly = chkHandicapFriendly.Checked,
                     FK_PondOwnerId = pondOwnerId,
-                    FishSpecies = species
+                    FishSpecies = species,
+                    StartAvailableHours = startAvailableHours,
+                    EndAvailableHours = endAvailableHours
                 };
 
                 await _fishingSpotAPIClient.ManageFishingSpotAsync(spot);

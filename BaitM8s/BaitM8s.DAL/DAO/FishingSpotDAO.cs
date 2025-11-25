@@ -37,7 +37,7 @@ namespace BaitM8s.DAL.DAO
                 var id = await connection.ExecuteScalarAsync<int>(
                 @"INSERT INTO FishingSpot (Name, Address, FK_zipcodeId, Longitude, Latitude, StartAvailableHours, EndAvailableHours, Capacity, HandicapFriendly, FK_PondOwnerId)
                   VALUES (@Name, @Address, @ZipcodeId, @Longitude, @Latitude, @StartAvailableHours, @EndAvailableHours, @Capacity, @HandicapFriendly, @FK_PondOwnerId);
-                  SELECT CAST(SCOPE_IDENTITY() as int);", //TODO: FK_PondOwnerId hedder FK_PondOwner i databasen. Skal lige fixes.
+                  SELECT CAST(SCOPE_IDENTITY() as int);", 
                 new
                 {
                     Name = spot.Name,
@@ -121,7 +121,7 @@ namespace BaitM8s.DAL.DAO
                 @"select fs.id, fs.name, fs.address, z.zipcode as zipcode,
                  fs.longitude, fs.latitude, fs.startavailablehours, fs.endavailablehours, fs.capacity, fs.handicapfriendly, fs.fk_pondownerid
           from fishingspot fs
-          inner join zipcode z on fs.fk_zipcodeid = z.id")).ToList(); //TODO: FK_PondOwnerId hedder FK_PondOwner!
+          inner join zipcode z on fs.fk_zipcodeid = z.id")).ToList();
 
             foreach (var spot in spots)
             {
@@ -163,13 +163,14 @@ namespace BaitM8s.DAL.DAO
             throw new NotImplementedException();
         }
 
+        //TODO: Skal opdateres.
         public async Task<bool> ManageFishingSpotAsync(FishingSpot fishingSpot)
         {
             var query = @"UPDATE FishingSpot
                       SET Name = @Name,
                           Capacity = @Capacity,
                           StartAvailableHours = @StartAvailableHours,
-                          EndAvailableHours = @EndAvailableHours
+                          EndAvailableHours = @EndAvailableHours,
                       WHERE Id = @Id;";
 
             using (var connection = CreateConnection())
