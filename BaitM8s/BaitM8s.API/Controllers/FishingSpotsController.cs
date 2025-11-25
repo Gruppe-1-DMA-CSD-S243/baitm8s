@@ -97,5 +97,24 @@ namespace BaitM8s.API.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            try
+            {
+                var success = await _fishingSpotDAO.DeleteFishingSpotAsync(id);
+                if (!success)
+                {
+                    return NotFound();
+                }
+                return Ok(success);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (not implemented here)
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }

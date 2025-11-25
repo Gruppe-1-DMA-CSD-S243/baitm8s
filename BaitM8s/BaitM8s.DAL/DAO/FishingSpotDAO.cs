@@ -85,10 +85,34 @@ namespace BaitM8s.DAL.DAO
 
         public async Task<bool> DeleteFishingSpotAsync(int id)
         {
-            throw new NotImplementedException();
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+
+            using var transaction = connection.BeginTransaction();
+
+            try
+            {
+                await connection.ExecuteAsync(
+                    "DELETE FROM FishSpecies_FishingSpot WHERE FK_FishingSpotId = @Id",
+                    new { Id = id },
+                    transaction);
+
+                await connection.ExecuteAsync(
+                    "DELETE FROM FishingSpot WHERE Id = @Id",
+                    new { Id = id },
+                    transaction);
+
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
+            return true;
         }
 
-         public async Task<IEnumerable<FishingSpot>> GetAllFishingSpotsAsync()
+        public async Task<IEnumerable<FishingSpot>> GetAllFishingSpotsAsync()
         {
             using var connection = new SqlConnection(_connectionString);
             await connection.OpenAsync();

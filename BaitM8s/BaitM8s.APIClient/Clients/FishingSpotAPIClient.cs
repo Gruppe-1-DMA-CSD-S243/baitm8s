@@ -36,7 +36,13 @@ namespace BaitM8s.APIClient.Clients
 
         public async Task<bool> DeleteFishingSpotAsync(int id)
         {
-            throw new NotImplementedException();
+            var request = new RestRequest($"FishingSpots/{id}", Method.Delete);
+            var response = await _restClient.ExecuteAsync(request);
+            if (!response.IsSuccessful)
+            {
+                throw new Exception($"Error deleting FishingSpot with ID {id}: {response.StatusCode} - {response.Content}");
+            }
+            return true;
         }
 
         public async Task<IEnumerable<FishingSpotDTO>> GetAllFishingSpotsAsync()
