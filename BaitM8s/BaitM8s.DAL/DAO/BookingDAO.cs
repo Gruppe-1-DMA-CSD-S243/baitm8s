@@ -65,9 +65,9 @@ namespace BaitM8s.DAL.DAO
 
         public async Task<int> CreateBookingAsync(Booking booking)
         {
-            var sql = @"INSERT INTO Booking (NumberOfPeople, Day, Month, Year, WeekNumber, FK_AnglerId, FK_FishingSpotId)
+            var sql = @"INSERT INTO Booking (NumberOfPeople, Day, Month, Year, WeekNumber, StartTime, EndTime, FK_AnglerId, FK_FishingSpotId)
                       OUTPUT INSERTED.Id
-                      VALUES (@NumberOfPeople, @Day, @Month, @Year, @WeekNumber, @FK_AnglerId, @FK_FishingSpotId);";
+                      VALUES (@NumberOfPeople, @Day, @Month, @Year, @WeekNumber, @StartTime, @EndTime, @FK_AnglerId, @FK_FishingSpotId);";
             using (var connection = CreateConnection())
             {
                 connection.Open();
@@ -84,6 +84,8 @@ namespace BaitM8s.DAL.DAO
                                 booking.Month,
                                 booking.Year,
                                 booking.WeekNumber,
+                                booking.StartTime,
+                                booking.EndTime,
                                 booking.FK_AnglerId,
                                 booking.FK_FishingSpotId
                             },

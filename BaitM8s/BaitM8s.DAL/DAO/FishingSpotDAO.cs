@@ -1,11 +1,11 @@
 ﻿using BaitM8s.DAL.Interfaces;
-using BaitM8s.DAL.DTO;
 using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BaitM8s.DAL.Model;
 
 namespace BaitM8s.DAL.DAO
 {
@@ -15,7 +15,7 @@ namespace BaitM8s.DAL.DAO
         {
         }
 
-        public async Task<int> CreateFishingSpotAsync(FishingSpotDTO fishingSpot)
+        public async Task<int> CreateFishingSpotAsync(FishingSpot fishingSpot)
         {
             throw new NotImplementedException();
         }
@@ -25,38 +25,38 @@ namespace BaitM8s.DAL.DAO
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<FishingSpotDTO>> GetAllFishingSpotsAsync()
+        public async Task<IEnumerable<FishingSpot>> GetAllFishingSpotsAsync()
         {
             var query = "SELECT * FROM FishingSpot";
             using var connection = CreateConnection();
-            return await connection.QueryAsync<FishingSpotDTO>(query);
+            return await connection.QueryAsync<FishingSpot>(query);
         }
 
-        public async Task<FishingSpotDTO?> GetFishingSpotAsync(int id)
+        public async Task<FishingSpot?> GetFishingSpotAsync(int id)
         {
             var query = @"SELECT * FROM FishingSpot WHERE Id = @Id";
             using var connection = CreateConnection();
-            return await connection.QuerySingleOrDefaultAsync<FishingSpotDTO>(query, new { Id = id });
+            return await connection.QuerySingleOrDefaultAsync<FishingSpot>(query, new { Id = id });
         }
 
-        public async Task<IEnumerable<FishingSpotDTO>> GetFishingSpotsByPondOwnerAsync(int id)
+        public async Task<IEnumerable<FishingSpot>> GetFishingSpotsByPondOwnerAsync(int id)
         {
             var query = @"SELECT * FROM FishingSpot WHERE FK_PondOwner = @Id";
             using var connection = CreateConnection();
-            return await connection.QueryAsync<FishingSpotDTO>(query, new { Id = id });
+            return await connection.QueryAsync<FishingSpot>(query, new { Id = id });
         }
 
-        public async Task<FishingSpotDTO> RegisterFishingSpotAsync(int id)
+        public async Task<FishingSpot> RegisterFishingSpotAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<FishingSpotDTO> RemoveOwnershipOnFishingSpotAsync(int id)
+        public async Task<FishingSpot> RemoveOwnershipOnFishingSpotAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<bool> ManageFishingSpotAsync(FishingSpotDTO fishingSpot)
+        public async Task<bool> ManageFishingSpotAsync(FishingSpot fishingSpot)
         {
             var query = @"UPDATE FishingSpot
                       SET Name = @Name,

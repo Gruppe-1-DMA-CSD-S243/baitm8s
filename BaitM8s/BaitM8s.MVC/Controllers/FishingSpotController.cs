@@ -1,19 +1,17 @@
 ﻿using BaitM8s.APIClient.Clients;
 using BaitM8s.APIClient.Interfaces;
 using BaitM8s.DAL.DTO;
-using BaitM8s.DAL.Interfaces;
-using BaitM8s.DAL.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BaitM8s.MVC.Controllers
 {
     public class FishingSpotController : Controller
     {
-        private readonly IFishingSpotDAO _fishingSpotApiClient;
+        private readonly IFishingSpotAPIClient _fishingSpotApiClient;
         //TODO: id currently decides if it is an angler(0) or owner(1-n) index that is returned, change hardcode later
         private readonly int userType = 0;
 
-        public FishingSpotController(IFishingSpotDAO fishingSpotApiClient)
+        public FishingSpotController(IFishingSpotAPIClient fishingSpotApiClient)
         {
             _fishingSpotApiClient = fishingSpotApiClient;
         }

@@ -2,8 +2,6 @@
 using BaitM8s.APIClient.Clients;
 using BaitM8s.APIClient.Interfaces;
 using BaitM8s.DAL.DTO;
-using BaitM8s.DAL.Interfaces;
-using BaitM8s.DAL.Model;
 using BaitM8s.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,9 +12,9 @@ namespace BaitM8s.MVC.Controllers
     public class BookingController : Controller
     {
         private readonly IBookingAPIClient _bookingApiClient;
-        private readonly IFishingSpotDAO _fishingSpotApiClient;
+        private readonly IFishingSpotAPIClient _fishingSpotApiClient;
 
-        public BookingController(IBookingAPIClient bookingApiClient, IFishingSpotDAO fishingSpotApiClient)
+        public BookingController(IBookingAPIClient bookingApiClient, IFishingSpotAPIClient fishingSpotApiClient)
         {
             _bookingApiClient = bookingApiClient;
             _fishingSpotApiClient = fishingSpotApiClient;

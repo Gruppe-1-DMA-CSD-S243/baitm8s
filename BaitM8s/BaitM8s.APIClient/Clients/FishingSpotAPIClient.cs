@@ -1,6 +1,5 @@
-﻿using BaitM8s.DAL.DTO;
-using BaitM8s.DAL.Interfaces;
-using BaitM8s.DAL.Model;
+﻿using BaitM8s.APIClient.Interfaces;
+using BaitM8s.DAL.DTO;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BaitM8s.APIClient.Clients
 {
-    public class FishingSpotAPIClient : IFishingSpotDAO
+    public class FishingSpotAPIClient : IFishingSpotAPIClient
     {
         private readonly string _apiBaseUri;
         private readonly RestClient _restClient;

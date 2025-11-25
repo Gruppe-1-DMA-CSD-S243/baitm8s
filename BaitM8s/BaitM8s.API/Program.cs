@@ -37,6 +37,9 @@ namespace BaitM8s.API
             builder.Services.AddScoped<IFishingSpotDAO>(fishingSpotDAO =>
             new FishingSpotDAO(_connectionString));
 
+            builder.Services.AddScoped<IFishingSpotMapper>(fishingSpotMapper =>
+            new FishingSpotMapper());
+
             builder.Services.AddScoped<INotificationService>(notificationService =>
             new TelegramNotificationService("https://api.telegram.org", "8230947150:AAHn8ZkyVU4DLGMvtGY06u0ZDz1lnVtHpKY", "-1003297586522"));
 

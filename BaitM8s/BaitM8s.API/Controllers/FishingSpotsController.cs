@@ -1,6 +1,8 @@
-﻿using BaitM8s.DAL.DAO;
+﻿using BaitM8s.API.Mappings.Interfaces;
+using BaitM8s.DAL.DAO;
 using BaitM8s.DAL.DTO;
 using BaitM8s.DAL.Interfaces;
+using BaitM8s.DAL.Model;
 using BaitM8s.Services.Notifications.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,9 +13,11 @@ namespace BaitM8s.API.Controllers
     public class FishingSpotsController : Controller
     {
         private readonly IFishingSpotDAO _fishingSpotDAO;
-        public FishingSpotsController(IFishingSpotDAO fishingSpotDAO)
+        private readonly IFishingSpotMapper _fishingSpotMapper;
+        public FishingSpotsController(IFishingSpotDAO fishingSpotDAO, IFishingSpotMapper fishingSpotMapper)
         {
             _fishingSpotDAO = fishingSpotDAO;
+            _fishingSpotMapper = fishingSpotMapper;
         }
 
         [HttpGet]
@@ -65,10 +69,11 @@ namespace BaitM8s.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<bool>> ManageFishingSpotAsync(int id, FishingSpotDTO fishingSpot)
+        public async Task<ActionResult<bool>> ManageFishingSpotAsync(int id, FishingSpotDTO dto)
         {
             try
             {
+                FishingSpot fishingSpot = _fishingSpotMapper.ToModel(dto);
                 return Ok(await _fishingSpotDAO.ManageFishingSpotAsync(fishingSpot));
             }
             catch (Exception ex)

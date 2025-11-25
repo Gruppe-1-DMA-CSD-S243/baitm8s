@@ -26,7 +26,7 @@ namespace BaitM8s.MVC
             builder.Services.AddScoped<IAnglerAPIClient>(angler => 
             new AnglerAPIClient("https://localhost:8888/api"));
 
-            builder.Services.AddScoped<IFishingSpotDAO>(fishingSpot =>
+            builder.Services.AddScoped<IFishingSpotAPIClient>(fishingSpot =>
             new FishingSpotAPIClient("https://localhost:8888/api"));
 
             var app = builder.Build();
