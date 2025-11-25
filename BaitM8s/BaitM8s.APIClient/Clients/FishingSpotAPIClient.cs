@@ -22,7 +22,8 @@ namespace BaitM8s.APIClient.Clients
 
         public async Task<int> CreateFishingSpotAsync(FishingSpot fishingSpot, int pondOwnerId)
         {
-            var request = new RestRequest("FishingSpot", Method.Post);
+            var request = new RestRequest("FishingSpots", Method.Post);
+            request.AddParameter("pondOwnerId", pondOwnerId);
             request.AddJsonBody(fishingSpot);
             var response = await _restClient.ExecuteAsync<int>(request);
             if (!response.IsSuccessful)
@@ -35,7 +36,7 @@ namespace BaitM8s.APIClient.Clients
 
         public async Task<bool> DeleteFishingSpotAsync(int id)
         {
-            var request = new RestRequest($"FishingSpot/{id}", Method.Delete);
+            var request = new RestRequest($"FishingSpots/{id}", Method.Delete);
             var response = await _restClient.ExecuteAsync(request);
             if (!response.IsSuccessful)
             {
@@ -90,7 +91,7 @@ namespace BaitM8s.APIClient.Clients
 
         public async Task<int> UpdateFishingSpotAsync(int id, FishingSpot fishingSpot)
         {
-            var request = new RestRequest($"FishingSpot/{id}", Method.Put);
+            var request = new RestRequest($"FishingSpots/{id}", Method.Put);
             request.AddJsonBody(fishingSpot);
             var response = await _restClient.ExecuteAsync<int>(request);
             if (!response.IsSuccessful)
