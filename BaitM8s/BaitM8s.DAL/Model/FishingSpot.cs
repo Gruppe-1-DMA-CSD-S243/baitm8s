@@ -17,6 +17,7 @@ namespace BaitM8s.DAL.Model
         public int Capacity { get; set; }
         public List<string> FishSpecies { get; set; }
         public bool HandicapFriendly { get; set; }
+        public int FK_PondOwnerId { get; set; }
 
         public FishingSpot(string name, string address, string zipCode, float longitude, float latitude, int capacity, List<string> fishSpecies, bool handicapFriendly)
         {

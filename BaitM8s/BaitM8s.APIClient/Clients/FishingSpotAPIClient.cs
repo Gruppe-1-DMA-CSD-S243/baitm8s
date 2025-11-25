@@ -20,10 +20,9 @@ namespace BaitM8s.APIClient.Clients
             _restClient = new RestClient(_apiBaseUri);
         }
 
-        public async Task<int> CreateFishingSpotAsync(FishingSpot fishingSpot, int pondOwnerId)
+        public async Task<int> CreateFishingSpotAsync(FishingSpot fishingSpot)
         {
             var request = new RestRequest("FishingSpots", Method.Post);
-            request.AddParameter("pondOwnerId", pondOwnerId);
             request.AddJsonBody(fishingSpot);
             var response = await _restClient.ExecuteAsync<int>(request);
             if (!response.IsSuccessful)

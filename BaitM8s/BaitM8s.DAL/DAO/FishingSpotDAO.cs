@@ -19,7 +19,7 @@ namespace BaitM8s.DAL.DAO
             this._connectionString = connectionString;
         }
 
-        public async Task<int> CreateFishingSpotAsync(FishingSpot spot, int pondOwnerId)
+        public async Task<int> CreateFishingSpotAsync(FishingSpot spot)
         {
             using SqlConnection connection = new SqlConnection(_connectionString);
             await connection.OpenAsync();
@@ -35,7 +35,7 @@ namespace BaitM8s.DAL.DAO
                       INSERT INTO Zipcode (Zipcode) VALUES (@ZipCode);
                       SELECT CAST(SCOPE_IDENTITY() as int);
                   END",
-                new { spot.ZipCode },
+                new { ZipCode = spot.ZipCode },
                 transaction);
                 var id = await connection.ExecuteScalarAsync<int>(
                 @"INSERT INTO FishingSpot (Name, Address, FK_zipcodeId, Longitude, Latitude, Capacity, HandicapFriendly, FK_PondOwner)
@@ -43,14 +43,14 @@ namespace BaitM8s.DAL.DAO
                   SELECT CAST(SCOPE_IDENTITY() as int);",
                 new
                 {
-                    spot.Name,
-                    spot.Address,
+                    Name = spot.Name,
+                    Address = spot.Address,
                     ZipcodeId = zipcodeId,
-                    spot.Longitude,
-                    spot.Latitude,
-                    spot.Capacity,
-                    spot.HandicapFriendly,
-                    PondOwnerId = pondOwnerId
+                    Longitude = spot.Longitude,
+                    Latitude = spot.Latitude,
+                    Capacity = spot.Capacity,
+                    HandicapFriendly = spot.HandicapFriendly,
+                    PondOwnerId = spot.FK_PondOwnerId
                 },
                 transaction);
 
@@ -83,7 +83,6 @@ namespace BaitM8s.DAL.DAO
                 throw;
             }
         }
-
 
         public async Task<bool> DeleteFishingSpotAsync(int id)
         {

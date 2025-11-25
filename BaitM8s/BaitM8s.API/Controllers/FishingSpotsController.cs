@@ -50,11 +50,11 @@ namespace BaitM8s.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> Create([FromBody] FishingSpot fishingSpot, [FromQuery] int pondOwnerId)
+        public async Task<ActionResult<int>> Create([FromBody] FishingSpot fishingSpot)
         {
             try
             {
-                var newId = await _fishingSpotDAO.CreateFishingSpotAsync(fishingSpot, pondOwnerId);
+                var newId = await _fishingSpotDAO.CreateFishingSpotAsync(fishingSpot);
                 return CreatedAtAction(nameof(Get), new { id = newId }, newId);
             }
             catch (Exception ex)

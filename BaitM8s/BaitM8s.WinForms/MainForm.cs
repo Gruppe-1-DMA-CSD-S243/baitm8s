@@ -158,10 +158,11 @@ namespace BaitM8s.WinForms
                     Latitude = latitude,
                     Capacity = capacity,
                     HandicapFriendly = chkHandicapFriendly.Checked,
-                    FishSpecies = fishSpecies
+                    FishSpecies = fishSpecies,
+                    FK_PondOwnerId = pondOwnerId
                 };
 
-                var newId = await _fishingSpotAPIClient.CreateFishingSpotAsync(newSpot, pondOwnerId);
+                var newId = await _fishingSpotAPIClient.CreateFishingSpotAsync(newSpot);
 
                 MessageBox.Show(
                     $"Fishing Spot created with ID: {newId}",
