@@ -13,8 +13,11 @@
 }
 <form method="get" asp-action="AvailableTimes" asp-controller="Booking">
     <input type="hidden" name="id" value="@Model.FishingSpot.Id" />
-
-    <select class="form-select" id="weekNumber" name="weekNumber" onchange="this.form.submit()">
+    <label for="weekNumber" style="display:inline-block; margin-right: 10px;">
+        Week Number:
+    </label>
+    <select name="weekNumber" id="weekNumber" style="width: 100px; height: 40px; display:inline-block;" onchange="this.form.submit()">
+        
         @for (int week = 52; week >= 1; week--)
         {
             if (week == Model.SelectedWeek)
@@ -28,7 +31,10 @@
         }
     </select>
 
-    <select class="form-select" id="year" name="year" onchange="this.form.submit()">
+    <label for="weekNumber" style="display:inline-block; margin-right: 10px;">
+        Year:
+    </label>
+    <select class="form-select" id="year" name="year" style="width: 100px; height: 40px; display:inline-block;" onchange="this.form.submit()">
         @for (int y = yearNumber; y <= 2100; y++)
         {
             if (y == Model.SelectedYear)
@@ -70,8 +76,8 @@
                            asp-route-day="@date.Day"
                            asp-route-year="@date.Year"
                            asp-route-month="@date.Month"
-                           asp-route-startTime="@time"
-                           asp-route-endTime="@time.Add(slotDuration)"
+                           asp-route-startTime="@time.Hours"
+                           asp-route-endTime="@time.Add(slotDuration).Hours"
                            class="btn btn-outline-primary btn-sm">
                             @timeSlot
                         </a>

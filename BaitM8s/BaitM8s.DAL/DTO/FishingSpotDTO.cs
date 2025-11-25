@@ -17,6 +17,7 @@ namespace BaitM8s.DAL.DTO
         public int Capacity { get; set; }
         public List<string>? FishSpecies { get; set; }
         public bool HandicapFriendly { get; set; }
+        //TODO: Add a new table with isAwaitingApproval for admin panel
         public bool IsAwaitingApproval { get; set; }
         public int StartAvailableHours { get; set; }
         public int EndAvailableHours { get; set; }
