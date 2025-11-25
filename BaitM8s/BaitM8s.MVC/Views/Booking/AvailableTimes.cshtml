@@ -7,8 +7,8 @@
     var weeks = Enumerable.Range(1, 52).Reverse();
     int yearNumber = DateTime.Now.Year;
     var years = Enumerable.Range(yearNumber, 2100).Reverse();
-    TimeSpan startTime = new TimeSpan(7, 0, 0);
-    TimeSpan endTime = new TimeSpan(15, 0, 0);
+    TimeSpan startTime = new TimeSpan(Model.FishingSpot.StartAvailableHours, 0, 0);
+    TimeSpan endTime = new TimeSpan(Model.FishingSpot.EndAvailableHours, 0, 0);
     TimeSpan slotDuration = new TimeSpan(1, 0, 0);
 }
 <form method="get" asp-action="AvailableTimes" asp-controller="Booking">
