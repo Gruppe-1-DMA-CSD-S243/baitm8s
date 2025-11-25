@@ -149,9 +149,9 @@ namespace BaitM8s.MVC.Controllers
         //var test = BookingAPIClient.GetDatesOfWeek(2, 3);
 
         [HttpGet]
-        public async Task<IActionResult> BookAvailableTime(int id, int day, int month, int year)
+        public async Task<IActionResult> BookAvailableTime(int id, int day, int month, int year, int startTime, int endTime)
         {
-            BookingDTO booking = new BookingDTO { FK_FishingSpotId = id, Day = day, Month = month, Year = year};
+            BookingDTO booking = new BookingDTO { FK_FishingSpotId = id, Day = day, Month = month, Year = year, StartTime = startTime, EndTime = endTime};
             return View(booking);
         }
 
@@ -166,7 +166,7 @@ namespace BaitM8s.MVC.Controllers
 
             }
             var newId = await _bookingApiClient.CreateAsync(booking);
-
+            //TODO: Skal vi ikke bare vise Details efter oprettelse?
             return RedirectToAction("AvailableTimes", "Booking", new { id = 1 });
             //TODO: giv fejlbesked og  vis formular igen
             return View();
