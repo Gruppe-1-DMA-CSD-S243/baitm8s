@@ -12,9 +12,7 @@ namespace BaitM8s.APIClient.Interfaces
         Task<FishingSpotDTO?> GetFishingSpotAsync(int id);
         Task<IEnumerable<FishingSpotDTO>> GetAllFishingSpotsAsync();
         Task<IEnumerable<FishingSpotDTO>> GetFishingSpotsByPondOwnerAsync(int id);
-        Task<FishingSpotDTO> RemoveOwnershipOnFishingSpotAsync(int id);
         Task<bool> DeleteFishingSpotAsync(int id);
-        Task<FishingSpotDTO> RegisterFishingSpotAsync(int id);
         Task<int> CreateFishingSpotAsync(FishingSpotDTO fishingSpot);
         Task<bool> ManageFishingSpotAsync(FishingSpotDTO fishingSpot);
     }

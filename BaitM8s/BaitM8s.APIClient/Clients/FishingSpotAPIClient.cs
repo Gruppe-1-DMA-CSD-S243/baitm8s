@@ -100,16 +100,6 @@ namespace BaitM8s.APIClient.Clients
             //return response.Data;
         }
 
-        public async Task<FishingSpotDTO> RegisterFishingSpotAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<FishingSpotDTO> RemoveOwnershipOnFishingSpotAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<bool> ManageFishingSpotAsync(FishingSpotDTO fishingSpot)
         {
             int id = fishingSpot.Id;

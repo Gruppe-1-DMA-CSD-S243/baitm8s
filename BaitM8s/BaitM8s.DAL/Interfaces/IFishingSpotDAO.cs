@@ -12,9 +12,7 @@ namespace BaitM8s.DAL.Interfaces
         Task<FishingSpot?> GetFishingSpotAsync(int id);
         Task<IEnumerable<FishingSpot>> GetAllFishingSpotsAsync();
         Task<IEnumerable<FishingSpot>> GetFishingSpotsByPondOwnerAsync(int id);
-        Task<FishingSpot> RemoveOwnershipOnFishingSpotAsync(int id);
         Task<bool> DeleteFishingSpotAsync(int id);
-        Task<FishingSpot> RegisterFishingSpotAsync(int id);
         Task<int> CreateFishingSpotAsync(FishingSpot fishingSpot);
         Task<bool> ManageFishingSpotAsync(FishingSpot fishingSpot);
 

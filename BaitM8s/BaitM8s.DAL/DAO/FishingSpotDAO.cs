@@ -153,16 +153,6 @@ namespace BaitM8s.DAL.DAO
             return await connection.QueryAsync<FishingSpot>(query, new { Id = id });
         }
 
-        public async Task<FishingSpot> RegisterFishingSpotAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<FishingSpot> RemoveOwnershipOnFishingSpotAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         //TODO: Skal opdateres.
         public async Task<bool> ManageFishingSpotAsync(FishingSpot fishingSpot)
         {
