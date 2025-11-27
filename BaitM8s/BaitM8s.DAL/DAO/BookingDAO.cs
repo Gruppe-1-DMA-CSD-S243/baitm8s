@@ -83,14 +83,15 @@ namespace BaitM8s.DAL.DAO
                             }, 
                             transaction);
 
-                        int slotsTaken = await connection.ExecuteScalarAsync<int>(@"SELECT SUM(NumberOfPeople) FROM Booking WHERE FK_FishingSpotId = @FK_FishingSpotId AND Day = @Day AND Month = @Month AND Year = @Year AND StartTime = @StartTime;",
+                        int slotsTaken = await connection.ExecuteScalarAsync<int>(@"SELECT SUM(NumberOfPeople) FROM Booking WHERE FK_FishingSpotId = @FK_FishingSpotId AND Day = @Day AND Month = @Month AND Year = @Year AND StartTime = @StartTime AND EndTime = @EndTime;",
                             new
                             {
                                 FK_FishingSpotId = booking.FK_FishingSpotId,
                                 Day = booking.Day,
                                 Month = booking.Month,
                                 Year = booking.Year,
-                                StartTime = booking.StartTime
+                                StartTime = booking.StartTime,
+                                EndTime = booking.EndTime
                             },
                             transaction);
 
