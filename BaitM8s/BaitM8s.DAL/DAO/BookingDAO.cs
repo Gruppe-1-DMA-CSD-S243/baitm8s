@@ -72,10 +72,33 @@ namespace BaitM8s.DAL.DAO
             {
                 connection.Open();
 
-                using (var transaction = connection.BeginTransaction())
+                using (var transaction = connection.BeginTransaction(System.Data.IsolationLevel.Serializable))
                 {
                     try
                     {
+                        int capacity = await connection.QuerySingleAsync<int>(@"SELECT Capacity FROM FishingSpot WHERE Id = @FK_FishingSpotId;",
+                            new
+                            {
+                                FK_FishingSpotId = booking.FK_FishingSpotId
+                            }, 
+                            transaction);
+
+                        int slotsTaken = await connection.ExecuteScalarAsync<int>(@"SELECT SUM(NumberOfPeople) FROM Booking WHERE FK_FishingSpotId = @FK_FishingSpotId AND Day = @Day AND Month = @Month AND Year = @Year AND StartTime = @StartTime;",
+                            new
+                            {
+                                FK_FishingSpotId = booking.FK_FishingSpotId,
+                                Day = booking.Day,
+                                Month = booking.Month,
+                                Year = booking.Year,
+                                StartTime = booking.StartTime
+                            },
+                            transaction);
+
+                        if (slotsTaken + booking.NumberOfPeople > capacity)
+                        {
+                            throw new Exception($"Number of people exceeds the fishing spot's capacity!");
+                        }
+
                         var newId = await connection.ExecuteScalarAsync<int>(sql,
                             new
                             {

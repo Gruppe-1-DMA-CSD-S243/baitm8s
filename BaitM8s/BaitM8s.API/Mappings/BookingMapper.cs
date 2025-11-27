@@ -19,9 +19,11 @@ namespace BaitM8s.API.Mappings
                 Day = dto.Day,
                 Month = dto.Month,
                 Year = dto.Year,
-                WeekNumber = cultureInfo.Calendar.GetWeekOfYear(date, 
-                    cultureInfo.DateTimeFormat.CalendarWeekRule, 
+                WeekNumber = cultureInfo.Calendar.GetWeekOfYear(date,
+                    cultureInfo.DateTimeFormat.CalendarWeekRule,
                     cultureInfo.DateTimeFormat.FirstDayOfWeek),
+                StartTime = dto.StartTime,
+                EndTime = dto.EndTime,
                 FK_AnglerId = dto.FK_AnglerId,
                 FK_FishingSpotId = dto.FK_FishingSpotId
             };
