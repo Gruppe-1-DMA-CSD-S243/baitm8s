@@ -160,12 +160,12 @@ namespace BaitM8s.DAL.DAO
                       SET Name = @Name,
                           Capacity = @Capacity,
                           StartAvailableHours = @StartAvailableHours,
-                          EndAvailableHours = @EndAvailableHours,
+                          EndAvailableHours = @EndAvailableHours
                       WHERE Id = @Id;";
 
-            using (var connection = CreateConnection())
-            {
-                connection.Open();
+            using var connection = new SqlConnection(_connectionString);
+            
+                await connection.OpenAsync();
 
                 using (var transaction = connection.BeginTransaction())
                 {
@@ -193,6 +193,47 @@ namespace BaitM8s.DAL.DAO
                         throw new Exception($"Error updating fishing spot with id {fishingSpot.Id}. Message was {ex.Message}");
                     }
                 }
+            
+        }
+
+        public async Task<bool> UpdateFishingSpotAsync(FishingSpot fishingSpot)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync(); // Explicitly open to catch connection errors early
+
+                    string sql = @"
+                UPDATE FishingSpot
+                SET 
+                    Name = @Name,
+                    Address = @Address,
+                    FK_zipcodeId = @FK_zipcodeId,
+                    Longitude = @Longitude,
+                    Latitude = @Latitude,
+                    StartAvailableHours = @StartAvailableHours,
+                    EndAvailableHours = @EndAvailableHours,
+                    Capacity = @Capacity,
+                    HandicapFriendly = @HandicapFriendly,
+                    FK_PondOwnerId = @FK_PondOwnerId
+                WHERE Id = @Id";
+
+                    int rowsAffected = await connection.ExecuteAsync(sql, fishingSpot);
+                    return rowsAffected > 0;
+                }
+            }
+            catch (SqlException ex)
+            {
+                // SQL-specific errors (e.g., FK violation, bad column)
+                Console.WriteLine($"SQL Error: {ex.Number} - {ex.Message}");
+                throw; // rethrow so your API can return a proper error response
+            }
+            catch (Exception ex)
+            {
+                // General errors (e.g., null object, bad mapping)
+                Console.WriteLine($"Unexpected Error: {ex.Message}");
+                throw;
             }
         }
     }
