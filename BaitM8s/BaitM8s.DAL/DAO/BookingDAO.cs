@@ -127,5 +127,26 @@ namespace BaitM8s.DAL.DAO
                 }
             }
         }
+
+        public async Task<IDictionary<string, int>> GetBookedPeopleCountAsync(int fishingSpotId, int weekNumber, int year)
+        {
+            string sql = @"SELECT * FROM Booking WHERE FK_FishingSpotId = @FK_FishingSpotId AND WeekNumber = @WeekNumber AND Year = @Year";
+            using var connection = CreateConnection();
+
+            IEnumerable<Booking> bookings = await connection.QueryAsync<Booking>(sql,
+                new
+                {
+                    FK_FishingSpotId = fishingSpotId,
+                    WeekNumber = weekNumber,
+                    Year = year
+                });
+
+            IDictionary<string, int> bookedPeoplePerTimeslot = bookings.GroupBy(booking => new { Day = booking.Day, StartTime = booking.StartTime })
+                .ToDictionary(
+                    group => $"{group.Key.Day}-{group.Key.StartTime}",
+                    group => group.Sum(booking => booking.NumberOfPeople));
+
+            return bookedPeoplePerTimeslot;
+        }
     }
 }

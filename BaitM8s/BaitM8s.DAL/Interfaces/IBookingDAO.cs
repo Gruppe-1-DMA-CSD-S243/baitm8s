@@ -13,5 +13,6 @@ namespace BaitM8s.DAL.Interfaces
         Task<IEnumerable<Booking>> GetAllBookingsAsync();
         Task<bool> DeleteBookingAsync(int id);
         Task<int> CreateBookingAsync(Booking booking);
+        Task<IDictionary<string, int>> GetBookedPeopleCountAsync(int fishingSpotId, int weekNumber, int year);
     }
 }
