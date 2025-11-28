@@ -160,12 +160,12 @@ namespace BaitM8s.DAL.DAO
                       SET Name = @Name,
                           Capacity = @Capacity,
                           StartAvailableHours = @StartAvailableHours,
-                          EndAvailableHours = @EndAvailableHours,
+                          EndAvailableHours = @EndAvailableHours
                       WHERE Id = @Id;";
 
-            using (var connection = CreateConnection())
-            {
-                connection.Open();
+            using var connection = new SqlConnection(_connectionString);
+            
+                await connection.OpenAsync();
 
                 using (var transaction = connection.BeginTransaction())
                 {
@@ -193,6 +193,99 @@ namespace BaitM8s.DAL.DAO
                         throw new Exception($"Error updating fishing spot with id {fishingSpot.Id}. Message was {ex.Message}");
                     }
                 }
+            
+        }
+
+        
+        public async Task<bool> UpdateFishingSpotAsync(FishingSpot spot)
+        {
+            using SqlConnection connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+            using var transaction = connection.BeginTransaction();
+
+            try
+            {
+                var zipcodeId = await connection.ExecuteScalarAsync<int>(
+                    @"IF EXISTS (SELECT 1 FROM Zipcode WHERE Zipcode = @ZipCode)
+                SELECT Id FROM Zipcode WHERE Zipcode = @ZipCode
+              ELSE
+              BEGIN
+                INSERT INTO Zipcode (Zipcode) VALUES (@ZipCode);
+                SELECT CAST(SCOPE_IDENTITY() AS INT);
+              END",
+                    new { spot.ZipCode },
+                    transaction);
+
+                int rows = await connection.ExecuteAsync(
+                    @"UPDATE FishingSpot
+              SET Name = @Name,
+                  Address = @Address,
+                  FK_zipcodeId = @ZipcodeId,
+                  Longitude = @Longitude,
+                  Latitude = @Latitude,
+                  Capacity = @Capacity,
+                  HandicapFriendly = @HandicapFriendly,
+                  FK_PondOwnerId = @FK_PondOwnerId,
+                  StartAvailableHours = @StartAvailableHours,
+                  EndAvailableHours = @EndAvailableHours
+              WHERE Id = @Id",
+                    new
+                    {
+                        spot.Name,
+                        spot.Address,
+                        ZipcodeId = zipcodeId,
+                        spot.Longitude,
+                        spot.Latitude,
+                        spot.Capacity,
+                        spot.HandicapFriendly,
+                        spot.FK_PondOwnerId,
+                        spot.Id,
+                        spot.StartAvailableHours,
+                        spot.EndAvailableHours
+
+                    },
+                    transaction);
+
+                if (rows == 0)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+
+
+                await connection.ExecuteAsync(
+                    @"DELETE FROM FishSpecies_FishingSpot WHERE FK_FishingSpotId = @Id",
+                    new { spot.Id },
+                    transaction);
+
+
+                foreach (var species in spot.FishSpecies)
+                {
+                    var speciesId = await connection.ExecuteScalarAsync<int>(
+                        @"IF EXISTS (SELECT 1 FROM FishSpecies WHERE Species = @Species)
+                      SELECT Id FROM FishSpecies WHERE Species = @Species
+                  ELSE
+                  BEGIN
+                      INSERT INTO FishSpecies (Species) VALUES (@Species);
+                      SELECT CAST(SCOPE_IDENTITY() AS INT);
+                  END",
+                        new { Species = species },
+                        transaction);
+
+                    await connection.ExecuteAsync(
+                        @"INSERT INTO FishSpecies_FishingSpot (FK_FishSpeciesId, FK_FishingSpotId)
+                  VALUES (@FishSpeciesId, @FishingSpotId)",
+                        new { FishSpeciesId = speciesId, FishingSpotId = spot.Id },
+                        transaction);
+                }
+
+                transaction.Commit();
+                return true;
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
             }
         }
     }

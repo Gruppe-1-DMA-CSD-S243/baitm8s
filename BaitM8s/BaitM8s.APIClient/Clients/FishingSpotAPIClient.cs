@@ -119,5 +119,23 @@ namespace BaitM8s.APIClient.Clients
 
             return response.Data;
         }
+
+        public async Task<bool> UpdateFishingSpotAsync(FishingSpotDTO fishingSpot)
+        {
+            int id = fishingSpot.Id;
+            var request = new RestRequest("fishingspots/update/{id}", Method.Put);
+            request.AddUrlSegment("id", id);
+            request.AddJsonBody(fishingSpot);
+            var response = await _restClient.ExecuteAsync<bool>(request);
+            if (response == null)
+            {
+                throw new Exception("No response from server");
+            }
+            if (!response.IsSuccessful)
+            {
+                throw new Exception($"Error updating fishing spot with id {id}. Message was {response.StatusDescription}");
+            }
+            return response.Data;
+        }
     }
 }

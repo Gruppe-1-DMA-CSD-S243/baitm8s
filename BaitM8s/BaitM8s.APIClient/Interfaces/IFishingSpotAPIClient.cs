@@ -15,5 +15,6 @@ namespace BaitM8s.APIClient.Interfaces
         Task<bool> DeleteFishingSpotAsync(int id);
         Task<int> CreateFishingSpotAsync(FishingSpotDTO fishingSpot);
         Task<bool> ManageFishingSpotAsync(FishingSpotDTO fishingSpot);
+        Task<bool> UpdateFishingSpotAsync(FishingSpotDTO fishingSpot);
     }
 }
