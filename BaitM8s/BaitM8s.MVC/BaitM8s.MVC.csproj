@@ -17,4 +17,8 @@
     <ProjectReference Include="..\BaitM8s.APIClient\BaitM8s.APIClient.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\map\" />
+  </ItemGroup>
+
 </Project>

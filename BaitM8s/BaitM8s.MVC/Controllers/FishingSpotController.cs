@@ -74,6 +74,18 @@ namespace BaitM8s.MVC.Controllers
             return RedirectToAction("Owner/Manage", new { fishingSpot.Id });
         }
 
+        public async Task<IActionResult> Map()
+        {
+            try
+            {
+                return View(await _fishingSpotApiClient.GetAllFishingSpotsAsync());
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error");
+            }
+        }
+
         //[HttpGet]
         //public async Task<IActionResult> RegisterOwnership()
         //{
