@@ -196,43 +196,95 @@ namespace BaitM8s.DAL.DAO
             
         }
 
-        public async Task<bool> UpdateFishingSpotAsync(FishingSpot fishingSpot)
+        
+        public async Task<bool> UpdateFishingSpotAsync(FishingSpot spot)
         {
+            using SqlConnection connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+            using var transaction = connection.BeginTransaction();
+
             try
             {
-                using (var connection = new SqlConnection(_connectionString))
+                var zipcodeId = await connection.ExecuteScalarAsync<int>(
+                    @"IF EXISTS (SELECT 1 FROM Zipcode WHERE Zipcode = @ZipCode)
+                SELECT Id FROM Zipcode WHERE Zipcode = @ZipCode
+              ELSE
+              BEGIN
+                INSERT INTO Zipcode (Zipcode) VALUES (@ZipCode);
+                SELECT CAST(SCOPE_IDENTITY() AS INT);
+              END",
+                    new { spot.ZipCode },
+                    transaction);
+
+                int rows = await connection.ExecuteAsync(
+                    @"UPDATE FishingSpot
+              SET Name = @Name,
+                  Address = @Address,
+                  FK_zipcodeId = @ZipcodeId,
+                  Longitude = @Longitude,
+                  Latitude = @Latitude,
+                  Capacity = @Capacity,
+                  HandicapFriendly = @HandicapFriendly,
+                  FK_PondOwnerId = @FK_PondOwnerId,
+                  StartAvailableHours = @StartAvailableHours,
+                  EndAvailableHours = @EndAvailableHours
+              WHERE Id = @Id",
+                    new
+                    {
+                        spot.Name,
+                        spot.Address,
+                        ZipcodeId = zipcodeId,
+                        spot.Longitude,
+                        spot.Latitude,
+                        spot.Capacity,
+                        spot.HandicapFriendly,
+                        spot.FK_PondOwnerId,
+                        spot.Id,
+                        spot.StartAvailableHours,
+                        spot.EndAvailableHours
+
+                    },
+                    transaction);
+
+                if (rows == 0)
                 {
-                    await connection.OpenAsync(); // Explicitly open to catch connection errors early
-
-                    string sql = @"
-                UPDATE FishingSpot
-                SET 
-                    Name = @Name,
-                    Address = @Address,
-                    FK_zipcodeId = @FK_zipcodeId,
-                    Longitude = @Longitude,
-                    Latitude = @Latitude,
-                    StartAvailableHours = @StartAvailableHours,
-                    EndAvailableHours = @EndAvailableHours,
-                    Capacity = @Capacity,
-                    HandicapFriendly = @HandicapFriendly,
-                    FK_PondOwnerId = @FK_PondOwnerId
-                WHERE Id = @Id";
-
-                    int rowsAffected = await connection.ExecuteAsync(sql, fishingSpot);
-                    return rowsAffected > 0;
+                    transaction.Rollback();
+                    return false;
                 }
+
+
+                await connection.ExecuteAsync(
+                    @"DELETE FROM FishSpecies_FishingSpot WHERE FK_FishingSpotId = @Id",
+                    new { spot.Id },
+                    transaction);
+
+
+                foreach (var species in spot.FishSpecies)
+                {
+                    var speciesId = await connection.ExecuteScalarAsync<int>(
+                        @"IF EXISTS (SELECT 1 FROM FishSpecies WHERE Species = @Species)
+                      SELECT Id FROM FishSpecies WHERE Species = @Species
+                  ELSE
+                  BEGIN
+                      INSERT INTO FishSpecies (Species) VALUES (@Species);
+                      SELECT CAST(SCOPE_IDENTITY() AS INT);
+                  END",
+                        new { Species = species },
+                        transaction);
+
+                    await connection.ExecuteAsync(
+                        @"INSERT INTO FishSpecies_FishingSpot (FK_FishSpeciesId, FK_FishingSpotId)
+                  VALUES (@FishSpeciesId, @FishingSpotId)",
+                        new { FishSpeciesId = speciesId, FishingSpotId = spot.Id },
+                        transaction);
+                }
+
+                transaction.Commit();
+                return true;
             }
-            catch (SqlException ex)
+            catch
             {
-                // SQL-specific errors (e.g., FK violation, bad column)
-                Console.WriteLine($"SQL Error: {ex.Number} - {ex.Message}");
-                throw; // rethrow so your API can return a proper error response
-            }
-            catch (Exception ex)
-            {
-                // General errors (e.g., null object, bad mapping)
-                Console.WriteLine($"Unexpected Error: {ex.Message}");
+                transaction.Rollback();
                 throw;
             }
         }

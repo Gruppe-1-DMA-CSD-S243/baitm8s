@@ -267,7 +267,7 @@ namespace BaitM8s.WinForms
                     EndAvailableHours = endAvailableHours
                 };
 
-                await _fishingSpotAPIClient.ManageFishingSpotAsync(spot);
+                await _fishingSpotAPIClient.UpdateFishingSpotAsync(spot);
 
                 MessageBox.Show("Fishing spot updated successfully.");
                 await LoadFishingSpotsAsync();

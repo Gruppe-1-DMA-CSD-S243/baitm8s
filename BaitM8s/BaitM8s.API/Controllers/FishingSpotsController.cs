@@ -117,25 +117,25 @@ namespace BaitM8s.API.Controllers
             }
         }
 
-        //[HttpPut("{id}")]
-        //public async Task<ActionResult> Update(int id, [FromBody] FishingSpotDTO dto)
-        //{
-        //    try
-        //    {
-        //        FishingSpot fishingSpot = _fishingSpotMapper.ToModel(dto);
-        //        fishingSpot.Id = id; // Ensure the ID is set correctly
-        //        var success = await _fishingSpotDAO.UpdateFishingSpotAsync(fishingSpot);
-        //        if (!success)
-        //        {
-        //            return NotFound();
-        //        }
-        //        return Ok(success);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Log the exception (not implemented here)
-        //        return StatusCode(500, "Internal server error");
-        //    }
-        //}
+        [HttpPut("update/{id}")]
+        public async Task<ActionResult> Update(int id, [FromBody] FishingSpotDTO dto)
+        {
+            try
+            {
+                FishingSpot fishingSpot = _fishingSpotMapper.ToModel(dto);
+                fishingSpot.Id = id; // Ensure the ID is set correctly
+                var success = await _fishingSpotDAO.UpdateFishingSpotAsync(fishingSpot);
+                if (!success)
+                {
+                    return NotFound();
+                }
+                return Ok(success);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (not implemented here)
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }

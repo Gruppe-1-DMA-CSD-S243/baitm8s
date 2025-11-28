@@ -123,7 +123,7 @@ namespace BaitM8s.APIClient.Clients
         public async Task<bool> UpdateFishingSpotAsync(FishingSpotDTO fishingSpot)
         {
             int id = fishingSpot.Id;
-            var request = new RestRequest("fishingspots/{id}", Method.Put);
+            var request = new RestRequest("fishingspots/update/{id}", Method.Put);
             request.AddUrlSegment("id", id);
             request.AddJsonBody(fishingSpot);
             var response = await _restClient.ExecuteAsync<bool>(request);
