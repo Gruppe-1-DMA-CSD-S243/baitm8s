@@ -16,7 +16,10 @@
 </script>
 
 <script>
-    var map = L.map('map').setView([51.505, -0.09], 13);
+	var userLat = 57.03;
+	var userLon = 9.92;
+
+    var map = L.map('map').setView([userLat, userLon], 13);
 
 	L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -33,7 +36,17 @@
 	@foreach(var spot in Model)
 	{
 		<text> <!--CultureInfo er nødvendigt! Det sørger for at float værdierne skrives med punktum!-->
-			L.marker([@spot.Latitude.ToString(CultureInfo.InvariantCulture), @spot.Longitude.ToString(CultureInfo.InvariantCulture)]).addTo(map).bindPopup("@spot.Name", { autoClose: false }).openPopup();
+			var marker = L.marker([@spot.Latitude.ToString(CultureInfo.InvariantCulture), @spot.Longitude.ToString(CultureInfo.InvariantCulture)]).addTo(map);
+			marker.bindPopup("@spot.Name", { closeButton: false });
+			marker.on('mouseover', function() {
+				this.openPopup();
+			});
+			marker.on('mouseout', function () {
+				this.closePopup();
+			});
+			marker.on('click', function() {
+				window.location.href = "@Url.Action("Details", "FishingSpot", new { id = spot.Id })";
+			});
 		</text>
 	}
 </script>
