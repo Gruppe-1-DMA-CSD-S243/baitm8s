@@ -83,7 +83,7 @@ namespace BaitM8s.API.Controllers
             }
         }
 
-        [HttpGet("fun")]
+        [HttpGet("booked-people-count")]
         public async Task<ActionResult<IDictionary<string, int>>> GetBookedPeopleCountAsync(int fishingSpotId = 1, int weekNumber = 48, int year = 2025)
         {
             try
@@ -92,7 +92,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                return NotFound(ex.Message); //TODO: Husk at fjerne ex.Message!
+                return NotFound();
             }
         }
     }

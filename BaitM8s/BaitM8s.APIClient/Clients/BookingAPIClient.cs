@@ -99,5 +99,22 @@ namespace BaitM8s.APIClient.Clients
             // Return the 7 days of the week
             return Enumerable.Range(0, 7).Select(d => mondayOfWeek.AddDays(d)).ToArray();
         }
+
+        public async Task<IDictionary<string, int>> GetBookedPeopleCountAsync(int fishingSpotId, int weekNumber, int year)
+        {
+            var request = new RestRequest("bookings/booked-people-count");
+            request.AddParameter<int>("fishingSpotId", fishingSpotId);
+            request.AddParameter<int>("weekNumber", weekNumber);
+            request.AddParameter<int>("year", year);
+
+            var response = await _restClient.ExecuteAsync<IDictionary<string, int>>(request);
+
+            if (!response.IsSuccessful || response.Data == null)
+            {
+                throw new Exception($"Error getting booked people count. Message was {response.StatusDescription}");
+            }
+
+            return response.Data;
+        }
     }
 }
