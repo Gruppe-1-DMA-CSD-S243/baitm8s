@@ -73,7 +73,7 @@
 
                     @if (Model.BookedPeople.ContainsKey(testStr))
                     {
-                        @if (Model.FishingSpot.Capacity > Model.BookedPeople[testStr])
+                        @if (Model.FishingSpot.Capacity > Model.BookedPeople[testStr]) //TODO: Det her tjek er bare en test!
                         {
                         <td>
                         <a asp-controller="Booking"
