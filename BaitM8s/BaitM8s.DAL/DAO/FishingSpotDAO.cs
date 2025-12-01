@@ -4,6 +4,7 @@ using Dapper;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,32 +13,82 @@ namespace BaitM8s.DAL.DAO
 {
     public class FishingSpotDAO : BaseDAO, IFishingSpotDAO
     {
+        private readonly string _insertFishingSpotSql = @"
+            INSERT INTO FishingSpot 
+                (Name, Address, FK_zipcodeId, Longitude, Latitude, 
+                 StartAvailableHours, EndAvailableHours, Capacity, HandicapFriendly, FK_PondOwnerId)
+            VALUES 
+                (@Name, @Address, @ZipcodeId, @Longitude, @Latitude,
+                 @StartAvailableHours, @EndAvailableHours, @Capacity, @HandicapFriendly, @FK_PondOwnerId);
+            SELECT CAST(SCOPE_IDENTITY() AS INT);";
+        private readonly string _deleteFishingSpotSql = @"DELETE FROM FishingSpot WHERE Id = @Id;";
+        private readonly string _getAllFishingSpotsSql = @"
+            SELECT 
+            fs.Id, fs.Name, fs.Address, z.Zipcode,
+            fs.Longitude, fs.Latitude, fs.StartAvailableHours,
+            fs.EndAvailableHours, fs.Capacity, fs.HandicapFriendly,
+            fs.FK_PondOwnerId,
+            f.Species
+            FROM FishingSpot fs
+            INNER JOIN Zipcode z ON fs.FK_zipcodeId = z.Id
+            LEFT JOIN FishSpecies_FishingSpot ffs ON fs.Id = ffs.FK_FishingSpotId
+            LEFT JOIN FishSpecies f ON f.Id = ffs.FK_FishSpeciesId
+            ORDER BY fs.Id;";
+        private readonly string _getFishingSpotByIdSql = @"SELECT * FROM FishingSpot WHERE Id = @Id;";
+        private readonly string _getFishingSpotsByPondOwnerSql = @"SELECT * FROM FishingSpot WHERE FK_PondOwner = @Id;";
+        private readonly string _updateFishingSpotSql = @"
+            UPDATE FishingSpot
+            SET 
+                Name = @Name,
+                Address = @Address,
+                FK_zipcodeId = @ZipcodeId,
+                Longitude = @Longitude,
+                Latitude = @Latitude,
+                StartAvailableHours = @StartAvailableHours,
+                EndAvailableHours = @EndAvailableHours,
+                Capacity = @Capacity,
+                HandicapFriendly = @HandicapFriendly,
+                FK_PondOwnerId = @FK_PondOwnerId
+            WHERE Id = @Id;";
+        private readonly string _deleteFishSpeciesFishingSpotSql = @"DELETE FROM FishSpecies_FishingSpot WHERE FK_FishingSpotId = @Id;";
+        private readonly string _insertFishSpeciesFishingSpotSql = @"
+            INSERT INTO FishSpecies_FishingSpot (FK_FishSpeciesId, FK_FishingSpotId)
+            VALUES (@FishSpeciesId, @FishingSpotId);";
+        private readonly string _getOrCreateZipcodeSql = @"
+            IF EXISTS (SELECT 1 FROM Zipcode WHERE Zipcode = @ZipCode)
+                SELECT Id FROM Zipcode WHERE Zipcode = @ZipCode
+            ELSE
+            BEGIN
+                INSERT INTO Zipcode (Zipcode) VALUES (@ZipCode);
+                SELECT CAST(SCOPE_IDENTITY() as int);
+            END;";
+        private readonly string _getOrCreateFishSpeciesSql = @"
+            IF EXISTS (SELECT 1 FROM FishSpecies WHERE Species = @Species)
+                SELECT Id FROM FishSpecies WHERE Species = @Species
+            ELSE
+            BEGIN
+                INSERT INTO FishSpecies (Species) VALUES (@Species);
+                SELECT CAST(SCOPE_IDENTITY() as int);
+            END;";
+        
         public FishingSpotDAO(string connectionString) : base(connectionString)
         {
         }
 
         public async Task<int> CreateFishingSpotAsync(FishingSpot spot)
         {
-            using SqlConnection connection = new SqlConnection(_connectionString);
-            await connection.OpenAsync();
+            using var connection = CreateConnection();
+            connection.Open();
             using var transaction = connection.BeginTransaction();
 
             try
             {
-                var zipcodeId = await connection.ExecuteScalarAsync<int>(
-                @"IF EXISTS (SELECT 1 FROM Zipcode WHERE Zipcode = @ZipCode)
-                      SELECT Id FROM Zipcode WHERE Zipcode = @ZipCode
-                  ELSE
-                  BEGIN
-                      INSERT INTO Zipcode (Zipcode) VALUES (@ZipCode);
-                      SELECT CAST(SCOPE_IDENTITY() as int);
-                  END",
-                new { ZipCode = spot.ZipCode },
-                transaction);
+                int zipcodeId = await connection.ExecuteScalarAsync<int>(
+                    _getOrCreateZipcodeSql,
+                    new { ZipCode = spot.ZipCode },
+                    transaction);
                 var id = await connection.ExecuteScalarAsync<int>(
-                @"INSERT INTO FishingSpot (Name, Address, FK_zipcodeId, Longitude, Latitude, StartAvailableHours, EndAvailableHours, Capacity, HandicapFriendly, FK_PondOwnerId)
-                  VALUES (@Name, @Address, @ZipcodeId, @Longitude, @Latitude, @StartAvailableHours, @EndAvailableHours, @Capacity, @HandicapFriendly, @FK_PondOwnerId);
-                  SELECT CAST(SCOPE_IDENTITY() as int);", 
+                _insertFishingSpotSql,
                 new
                 {
                     Name = spot.Name,
@@ -55,20 +106,12 @@ namespace BaitM8s.DAL.DAO
 
                 foreach (var species in spot.FishSpecies)
                 {
-                    var speciesId = await connection.ExecuteScalarAsync<int>(
-                        @"IF EXISTS (SELECT 1 FROM FishSpecies WHERE Species = @Species)
-                      SELECT Id FROM FishSpecies WHERE Species = @Species
-                  ELSE
-                  BEGIN
-                      INSERT INTO FishSpecies (Species) VALUES (@Species);
-                      SELECT CAST(SCOPE_IDENTITY() as int);
-                  END",
+                    int speciesId = await connection.ExecuteScalarAsync<int>(
+                        _getOrCreateFishSpeciesSql,
                         new { Species = species },
                         transaction);
-
                     await connection.ExecuteAsync(
-                        @"INSERT INTO FishSpecies_FishingSpot (FK_FishSpeciesId, FK_FishingSpotId)
-                  VALUES (@FishSpeciesId, @FishingSpotId)",
+                        _insertFishSpeciesFishingSpotSql,
                         new { FishSpeciesId = speciesId, FishingSpotId = id },
                         transaction);
                 }
@@ -85,20 +128,19 @@ namespace BaitM8s.DAL.DAO
 
         public async Task<bool> DeleteFishingSpotAsync(int id)
         {
-            using var connection = new SqlConnection(_connectionString);
-            await connection.OpenAsync();
-
+            using var connection = CreateConnection();
+            connection.Open();
             using var transaction = connection.BeginTransaction();
 
             try
             {
                 await connection.ExecuteAsync(
-                    "DELETE FROM FishSpecies_FishingSpot WHERE FK_FishingSpotId = @Id",
+                    _deleteFishSpeciesFishingSpotSql,
                     new { Id = id },
                     transaction);
 
                 await connection.ExecuteAsync(
-                    "DELETE FROM FishingSpot WHERE Id = @Id",
+                    _deleteFishingSpotSql,
                     new { Id = id },
                     transaction);
 
@@ -114,36 +156,33 @@ namespace BaitM8s.DAL.DAO
 
         public async Task<IEnumerable<FishingSpot>> GetAllFishingSpotsAsync()
         {
-            using var connection = new SqlConnection(_connectionString);
-            await connection.OpenAsync();
-
-            var spots = (await connection.QueryAsync<FishingSpot>(
-                @"select fs.id, fs.name, fs.address, z.zipcode as zipcode,
-                 fs.longitude, fs.latitude, fs.startavailablehours, fs.endavailablehours, fs.capacity, fs.handicapfriendly, fs.fk_pondownerid
-          from fishingspot fs
-          inner join zipcode z on fs.fk_zipcodeid = z.id")).ToList();
-
-            foreach (var spot in spots)
-            {
-                var species = await connection.QueryAsync<string>(
-                    @"select f.species
-              from fishspecies f
-              inner join fishspecies_fishingspot ffs on f.id = ffs.fk_fishspeciesid
-              where ffs.fk_fishingspotid = @id",
-                    new { id = spot.Id });
-
-                spot.FishSpecies = species.ToList();
-            }
-
-            return spots;
+            using var connection = CreateConnection();
+            var lookup = new Dictionary<int, FishingSpot>();
+            await connection.QueryAsync<FishingSpot, string, FishingSpot>(
+                _getAllFishingSpotsSql,
+                (spot, species) =>
+                {
+                    if (!lookup.TryGetValue(spot.Id, out var existingSpot))
+                    {
+                        existingSpot = spot;
+                        existingSpot.FishSpecies = new List<string>();
+                        lookup.Add(existingSpot.Id, existingSpot);
+                    }
+                    if (species != null && !existingSpot.FishSpecies.Contains(species))
+                    {
+                        existingSpot.FishSpecies.Add(species);
+                    }
+                    return existingSpot;
+                },
+                splitOn: "species");
+            return lookup.Values;
 
         }
 
         public async Task<FishingSpot?> GetFishingSpotAsync(int id)
         {
-            var query = @"SELECT * FROM FishingSpot WHERE Id = @Id";
             using var connection = CreateConnection();
-            return await connection.QuerySingleOrDefaultAsync<FishingSpot>(query, new { Id = id });
+            return await connection.QuerySingleOrDefaultAsync<FishingSpot>(_getFishingSpotByIdSql, new { Id = id });
         }
 
         public async Task<IEnumerable<FishingSpot>> GetFishingSpotsByPondOwnerAsync(int id)
@@ -199,41 +238,20 @@ namespace BaitM8s.DAL.DAO
         
         public async Task<bool> UpdateFishingSpotAsync(FishingSpot spot)
         {
-            using SqlConnection connection = new SqlConnection(_connectionString);
-            await connection.OpenAsync();
+            using var connection = CreateConnection();
+            connection.Open();
             using var transaction = connection.BeginTransaction();
 
             try
             {
-                var zipcodeId = await connection.ExecuteScalarAsync<int>(
-                    @"IF EXISTS (SELECT 1 FROM Zipcode WHERE Zipcode = @ZipCode)
-                SELECT Id FROM Zipcode WHERE Zipcode = @ZipCode
-              ELSE
-              BEGIN
-                INSERT INTO Zipcode (Zipcode) VALUES (@ZipCode);
-                SELECT CAST(SCOPE_IDENTITY() AS INT);
-              END",
-                    new { spot.ZipCode },
-                    transaction);
 
                 int rows = await connection.ExecuteAsync(
-                    @"UPDATE FishingSpot
-              SET Name = @Name,
-                  Address = @Address,
-                  FK_zipcodeId = @ZipcodeId,
-                  Longitude = @Longitude,
-                  Latitude = @Latitude,
-                  Capacity = @Capacity,
-                  HandicapFriendly = @HandicapFriendly,
-                  FK_PondOwnerId = @FK_PondOwnerId,
-                  StartAvailableHours = @StartAvailableHours,
-                  EndAvailableHours = @EndAvailableHours
-              WHERE Id = @Id",
+                    _updateFishingSpotSql,
                     new
                     {
                         spot.Name,
                         spot.Address,
-                        ZipcodeId = zipcodeId,
+                        ZipcodeId = spot.ZipCode,
                         spot.Longitude,
                         spot.Latitude,
                         spot.Capacity,
@@ -254,28 +272,16 @@ namespace BaitM8s.DAL.DAO
 
 
                 await connection.ExecuteAsync(
-                    @"DELETE FROM FishSpecies_FishingSpot WHERE FK_FishingSpotId = @Id",
-                    new { spot.Id },
+                    _deleteFishSpeciesFishingSpotSql,
+                    new { FishingSpotId = spot.Id },
                     transaction);
 
 
                 foreach (var species in spot.FishSpecies)
                 {
-                    var speciesId = await connection.ExecuteScalarAsync<int>(
-                        @"IF EXISTS (SELECT 1 FROM FishSpecies WHERE Species = @Species)
-                      SELECT Id FROM FishSpecies WHERE Species = @Species
-                  ELSE
-                  BEGIN
-                      INSERT INTO FishSpecies (Species) VALUES (@Species);
-                      SELECT CAST(SCOPE_IDENTITY() AS INT);
-                  END",
-                        new { Species = species },
-                        transaction);
-
                     await connection.ExecuteAsync(
-                        @"INSERT INTO FishSpecies_FishingSpot (FK_FishSpeciesId, FK_FishingSpotId)
-                  VALUES (@FishSpeciesId, @FishingSpotId)",
-                        new { FishSpeciesId = speciesId, FishingSpotId = spot.Id },
+                        _insertFishSpeciesFishingSpotSql,
+                        new { FishSpeciesId = species, FishingSpotId = spot.Id },
                         transaction);
                 }
 
@@ -287,6 +293,34 @@ namespace BaitM8s.DAL.DAO
                 transaction.Rollback();
                 throw;
             }
+        }
+
+        private Task<int> getOrCreateZipcodeAsync(IDbConnection connection, string zipCode, IDbTransaction transaction)
+        {
+            return connection.ExecuteScalarAsync<int>(
+                @"IF EXISTS (SELECT 1 FROM Zipcode WHERE Zipcode = @ZipCode)
+                      SELECT Id FROM Zipcode WHERE Zipcode = @ZipCode
+                  ELSE
+                  BEGIN
+                      INSERT INTO Zipcode (Zipcode) VALUES (@ZipCode);
+                      SELECT CAST(SCOPE_IDENTITY() as int);
+                  END",
+                new { ZipCode = zipCode },
+                transaction);
+        }
+
+        private Task<int> getOrCreateFishSpeciesAsync(IDbConnection connection, string species, IDbTransaction transaction)
+        {
+            return connection.ExecuteScalarAsync<int>(
+                @"IF EXISTS (SELECT 1 FROM FishSpecies WHERE Species = @Species)
+                      SELECT Id FROM FishSpecies WHERE Species = @Species
+                  ELSE
+                  BEGIN
+                      INSERT INTO FishSpecies (Species) VALUES (@Species);
+                      SELECT CAST(SCOPE_IDENTITY() as int);
+                  END",
+                new { Species = species },
+                transaction);
         }
     }
 }
