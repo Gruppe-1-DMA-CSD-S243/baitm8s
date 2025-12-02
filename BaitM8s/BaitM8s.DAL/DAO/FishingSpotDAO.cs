@@ -244,6 +244,10 @@ namespace BaitM8s.DAL.DAO
 
             try
             {
+                var zipcodeId = await connection.ExecuteScalarAsync<int>(
+                    _getOrCreateZipcodeSql,
+                    new { ZipCode = spot.ZipCode },
+                    transaction);
 
                 int rows = await connection.ExecuteAsync(
                     _updateFishingSpotSql,
@@ -251,7 +255,7 @@ namespace BaitM8s.DAL.DAO
                     {
                         spot.Name,
                         spot.Address,
-                        ZipcodeId = spot.ZipCode,
+                        ZipcodeId = zipcodeId,
                         spot.Longitude,
                         spot.Latitude,
                         spot.Capacity,
@@ -273,7 +277,7 @@ namespace BaitM8s.DAL.DAO
 
                 await connection.ExecuteAsync(
                     _deleteFishSpeciesFishingSpotSql,
-                    new { FishingSpotId = spot.Id },
+                    new { spot.Id },
                     transaction);
 
 
@@ -281,7 +285,7 @@ namespace BaitM8s.DAL.DAO
                 {
                     await connection.ExecuteAsync(
                         _insertFishSpeciesFishingSpotSql,
-                        new { FishSpeciesId = species, FishingSpotId = spot.Id },
+                        new { Species = species },
                         transaction);
                 }
 
@@ -291,7 +295,7 @@ namespace BaitM8s.DAL.DAO
             catch
             {
                 transaction.Rollback();
-                throw;
+                throw new Exception("Transaction was rolled back");
             }
         }
 
