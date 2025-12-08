@@ -1,6 +1,7 @@
 ﻿using BaitM8s.APIClient.Clients;
 using BaitM8s.APIClient.Interfaces;
 using BaitM8s.DAL.DTO;
+using Humanizer.Localisation.TimeToClockNotation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BaitM8s.MVC.Controllers
@@ -86,32 +87,28 @@ namespace BaitM8s.MVC.Controllers
             }
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> RegisterOwnership()
-        //{
-        //    var fishingSpots = await _fishingSpotApiClient.GetAllFishingSpotsAsync();
-        //    return View(fishingSpots);
-        //}
+        [HttpGet]
+        public async Task<IActionResult> Register()
+        {
+            return View();
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> RegisterOwnership(int id)
-        //{
-        //    var fishingSpots = await _fishingSpotApiClient.GetAllFishingSpotsAsync();
-        //    return View(fishingSpots);
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Register([FromForm] FishingSpotDTO fishingSpot)
+        {
+            try
+            {
+                fishingSpot.IsAwaitingApproval = true;
+                fishingSpot.FishSpecies = new List<string>(); //TODO: Dette er en temp løsning!
 
-        //[HttpGet]
-        //public async Task<IActionResult> RemoveOwnership()
-        //{
-        //    var fishingSpots = await _fishingSpotApiClient.GetAllFishingSpotsAsync();
-        //    return View(fishingSpots);
-        //}
+                int newId = await _fishingSpotApiClient.CreateFishingSpotAsync(fishingSpot);
 
-        //[HttpPost]
-        //public async Task<IActionResult> RemoveOwnership(int id)
-        //{
-        //    var fishingSpots = await _fishingSpotApiClient.GetAllFishingSpotsAsync();
-        //    return View(fishingSpots);
-        //}
+                return RedirectToAction("Details", new { id = newId });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error");
+            }
+        }
     }
 }
