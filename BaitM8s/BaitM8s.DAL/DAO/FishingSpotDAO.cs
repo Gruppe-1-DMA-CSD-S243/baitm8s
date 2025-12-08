@@ -16,10 +16,10 @@ namespace BaitM8s.DAL.DAO
         private readonly string _insertFishingSpotSql = @"
             INSERT INTO FishingSpot 
                 (Name, Address, FK_zipcodeId, Longitude, Latitude, 
-                 StartAvailableHours, EndAvailableHours, Capacity, HandicapFriendly, FK_PondOwnerId)
+                 StartAvailableHours, EndAvailableHours, Capacity, HandicapFriendly, FK_PondOwnerId, IsAwaitingApproval)
             VALUES 
                 (@Name, @Address, @ZipcodeId, @Longitude, @Latitude,
-                 @StartAvailableHours, @EndAvailableHours, @Capacity, @HandicapFriendly, @FK_PondOwnerId);
+                 @StartAvailableHours, @EndAvailableHours, @Capacity, @HandicapFriendly, @FK_PondOwnerId, @IsAwaitingApproval);
             SELECT CAST(SCOPE_IDENTITY() AS INT);";
         private readonly string _deleteFishingSpotSql = @"DELETE FROM FishingSpot WHERE Id = @Id;";
         private readonly string _getAllFishingSpotsSql = @"
@@ -27,7 +27,7 @@ namespace BaitM8s.DAL.DAO
             fs.Id, fs.Name, fs.Address, z.Zipcode,
             fs.Longitude, fs.Latitude, fs.StartAvailableHours,
             fs.EndAvailableHours, fs.Capacity, fs.HandicapFriendly,
-            fs.FK_PondOwnerId,
+            fs.FK_PondOwnerId, fs.IsAwaitingApproval,
             f.Species
             FROM FishingSpot fs
             INNER JOIN Zipcode z ON fs.FK_zipcodeId = z.Id
@@ -48,7 +48,8 @@ namespace BaitM8s.DAL.DAO
                 EndAvailableHours = @EndAvailableHours,
                 Capacity = @Capacity,
                 HandicapFriendly = @HandicapFriendly,
-                FK_PondOwnerId = @FK_PondOwnerId
+                FK_PondOwnerId = @FK_PondOwnerId,
+                IsAwaitingApproval = @IsAwaitingApproval
             WHERE Id = @Id;";
         private readonly string _deleteFishSpeciesFishingSpotSql = @"DELETE FROM FishSpecies_FishingSpot WHERE FK_FishingSpotId = @Id;";
         private readonly string _insertFishSpeciesFishingSpotSql = @"
@@ -101,7 +102,8 @@ namespace BaitM8s.DAL.DAO
                     EndAvailableHours = spot.EndAvailableHours,
                     Capacity = spot.Capacity,
                     HandicapFriendly = spot.HandicapFriendly,
-                    FK_PondOwnerId = spot.FK_PondOwnerId
+                    FK_PondOwnerId = spot.FK_PondOwnerId,
+                    IsAwaitingApproval = spot.IsAwaitingApproval
                 },
                 transaction);
 
@@ -264,8 +266,8 @@ namespace BaitM8s.DAL.DAO
                         spot.FK_PondOwnerId,
                         spot.Id,
                         spot.StartAvailableHours,
-                        spot.EndAvailableHours
-
+                        spot.EndAvailableHours,
+                        spot.IsAwaitingApproval
                     },
                     transaction);
 
@@ -284,9 +286,13 @@ namespace BaitM8s.DAL.DAO
 
                 foreach (var species in spot.FishSpecies)
                 {
+                    int speciesId = await connection.ExecuteScalarAsync<int>(
+                        _getOrCreateFishSpeciesSql,
+                        new { Species = species },
+                        transaction);
                     await connection.ExecuteAsync(
                         _insertFishSpeciesFishingSpotSql,
-                        new { Species = species },
+                        new { FishSpeciesId = speciesId, FishingSpotId = spot.Id },
                         transaction);
                 }
 

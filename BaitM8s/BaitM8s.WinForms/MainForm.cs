@@ -53,6 +53,7 @@ namespace BaitM8s.WinForms
             txtPondOwnerId.Text = selectedSpot.FK_PondOwnerId.ToString();
             txtStartAvailableHours.Text = selectedSpot.StartAvailableHours.ToString();
             txtEndAvailableHours.Text= selectedSpot.EndAvailableHours.ToString();
+            chkIsAwaitingApproval.Checked = selectedSpot.IsAwaitingApproval;
         }
         public void ClearFields()
         {
@@ -68,6 +69,7 @@ namespace BaitM8s.WinForms
             txtPondOwnerId.Clear();
             txtStartAvailableHours.Clear();
             txtEndAvailableHours.Clear();
+            chkIsAwaitingApproval.Checked = false;
         }
         
 
@@ -150,7 +152,8 @@ namespace BaitM8s.WinForms
                     FishSpecies = fishSpecies,
                     FK_PondOwnerId = pondOwnerId,
                     StartAvailableHours = startAvailableHours,
-                    EndAvailableHours = endAvailableHours
+                    EndAvailableHours = endAvailableHours,
+                    IsAwaitingApproval = chkIsAwaitingApproval.Checked
                 };
 
                 var newId = await _fishingSpotAPIClient.CreateFishingSpotAsync(newSpot);
@@ -237,7 +240,8 @@ namespace BaitM8s.WinForms
                     FK_PondOwnerId = pondOwnerId,
                     FishSpecies = species,
                     StartAvailableHours = startAvailableHours,
-                    EndAvailableHours = endAvailableHours
+                    EndAvailableHours = endAvailableHours,
+                    IsAwaitingApproval = chkIsAwaitingApproval.Checked
                 };
 
                 await _fishingSpotAPIClient.UpdateFishingSpotAsync(spot);
