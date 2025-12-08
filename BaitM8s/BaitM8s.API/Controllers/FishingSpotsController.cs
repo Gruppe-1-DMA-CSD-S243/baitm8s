@@ -29,10 +29,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                // This line is used for debugging.
-                return StatusCode(500, $"Error: {ex.Message}");
-
-                //return StatusCode(500, $"An error occurred trying to retrieve all fishing spots.");
+                return StatusCode(500, $"Error getting the fishing spots: {ex.Message}");
             }
         }
 
@@ -45,10 +42,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                // This line is used for debugging.
-                return StatusCode(500, $"Error: {ex.Message}");
-
-                //return StatusCode(500, $"An error occurred trying to retrieve the fishing spot with id {id}.");
+                return StatusCode(500, $"Error getting the fishing spot with id {id}: {ex.Message}");
             }
         }
 
@@ -61,10 +55,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                // This line is used for debugging.
-                return StatusCode(500, $"Error: {ex.Message}");
-
-                //return StatusCode(500, $"An error occurred trying to retrieve the fishing spots from owner id {id}.");
+                return StatusCode(500, $"Error getting the owners fishing spots: {ex.Message}");
             }
         }
 
@@ -78,7 +69,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, $"Error managing the fishing spot: {ex.Message}");
             }
         }
 
@@ -93,8 +84,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception (not implemented here)
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, $"Internal server error creating the fishing spot, {ex.Message}");
             }
         }
 
@@ -112,8 +102,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception (not implemented here)
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, $"Internal server error deleting the fishing spot, {ex.Message}");
             }
         }
 
@@ -123,7 +112,7 @@ namespace BaitM8s.API.Controllers
             try
             {
                 FishingSpot fishingSpot = _fishingSpotMapper.ToModel(dto);
-                fishingSpot.Id = id; // Ensure the ID is set correctly
+                fishingSpot.Id = id;
                 var success = await _fishingSpotDAO.UpdateFishingSpotAsync(fishingSpot);
                 if (!success)
                 {
@@ -133,8 +122,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception (not implemented here)
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, $"Internal server error updating the fishing spot, {ex.Message}");
             }
         }
     }

@@ -62,6 +62,7 @@ namespace BaitM8s.DAL.DAO
                 INSERT INTO Zipcode (Zipcode) VALUES (@ZipCode);
                 SELECT CAST(SCOPE_IDENTITY() as int);
             END;";
+        private readonly string _getZipcodeIdSql = @"SELECT Id FROM Zipcode WHERE Zipcode = @ZipCode;";
         private readonly string _getOrCreateFishSpeciesSql = @"
             IF EXISTS (SELECT 1 FROM FishSpecies WHERE Species = @Species)
                 SELECT Id FROM FishSpecies WHERE Species = @Species
@@ -84,7 +85,7 @@ namespace BaitM8s.DAL.DAO
             try
             {
                 int zipcodeId = await connection.ExecuteScalarAsync<int>(
-                    _getOrCreateZipcodeSql,
+                    _getZipcodeIdSql,
                     new { ZipCode = spot.ZipCode },
                     transaction);
                 var id = await connection.ExecuteScalarAsync<int>(
@@ -119,10 +120,10 @@ namespace BaitM8s.DAL.DAO
                 transaction.Commit();
                 return id;
             }
-            catch
+            catch(Exception ex)
             {
                 transaction.Rollback();
-                throw;
+                throw new Exception("Transaction was rolled back trying to create a fishing spot. " + ex.Message);
             }
         }
 
@@ -146,10 +147,10 @@ namespace BaitM8s.DAL.DAO
 
                 transaction.Commit();
             }
-            catch
+            catch(Exception ex)
             {
                 transaction.Rollback();
-                throw;
+                throw new Exception("Transaction was rolled back trying to delete a fishing spot. " + ex.Message);
             }
             return true;
         }
@@ -245,7 +246,7 @@ namespace BaitM8s.DAL.DAO
             try
             {
                 var zipcodeId = await connection.ExecuteScalarAsync<int>(
-                    _getOrCreateZipcodeSql,
+                    _getZipcodeIdSql,
                     new { ZipCode = spot.ZipCode },
                     transaction);
 
@@ -292,10 +293,10 @@ namespace BaitM8s.DAL.DAO
                 transaction.Commit();
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
                 transaction.Rollback();
-                throw new Exception("Transaction was rolled back");
+                throw new Exception($"Transaction was rolled back trying to update fishing spot with id {spot.Id}, { ex.Message }");
             }
         }
     }
