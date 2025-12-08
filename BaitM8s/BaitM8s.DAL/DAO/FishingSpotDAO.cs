@@ -285,9 +285,13 @@ namespace BaitM8s.DAL.DAO
 
                 foreach (var species in spot.FishSpecies)
                 {
+                    int speciesId = await connection.ExecuteScalarAsync<int>(
+                        _getOrCreateFishSpeciesSql,
+                        new { Species = species },
+                        transaction);
                     await connection.ExecuteAsync(
                         _insertFishSpeciesFishingSpotSql,
-                        new { Species = species },
+                        new { FishSpeciesId = speciesId, FishingSpotId = spot.Id },
                         transaction);
                 }
 
