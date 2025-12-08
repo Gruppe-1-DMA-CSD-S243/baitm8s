@@ -69,34 +69,7 @@ namespace BaitM8s.WinForms
             txtStartAvailableHours.Clear();
             txtEndAvailableHours.Clear();
         }
-        //public async Task CreateFishingSpotAsync()
-        //{
-        //    try
-        //    {
-        //        var fishSpecies = txtFishSpecies.Text.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-        //                            .Select(s => s.Trim())
-        //                            .ToList();
-        //        var newSpot = new FishingSpot
-        //        {
-        //            Name = txtName.Text,
-        //            Address = txtAddress.Text,
-        //            ZipCode = txtZipCode.Text,
-        //            Longitude = float.Parse(txtLongitude.Text),
-        //            Latitude = float.Parse(txtLatitude.Text),
-        //            Capacity = int.Parse(txtCapacity.Text),
-        //            FishSpecies = fishSpecies,
-        //            HandicapFriendly = chkHandicapFriendly.Checked
-        //        };
-        //        int pondOwnerId = 1; // Example pond owner ID
-        //        var newId = await _fishingSpotAPIClient.CreateFishingSpotAsync(newSpot, pondOwnerId);
-        //        MessageBox.Show($"Fishing Spot created with ID: {newId}");
-        //        await LoadFishingSpotsAsync();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show($"Error creating Fishing Spot: {ex.Message}");
-        //    }
-        //}
+        
 
         public async Task CreateFishingSpotAsync()
         {

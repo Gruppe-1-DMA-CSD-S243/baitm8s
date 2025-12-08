@@ -86,18 +86,6 @@ namespace BaitM8s.APIClient.Clients
             }
 
             return response.Data;
-
-            //var request = new RestRequest("bookings/{id}", Method.Get);
-            //request.AddUrlSegment("id", id);
-
-            //var response = await _restClient.ExecuteAsync<BookingDTO>(request);
-
-            //if (!response.IsSuccessful || response.Data == null)
-            //{
-            //    throw new Exception($"Error retrieving booking with id {id}. Message was {response.StatusDescription}");
-            //}
-
-            //return response.Data;
         }
 
         public async Task<bool> ManageFishingSpotAsync(FishingSpotDTO fishingSpot)
