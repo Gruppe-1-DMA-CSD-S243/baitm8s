@@ -187,7 +187,7 @@ namespace BaitM8s.DAL.DAO
 
         public async Task<IEnumerable<FishingSpot>> GetFishingSpotsByPondOwnerAsync(int id)
         {
-            var query = @"SELECT * FROM FishingSpot WHERE FK_PondOwner = @Id";
+            var query = @"SELECT * FROM FishingSpot WHERE FK_PondOwnerId = @Id";
             using var connection = CreateConnection();
             return await connection.QueryAsync<FishingSpot>(query, new { Id = id });
         }
