@@ -265,8 +265,8 @@ namespace BaitM8s.DAL.DAO
                         spot.FK_PondOwnerId,
                         spot.Id,
                         spot.StartAvailableHours,
-                        spot.EndAvailableHours
-
+                        spot.EndAvailableHours,
+                        spot.IsAwaitingApproval
                     },
                     transaction);
 
