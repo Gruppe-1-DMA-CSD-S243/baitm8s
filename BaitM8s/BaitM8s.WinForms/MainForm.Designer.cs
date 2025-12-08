@@ -58,13 +58,14 @@
             txtStartAvailableHours = new TextBox();
             lblEndAvailableHours = new Label();
             txtEndAvailableHours = new TextBox();
+            chkIsAwaitingApproval = new CheckBox();
             SuspendLayout();
             // 
             // lstFishingSpots
             // 
             lstFishingSpots.FormattingEnabled = true;
             lstFishingSpots.Location = new Point(7, 46);
-            lstFishingSpots.Margin = new Padding(2, 2, 2, 2);
+            lstFishingSpots.Margin = new Padding(2);
             lstFishingSpots.Name = "lstFishingSpots";
             lstFishingSpots.Size = new Size(286, 184);
             lstFishingSpots.TabIndex = 0;
@@ -74,7 +75,7 @@
             // 
             lstPendingFishingSpots.FormattingEnabled = true;
             lstPendingFishingSpots.Location = new Point(7, 278);
-            lstPendingFishingSpots.Margin = new Padding(2, 2, 2, 2);
+            lstPendingFishingSpots.Margin = new Padding(2);
             lstPendingFishingSpots.Name = "lstPendingFishingSpots";
             lstPendingFishingSpots.Size = new Size(286, 204);
             lstPendingFishingSpots.TabIndex = 1;
@@ -82,7 +83,7 @@
             // btnCreate
             // 
             btnCreate.Location = new Point(7, 501);
-            btnCreate.Margin = new Padding(2, 2, 2, 2);
+            btnCreate.Margin = new Padding(2);
             btnCreate.Name = "btnCreate";
             btnCreate.Size = new Size(92, 29);
             btnCreate.TabIndex = 2;
@@ -93,7 +94,7 @@
             // btnUpdate
             // 
             btnUpdate.Location = new Point(103, 501);
-            btnUpdate.Margin = new Padding(2, 2, 2, 2);
+            btnUpdate.Margin = new Padding(2);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(92, 29);
             btnUpdate.TabIndex = 3;
@@ -104,7 +105,7 @@
             // btnDelete
             // 
             btnDelete.Location = new Point(199, 501);
-            btnDelete.Margin = new Padding(2, 2, 2, 2);
+            btnDelete.Margin = new Padding(2);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(92, 29);
             btnDelete.TabIndex = 4;
@@ -135,7 +136,7 @@
             // txtId
             // 
             txtId.Location = new Point(638, 46);
-            txtId.Margin = new Padding(2, 2, 2, 2);
+            txtId.Margin = new Padding(2);
             txtId.Name = "txtId";
             txtId.Size = new Size(211, 27);
             txtId.TabIndex = 7;
@@ -143,7 +144,7 @@
             // txtName
             // 
             txtName.Location = new Point(638, 74);
-            txtName.Margin = new Padding(2, 2, 2, 2);
+            txtName.Margin = new Padding(2);
             txtName.Name = "txtName";
             txtName.Size = new Size(211, 27);
             txtName.TabIndex = 8;
@@ -151,7 +152,7 @@
             // txtAddress
             // 
             txtAddress.Location = new Point(638, 102);
-            txtAddress.Margin = new Padding(2, 2, 2, 2);
+            txtAddress.Margin = new Padding(2);
             txtAddress.Name = "txtAddress";
             txtAddress.Size = new Size(211, 27);
             txtAddress.TabIndex = 9;
@@ -159,7 +160,7 @@
             // txtZipCode
             // 
             txtZipCode.Location = new Point(638, 131);
-            txtZipCode.Margin = new Padding(2, 2, 2, 2);
+            txtZipCode.Margin = new Padding(2);
             txtZipCode.Name = "txtZipCode";
             txtZipCode.Size = new Size(211, 27);
             txtZipCode.TabIndex = 10;
@@ -167,7 +168,7 @@
             // txtLongitude
             // 
             txtLongitude.Location = new Point(638, 159);
-            txtLongitude.Margin = new Padding(2, 2, 2, 2);
+            txtLongitude.Margin = new Padding(2);
             txtLongitude.Name = "txtLongitude";
             txtLongitude.Size = new Size(211, 27);
             txtLongitude.TabIndex = 11;
@@ -175,7 +176,7 @@
             // txtLatitude
             // 
             txtLatitude.Location = new Point(638, 187);
-            txtLatitude.Margin = new Padding(2, 2, 2, 2);
+            txtLatitude.Margin = new Padding(2);
             txtLatitude.Name = "txtLatitude";
             txtLatitude.Size = new Size(211, 27);
             txtLatitude.TabIndex = 12;
@@ -183,7 +184,7 @@
             // txtCapacity
             // 
             txtCapacity.Location = new Point(638, 215);
-            txtCapacity.Margin = new Padding(2, 2, 2, 2);
+            txtCapacity.Margin = new Padding(2);
             txtCapacity.Name = "txtCapacity";
             txtCapacity.Size = new Size(211, 27);
             txtCapacity.TabIndex = 13;
@@ -191,7 +192,7 @@
             // txtFishSpecies
             // 
             txtFishSpecies.Location = new Point(638, 243);
-            txtFishSpecies.Margin = new Padding(2, 2, 2, 2);
+            txtFishSpecies.Margin = new Padding(2);
             txtFishSpecies.Name = "txtFishSpecies";
             txtFishSpecies.Size = new Size(211, 27);
             txtFishSpecies.TabIndex = 14;
@@ -200,7 +201,7 @@
             // 
             chkHandicapFriendly.AutoSize = true;
             chkHandicapFriendly.Location = new Point(660, 271);
-            chkHandicapFriendly.Margin = new Padding(2, 2, 2, 2);
+            chkHandicapFriendly.Margin = new Padding(2);
             chkHandicapFriendly.Name = "chkHandicapFriendly";
             chkHandicapFriendly.Size = new Size(158, 24);
             chkHandicapFriendly.TabIndex = 15;
@@ -290,7 +291,7 @@
             // txtPondOwnerId
             // 
             txtPondOwnerId.Location = new Point(644, 298);
-            txtPondOwnerId.Margin = new Padding(2, 2, 2, 2);
+            txtPondOwnerId.Margin = new Padding(2);
             txtPondOwnerId.Name = "txtPondOwnerId";
             txtPondOwnerId.Size = new Size(205, 27);
             txtPondOwnerId.TabIndex = 24;
@@ -337,11 +338,22 @@
             txtEndAvailableHours.Size = new Size(205, 27);
             txtEndAvailableHours.TabIndex = 29;
             // 
+            // chkIsAwaitingApproval
+            // 
+            chkIsAwaitingApproval.AutoSize = true;
+            chkIsAwaitingApproval.Location = new Point(667, 430);
+            chkIsAwaitingApproval.Name = "chkIsAwaitingApproval";
+            chkIsAwaitingApproval.Size = new Size(172, 24);
+            chkIsAwaitingApproval.TabIndex = 30;
+            chkIsAwaitingApproval.Text = "Is awaiting approval?";
+            chkIsAwaitingApproval.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(855, 537);
+            Controls.Add(chkIsAwaitingApproval);
             Controls.Add(txtEndAvailableHours);
             Controls.Add(lblEndAvailableHours);
             Controls.Add(txtStartAvailableHours);
@@ -372,7 +384,7 @@
             Controls.Add(btnCreate);
             Controls.Add(lstPendingFishingSpots);
             Controls.Add(lstFishingSpots);
-            Margin = new Padding(2, 2, 2, 2);
+            Margin = new Padding(2);
             Name = "MainForm";
             Text = "BaitM8s Administrator Panel";
             Load += MainForm_Load;
@@ -414,5 +426,6 @@
         private TextBox txtStartAvailableHours;
         private Label lblEndAvailableHours;
         private TextBox txtEndAvailableHours;
+        private CheckBox chkIsAwaitingApproval;
     }
 }
