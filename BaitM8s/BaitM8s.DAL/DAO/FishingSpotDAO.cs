@@ -298,33 +298,5 @@ namespace BaitM8s.DAL.DAO
                 throw new Exception("Transaction was rolled back");
             }
         }
-
-        private Task<int> getOrCreateZipcodeAsync(IDbConnection connection, string zipCode, IDbTransaction transaction)
-        {
-            return connection.ExecuteScalarAsync<int>(
-                @"IF EXISTS (SELECT 1 FROM Zipcode WHERE Zipcode = @ZipCode)
-                      SELECT Id FROM Zipcode WHERE Zipcode = @ZipCode
-                  ELSE
-                  BEGIN
-                      INSERT INTO Zipcode (Zipcode) VALUES (@ZipCode);
-                      SELECT CAST(SCOPE_IDENTITY() as int);
-                  END",
-                new { ZipCode = zipCode },
-                transaction);
-        }
-
-        private Task<int> getOrCreateFishSpeciesAsync(IDbConnection connection, string species, IDbTransaction transaction)
-        {
-            return connection.ExecuteScalarAsync<int>(
-                @"IF EXISTS (SELECT 1 FROM FishSpecies WHERE Species = @Species)
-                      SELECT Id FROM FishSpecies WHERE Species = @Species
-                  ELSE
-                  BEGIN
-                      INSERT INTO FishSpecies (Species) VALUES (@Species);
-                      SELECT CAST(SCOPE_IDENTITY() as int);
-                  END",
-                new { Species = species },
-                transaction);
-        }
     }
 }
