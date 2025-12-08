@@ -1,6 +1,7 @@
 ﻿using BaitM8s.APIClient.Clients;
 using BaitM8s.APIClient.Interfaces;
 using BaitM8s.DAL.DTO;
+using BaitM8s.DAL.Model;
 using Humanizer.Localisation.TimeToClockNotation;
 using Microsoft.AspNetCore.Mvc;
 
@@ -79,7 +80,15 @@ namespace BaitM8s.MVC.Controllers
         {
             try
             {
-                return View(await _fishingSpotApiClient.GetAllFishingSpotsAsync());
+                IEnumerable<FishingSpotDTO> fishingSpots = await _fishingSpotApiClient.GetAllFishingSpotsAsync();
+
+                foreach (var fishingSpot in fishingSpots)
+                {
+                    fishingSpot.Longitude = (float)Math.Round(fishingSpot.Longitude, 2); //TODO: TEMP LØSNING!
+                    fishingSpot.Latitude = (float)Math.Round(fishingSpot.Latitude, 2); //TODO: TEMP LØSNING!
+                }
+
+                return View(fishingSpots);
             }
             catch (Exception ex)
             {
