@@ -89,15 +89,16 @@ namespace BaitM8s.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(BookingDTO booking)
         {
-            if (ModelState.IsValid)
+            try
             {
-                //TODO: try catch
                 var newId = await _bookingApiClient.CreateAsync(booking);
 
                 return RedirectToAction("Details", "Booking", new { id = newId });
             }
-            //TODO: giv fejlbesked og  vis formular igen
-            return View();
+            catch (Exception ex)
+            {
+                return View();
+            }
         }
 
         public async Task<IActionResult> Index()
@@ -146,7 +147,6 @@ namespace BaitM8s.MVC.Controllers
 
             return View(model);
         }
-        //var test = BookingAPIClient.GetDatesOfWeek(2, 3);
 
         [HttpGet]
         public async Task<IActionResult> BookAvailableTime(int id, int day, int month, int year, int startTime, int endTime)
@@ -161,15 +161,19 @@ namespace BaitM8s.MVC.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-
-                //TODO: try catch
-
             }
-            var newId = await _bookingApiClient.CreateAsync(booking);
-            //TODO: Skal vi ikke bare vise Details efter oprettelse?
-            return RedirectToAction("AvailableTimes", "Booking", new { id = 1 });
-            //TODO: giv fejlbesked og  vis formular igen
-            return View();
+
+            try
+            {
+                var newId = await _bookingApiClient.CreateAsync(booking);
+                //TODO: Skal vi ikke bare vise Details efter oprettelse?
+                return RedirectToAction("AvailableTimes", "Booking", new { id = 1 });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+            
         }
     }
 }

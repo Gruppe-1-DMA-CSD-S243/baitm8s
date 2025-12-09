@@ -20,7 +20,6 @@ namespace BaitM8s.API.Controllers
             _anglerDAO = anglerDAO;
         }
 
-        // GET: api/<ValuesController>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AnglerDTO>>> GetAsync()
         {
@@ -30,17 +29,16 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error: {ex.Message}");
+                return StatusCode(500, $"An error occurred while trying to retrieve all anglers.");
             }
         }
 
-        // GET api/<ValuesController>/5
         [HttpGet("{Id}")]
-        public async Task<ActionResult<AnglerDTO>> GetAsync(int Id)
+        public async Task<ActionResult<AnglerDTO>> GetAsync(int id)
         {
             try
             {
-                Angler angler = await _anglerDAO.GetAnglerAsync(Id);
+                Angler angler = await _anglerDAO.GetAnglerAsync(id);
                 if (angler == null)
                 {
                     return NoContent();
@@ -50,10 +48,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                // This line is used for debugging.
-                return StatusCode(500, $"Error: {ex.Message}");
-
-                //return StatusCode(500, $"An error occurred trying to retrieve the angler with id {id}.");
+                return StatusCode(500, $"An error occurred trying to retrieve the angler with id {id}.");
             }
         }
 

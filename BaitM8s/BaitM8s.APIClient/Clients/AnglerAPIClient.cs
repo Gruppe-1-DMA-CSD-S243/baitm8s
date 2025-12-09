@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace BaitM8s.APIClient.Clients
 {
-    //TODO: Change to IAnglerDAO
     public class AnglerAPIClient : IAnglerAPIClient
     {
         private readonly string _apiBaseUri;

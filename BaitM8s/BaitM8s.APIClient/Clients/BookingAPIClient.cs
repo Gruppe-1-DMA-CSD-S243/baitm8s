@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace BaitM8s.APIClient.Clients
 {
-    //TODO: Change to IBookingDAO
     public class BookingAPIClient : IBookingAPIClient
     {
         private readonly string _apiBaseUri;

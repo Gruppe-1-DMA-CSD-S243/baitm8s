@@ -31,10 +31,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                // This line is used for debugging.
-                return StatusCode(500, $"Error: {ex.Message}");
-
-                //return StatusCode(500, $"An error occurred trying to retrieve all bookings posts.");
+                return StatusCode(500, $"An error occurred trying to retrieve all bookings posts.");
             }
         }
 
@@ -47,10 +44,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                // This line is used for debugging.
-                return StatusCode(500, $"Error: {ex.Message}");
-
-                //return StatusCode(500, $"An error occurred trying to retrieve the blog post with id {id}.");
+                return StatusCode(500, $"An error occurred trying to retrieve the blog post with id {id}.");
             }
         }
 
@@ -79,13 +73,13 @@ namespace BaitM8s.API.Controllers
 
                 int newId = await _bookingDAO.CreateBookingAsync(booking);
 
-                await _notificationService.SendNotificationAsync("hej");
+                await _notificationService.SendNotificationAsync("hej"); //TODO: Send en ordentlig besked
 
                 return Ok(newId);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error creating booking: {ex.Message}");
+                return StatusCode(500, $"An error occurred while trying to create a booking.");
             }
         }
     }

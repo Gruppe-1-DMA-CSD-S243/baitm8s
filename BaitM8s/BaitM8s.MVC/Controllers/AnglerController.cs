@@ -25,13 +25,13 @@ namespace BaitM8s.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            return View();
+            throw new NotImplementedException();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(BookingDTO booking)
+        public async Task<IActionResult> Create(AnglerDTO booking)
         {
-            return View();
+            throw new NotImplementedException();
         }
 
 

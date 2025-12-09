@@ -29,7 +29,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error getting the fishing spots: {ex.Message}");
+                return StatusCode(500, $"Error getting all fishing spots");
             }
         }
 
@@ -42,7 +42,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error getting the fishing spot with id {id}: {ex.Message}");
+                return StatusCode(500, $"Error getting the fishing spot with id {id}");
             }
         }
 
@@ -55,7 +55,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error getting the owners fishing spots: {ex.Message}");
+                return StatusCode(500, $"Error getting the owners fishing spots");
             }
         }
 
@@ -69,7 +69,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error managing the fishing spot: {ex.Message}");
+                return StatusCode(500, $"Error occurred while managing the fishing spot");
             }
         }
 
@@ -84,7 +84,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error creating the fishing spot, {ex.Message}");
+                return StatusCode(500, $"Error occurred while creating a new fishing spot");
             }
         }
 
@@ -102,7 +102,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error deleting the fishing spot, {ex.Message}");
+                return StatusCode(500, $"An error occurred while trying to delete fishing spot with id {id}");
             }
         }
 
@@ -122,7 +122,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Internal server error updating the fishing spot, {ex.Message}");
+                return StatusCode(500, $"An error occurred while trying to update fishing spot with id {id}");
             }
         }
     }
