@@ -21,7 +21,6 @@ namespace BaitM8s.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int id)
         {
-
             //TODO: Change to id 
             if (userType == 0)
             {
@@ -84,8 +83,9 @@ namespace BaitM8s.MVC.Controllers
 
                 foreach (var fishingSpot in fishingSpots)
                 {
-                    fishingSpot.Longitude = (float)Math.Round(fishingSpot.Longitude, 2); //TODO: TEMP LØSNING!
-                    fishingSpot.Latitude = (float)Math.Round(fishingSpot.Latitude, 2); //TODO: TEMP LØSNING!
+                    // Leaflet kan ikke læse float værdier med for mange decimaler.
+                    fishingSpot.Longitude = (float)Math.Round(fishingSpot.Longitude, 2); 
+                    fishingSpot.Latitude = (float)Math.Round(fishingSpot.Latitude, 2); 
                 }
 
                 return View(fishingSpots);

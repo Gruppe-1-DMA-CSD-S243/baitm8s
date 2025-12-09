@@ -195,7 +195,6 @@ namespace BaitM8s.DAL.DAO
             return await connection.QueryAsync<FishingSpot>(query, new { Id = id });
         }
 
-        //TODO: Skal opdateres.
         public async Task<bool> ManageFishingSpotAsync(FishingSpot fishingSpot)
         {
             var query = @"UPDATE FishingSpot
