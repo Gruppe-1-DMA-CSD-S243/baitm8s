@@ -37,7 +37,7 @@ public class TestFishingSpotDAO
         int id = allFishingSpots.Min(booking => booking.Id);
 
         //Act
-        FishingSpot foundFishingSpot = await DAO.GetFishingSpotAsync(id);
+        FishingSpot? foundFishingSpot = await DAO.GetFishingSpotAsync(id);
 
         //Assert
         Assert.NotNull(foundFishingSpot);

@@ -40,14 +40,6 @@ namespace BaitM8s.MVC.Controllers
             return View();
         }
 
-        public async Task<IActionResult> BookingCalendar(int id)
-        {
-            string calendarEvents = null;
-
-            ViewBag.BookingJson = System.Text.Json.JsonSerializer.Serialize(calendarEvents);
-            return View();
-        }
-
         [HttpGet]
         public async Task<ActionResult<BookingDTO>> Delete(int bookingId)
         {
@@ -166,8 +158,8 @@ namespace BaitM8s.MVC.Controllers
             try
             {
                 var newId = await _bookingApiClient.CreateAsync(booking);
-                //TODO: Skal vi ikke bare vise Details efter oprettelse?
-                return RedirectToAction("AvailableTimes", "Booking", new { id = 1 });
+
+                return RedirectToAction("Details", "Booking", new { bookingId = newId });
             }
             catch (Exception ex)
             {
