@@ -73,7 +73,7 @@ namespace BaitM8s.API.Controllers
 
                 int newId = await _bookingDAO.CreateBookingAsync(booking);
 
-                await _notificationService.SendNotificationAsync("hej"); //TODO: Send en ordentlig besked
+                await _notificationService.SendNotificationAsync($"Tak for din booking! Du har nu en reserveret tid ved fiskespot {dto.FK_FishingSpotId} den {dto.Day}/{dto.Month} kl. {dto.StartTime}."); 
 
                 return Ok(newId);
             }
