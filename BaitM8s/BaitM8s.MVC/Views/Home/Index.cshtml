@@ -1,8 +1,81 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "BaitM8s – Book din næste fisketur";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    .hero {
+        background: url('/images/fishing-hero.jpg') center/cover no-repeat;
+        height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: black;
+        text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    }
+
+    .hero h1 {
+        font-size: 4rem;
+        font-weight: 700;
+    }
+
+    .feature-icon {
+        font-size: 3rem;
+        color: #2c7a7b;
+    }
+
+    .cta-btn {
+        margin-right: 10px;
+    }
+
+    .btn-purple {
+        background-color: #AC75AC; /* lilla */
+        color: white; /* hvid tekst */
+        border: none;
+    }
+
+        .btn-purple:hover {
+            background-color: #9c659c; /* mørkere lilla ved hover */
+            color: white;
+        }
+
+</style>
+
+<div class="hero">
+    <div class="text-center">
+        <h1>BaitM8s</h1>
+        <p class="lead mb-4">Den nemmeste måde at booke put & take oplevelser</p>
+
+        <a class="btn btn-primary btn-lg cta-btn" href="/FishingSpot/Map">
+            Find fiskevande
+        </a>
+        <a class="btn btn-purple btn-lg" href="/Angler/Details">
+            Opret bruger
+        </a>
+    </div>
+</div>
+
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">Hvorfor BaitM8s?</h2>
+
+    <div class="row text-center">
+        <div class="col-md-4">
+            <div class="feature-icon mb-3">🎣</div>
+            <h4>Let booking</h4>
+            <p>Find og book ledige tider hos lokale put & take-søer på få sekunder.</p>
+        </div>
+
+        <div class="col-md-4">
+            <div class="feature-icon mb-3">📍</div>
+            <h4>Overblik</h4>
+            <p>Se åbningstider og belægning før du tager afsted.</p>
+        </div>
+
+        <div class="col-md-4">
+            <div class="feature-icon mb-3">💬</div>
+            <h4>For ejere</h4>
+            <p>Nemt system til at administrere tider, fiskekort.</p>
+        </div>
+    </div>
+
 </div>
