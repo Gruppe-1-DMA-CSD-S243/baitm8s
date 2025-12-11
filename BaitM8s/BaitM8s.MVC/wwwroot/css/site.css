@@ -1,13 +1,12 @@
 :root {
-    --base: #812e83;
-    --lighter: oklch(from var(--base) clamp(0, l + 0.22, 1) calc(c * 0.7) h);
-    --darker: oklch(from var(--base) clamp(0, l + 0.22, 1) calc(c * 0.94) h);
+    --base: #9AA561;
+    --lighter: #E8D68C;
+    --darker: #214030;
     --complement: hsl(from var(--base) calc(h-180) s l);
 }
 
 html {
     font-size: 14px;
-
 }
 
 @media (min-width: 768px) {
@@ -27,61 +26,85 @@ html {
 
 body {
     margin-bottom: 60px;
-    /*background: linear-gradient(to bottom, mediumpurple, white);*/
 }
 
-/* Ændr headerens højde */
+/* -------------------------------------------------------
+   NAVBAR OPTIMERET + centrerede items
+--------------------------------------------------------- */
 
 .navbar {
     height: 140px;
     align-items: center;
-    /*    background-color: dimgrey;*/
 }
+
+    /* NEW: Centrer hele navbarens indhold vandret */
+    .navbar .container {
+        display: flex;
+        justify-content: center; /* centrer alt */
+        align-items: center;
+        position: relative; /* så brand kan trækkes ind mod midten */
+    }
+
+/* NEW: Træk logoet lidt ind mod midten */
+.navbar-brand {
+    position: absolute;
+    left: 20px; /* logo ikke helt ude i venstre hjørne */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* NEW: Centrer navigation korrekt mellem brand og højre side */
+.navbar-collapse {
+    display: flex;
+    justify-content: center !important;
+    width: 100%;
+}
+
+/* -------------------------------------------------------
+   LINKS STYLING
+--------------------------------------------------------- */
 
 .navbar-nav {
     justify-content: center;
 }
 
-
 .navbar .nav-link {
-    display: inline-block; /* gør linket som en boks */
-/*    width: 120px;*/ /* afstand inde i boksen */
+    display: inline-block;
     height: 50px;
     line-height: 50px;
     text-align: center;
     padding: 0px 20px;
-    border: 1px solid #000000; /* kant rundt om boksen */
-    border-radius: 5px; /* afrundede hjørner */
-    margin-right: 10px; /* afstand mellem bokse */
-    background-color: var(--lighter); /* lys baggrund */
-    transition: all 0.2s ease; /* glidende effekt ved hover */
+    border: 1px solid #000000;
+    border-radius: 5px;
+    margin-right: 10px;
+    background-color: var(--base);
+    transition: all 0.2s ease;
 }
 
-/* (valgfrit) centrer logoet og linkene lodret */
+/* OPTIONAL: Vertikal justering */
 .navbar-brand,
 .nav-link {
-    line-height: 100px; /* justér indtil det ser pænt ud */
+    line-height: 100px;
 }
 
 .navbar .nav-link:hover {
-    background-color: var(--darker); /* blå baggrund ved hover */
-    color: #fff; /* hvid tekst */
-    border-color: black; /* blå kant */
+    background-color: var(--lighter);
+    color: #fff;
+    border-color: black;
 }
 
-.navbar-collapse {
-    display: flex;
-    justify-content: center; /* centrer links */
-}
+/* -------------------------------------------------------
+   MISC
+--------------------------------------------------------- */
 
 .vertical-center-line {
-    position: fixed; /* står fast på skærmen */
+    position: fixed;
     top: 0;
     bottom: 0;
-    left: 50%; /* midt på skærmen */
-    width: 2px; /* tykkelse på linjen */
-    background-color: red; /* tydelig farve */
-    z-index: 9999; /* ligger ovenpå alt */
+    left: 50%;
+    width: 2px;
+    background-color: red;
+    z-index: 9999;
 }
 
 footer.fotter {
