@@ -11,7 +11,8 @@ namespace BaitM8s.MVC.Controllers
     {
         private readonly IFishingSpotAPIClient _fishingSpotApiClient;
         //TODO: id currently decides if it is an angler(0) or owner(1-n) index that is returned, change hardcode later
-        private readonly int userType = 0;
+        private int UserType =>
+            HttpContext.Session.GetInt32("UserType") ?? 0;
 
         public FishingSpotController(IFishingSpotAPIClient fishingSpotApiClient)
         {
@@ -22,14 +23,14 @@ namespace BaitM8s.MVC.Controllers
         public async Task<IActionResult> Index(int id)
         {
             //TODO: Change to id 
-            if (userType == 0)
+            if (UserType == 0)
             {
                 var fishingSpots = await _fishingSpotApiClient.GetAllFishingSpotsAsync();
                 return View("Angler/Index", fishingSpots);
             }
             else
             {
-                var fishingSpots = await _fishingSpotApiClient.GetFishingSpotsByPondOwnerAsync(userType);
+                var fishingSpots = await _fishingSpotApiClient.GetFishingSpotsByPondOwnerAsync(UserType);
                 return View("Owner/Index", fishingSpots);
             }
         }
@@ -39,7 +40,7 @@ namespace BaitM8s.MVC.Controllers
         {
             var fishingSpot = await _fishingSpotApiClient.GetFishingSpotAsync(id);
 
-            if (userType == 0)
+            if (UserType == 0)
             {
                 return View("Angler/Details", fishingSpot);
             }
