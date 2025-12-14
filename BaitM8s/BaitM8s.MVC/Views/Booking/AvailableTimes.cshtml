@@ -51,7 +51,7 @@
         Number of people:
     </label>
     <select class="form-select" id="numberOfPeople" name="numberOfPeople" style="width: 100px; height: 40px; display:inline-block;" onchange="this.form.submit()"> 
-        @for (int i = 1; i < Model.FishingSpot.Capacity + 1; i++) //TODO: Læs lige de attributes, der er i select id="numberOfPeople". Er alle nødvendige?
+        @for (int i = 1; i < Model.FishingSpot.Capacity + 1; i++) 
         {
             if (i == Model.NumberOfPeople)
             {
@@ -89,7 +89,7 @@
 
                     @if (Model.BookedPeople.ContainsKey(testStr))
                     {
-                        @if (Model.FishingSpot.Capacity > Model.BookedPeople[testStr]) //TODO: Det her tjek er bare en test!
+                        @if (Model.FishingSpot.Capacity < Model.BookedPeople[testStr] + Model.NumberOfPeople) 
                         {
                         <td>
                         <a asp-controller="Booking"
