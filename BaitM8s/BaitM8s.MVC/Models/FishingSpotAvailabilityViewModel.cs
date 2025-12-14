@@ -10,5 +10,6 @@ namespace BaitM8s.MVC.Models
         public int SelectedWeek { get; set; }
         public int SelectedYear { get; set; }
         public IDictionary<string, int> BookedPeople { get; set; }
+        public int NumberOfPeople { get; set; }
     }
 }

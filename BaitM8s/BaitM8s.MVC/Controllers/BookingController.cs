@@ -117,7 +117,7 @@ namespace BaitM8s.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AvailableTimes(int id, int? weekNumber, int? year)
+        public async Task<IActionResult> AvailableTimes(int id, int? weekNumber, int? year, int numberOfPeople = 1)
         {
             var fishingSpot = await _fishingSpotApiClient.GetFishingSpotAsync(id);
 
@@ -138,7 +138,8 @@ namespace BaitM8s.MVC.Controllers
                 WeekDates = weekDates,
                 SelectedWeek = selectedWeek,
                 SelectedYear = selectedYear,
-                BookedPeople = bookedPeople
+                BookedPeople = bookedPeople,
+                NumberOfPeople = numberOfPeople
             };
 
             return View(model);
