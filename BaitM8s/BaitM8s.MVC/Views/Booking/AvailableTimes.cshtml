@@ -85,11 +85,11 @@
             <tr>
                 @foreach (var date in days)
                 {
-                    string testStr = $"{date.Day}-{time.Hours}";
+                    string timeslotStr = $"{date.Day}-{time.Hours}";
 
-                    @if (Model.BookedPeople.ContainsKey(testStr))
+                    @if (Model.BookedPeople.ContainsKey(timeslotStr))
                     {
-                        @if (Model.FishingSpot.Capacity < Model.BookedPeople[testStr] + Model.NumberOfPeople) 
+                        @if (Model.FishingSpot.Capacity < Model.BookedPeople[timeslotStr] + Model.NumberOfPeople) 
                         {
                         <td>
                         <a asp-controller="Booking"
@@ -101,6 +101,22 @@
                            asp-route-startTime="@time.Hours"
                            asp-route-endTime="@time.Add(slotDuration).Hours"
                            class="btn btn-outline-primary btn-sm" style="background-color: red; pointer-events: none">
+                            @timeSlot
+                        </a>
+                        </td>
+                        }
+                        else
+                        {
+                        <td>
+                        <a asp-controller="Booking"
+                           asp-action="BookAvailableTime"
+                           asp-route-id="@Model.FishingSpot.Id"
+                           asp-route-day="@date.Day"
+                           asp-route-year="@date.Year"
+                           asp-route-month="@date.Month"
+                           asp-route-startTime="@time.Hours"
+                           asp-route-endTime="@time.Add(slotDuration).Hours"
+                           class="btn btn-outline-primary btn-sm">
                             @timeSlot
                         </a>
                         </td>
@@ -122,7 +138,6 @@
                         </a>
                         </td>
                     }
-                    
                 }
             </tr>
         }
