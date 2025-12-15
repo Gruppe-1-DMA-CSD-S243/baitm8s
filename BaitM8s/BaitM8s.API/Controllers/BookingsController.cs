@@ -31,7 +31,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred trying to retrieve all bookings posts.");
+                return StatusCode(500, $"An error occurred trying to retrieve all bookings.");
             }
         }
 
@@ -44,7 +44,7 @@ namespace BaitM8s.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred trying to retrieve the blog post with id {id}.");
+                return StatusCode(500, $"An error occurred trying to retrieve the booking with id {id}.");
             }
         }
 
