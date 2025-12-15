@@ -21,13 +21,13 @@ namespace BaitM8s.MVC
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddScoped<IBookingAPIClient>(apiClient => 
-            new BookingAPIClient(configuration["API_BASE_URI"] ?? "https://localhost:8888/api"));
+            new BookingAPIClient(configuration["API_BASE_URI"]));
 
             builder.Services.AddScoped<IAnglerAPIClient>(angler => 
-            new AnglerAPIClient("https://localhost:8888/api"));
+            new AnglerAPIClient(configuration["API_BASE_URI"]));
 
             builder.Services.AddScoped<IFishingSpotAPIClient>(fishingSpot =>
-            new FishingSpotAPIClient("https://localhost:8888/api"));
+            new FishingSpotAPIClient(configuration["API_BASE_URI"]));
 
             builder.Services.AddSession();
 
