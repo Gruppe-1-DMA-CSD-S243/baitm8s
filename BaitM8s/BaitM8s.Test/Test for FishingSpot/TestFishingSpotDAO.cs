@@ -82,7 +82,7 @@ public class TestFishingSpotDAO
             IsAwaitingApproval = false,
             StartAvailableHours = 8,
             EndAvailableHours = 13,
-            FK_PondOwnerId = 1 //TODO: Kig lige på dette id!
+            FK_PondOwnerId = 1 //TODO: Hardcoded id - midlertidig løsning!
         };
 
         int newId = await DAO.CreateFishingSpotAsync(newFishingSpot);

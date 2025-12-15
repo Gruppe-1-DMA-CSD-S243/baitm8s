@@ -10,7 +10,7 @@ namespace BaitM8s.MVC.Controllers
     public class FishingSpotController : Controller
     {
         private readonly IFishingSpotAPIClient _fishingSpotApiClient;
-        //TODO: id currently decides if it is an angler(0) or owner(1-n) index that is returned, change hardcode later
+        //TODO: UserType bestemmer om brugeren er Angler eller Pondowner og bruges til at styre hvilket View, der skal returneres. Dette er en midlertidig løsning!
         private int UserType =>
             HttpContext.Session.GetInt32("UserType") ?? 0;
 
@@ -22,7 +22,6 @@ namespace BaitM8s.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int id)
         {
-            //TODO: Change to id 
             if (UserType == 0)
             {
                 var fishingSpots = await _fishingSpotApiClient.GetAllFishingSpotsAsync();
@@ -109,7 +108,7 @@ namespace BaitM8s.MVC.Controllers
             try
             {
                 fishingSpot.IsAwaitingApproval = true;
-                fishingSpot.FishSpecies = new List<string>(); //TODO: Dette er en temp løsning!
+                fishingSpot.FishSpecies = new List<string>(); //TODO: Midlertidig løsning til at tilføjge FishSpecies på nyoprettet FishingSpot!
 
                 int newId = await _fishingSpotApiClient.CreateFishingSpotAsync(fishingSpot);
 

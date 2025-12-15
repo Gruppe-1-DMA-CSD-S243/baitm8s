@@ -129,7 +129,6 @@ namespace BaitM8s.MVC.Controllers
             var weekStart = ISOWeek.ToDateTime(selectedYear, selectedWeek, DayOfWeek.Monday);
             var weekDates = Enumerable.Range(0, 7).Select(d => weekStart.AddDays(d)).ToArray();
 
-            //TODO: Test:
             IDictionary<string, int> bookedPeople = await _bookingApiClient.GetBookedPeopleCountAsync(fishingSpot.Id, selectedWeek, selectedYear);
 
             var model = new FishingSpotAvailabilityViewModel
