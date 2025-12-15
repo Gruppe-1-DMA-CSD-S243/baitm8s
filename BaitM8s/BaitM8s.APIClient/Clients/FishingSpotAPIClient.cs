@@ -61,7 +61,7 @@ namespace BaitM8s.APIClient.Clients
 
         public async Task<FishingSpotDTO?> GetFishingSpotAsync(int id)
         {
-            var request = new RestRequest("fishingspots/by-id/{id}", Method.Get);
+            var request = new RestRequest("Fishingspots/{id}", Method.Get);
             request.AddUrlSegment("id", id);
 
             var response = await _restClient.ExecuteAsync<FishingSpotDTO>(request);
@@ -75,8 +75,8 @@ namespace BaitM8s.APIClient.Clients
 
         public async Task<IEnumerable<FishingSpotDTO>> GetFishingSpotsByPondOwnerAsync(int id)
         {
-            var request = new RestRequest("fishingspots/by-owner/{id}", Method.Get);
-            request.AddUrlSegment("id", id);
+            var request = new RestRequest("FishingSpots/owner", Method.Get);
+            request.AddParameter<int>("ownerId", id);
 
             var response = await _restClient.ExecuteAsync<IEnumerable<FishingSpotDTO>>(request);
 

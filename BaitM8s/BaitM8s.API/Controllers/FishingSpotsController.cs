@@ -33,7 +33,7 @@ namespace BaitM8s.API.Controllers
             }
         }
 
-        [HttpGet("by-id/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<FishingSpotDTO>> GetAsync(int id)
         {
             try
@@ -46,12 +46,12 @@ namespace BaitM8s.API.Controllers
             }
         }
 
-        [HttpGet("by-owner/{id}")]
-        public async Task<ActionResult<IEnumerable<FishingSpotDTO>>> GetAllByOwnerAsync(int id)
+        [HttpGet("owner")]
+        public async Task<ActionResult<IEnumerable<FishingSpotDTO>>> GetAllByOwnerAsync(int ownerId)
         {
             try
             {
-                return Ok(await _fishingSpotDAO.GetFishingSpotsByPondOwnerAsync(id));
+                return Ok(await _fishingSpotDAO.GetFishingSpotsByPondOwnerAsync(ownerId));
             }
             catch (Exception ex)
             {
