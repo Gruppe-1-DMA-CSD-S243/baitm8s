@@ -121,7 +121,7 @@ public class TestFishingSpotDAO
         bool isUpdated = await DAO.UpdateFishingSpotAsync(fishingSpotToUpdate);
 
         //Assert
-        Assert.True(isUpdated); //TODO: Man skulle måske teste på noget mere.
+        Assert.True(isUpdated); 
     }
 
     [Test]
