@@ -78,7 +78,7 @@ public class TestBookingDAO
             Year = 2025,
             WeekNumber = 47,
             FK_AnglerId = 1, //TODO: id skal findes fremfor hardcodes!
-            FK_FishingSpotId = 1 //TODO: Hardcoded id - midlertidig løsning!
+            FK_FishingSpotId = 1 //TODO: id skal findes fremfor hardcodes!
         };
 
         int newId = await DAO.CreateBookingAsync(newBooking);
