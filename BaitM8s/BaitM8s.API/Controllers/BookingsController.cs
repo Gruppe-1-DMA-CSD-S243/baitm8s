@@ -82,5 +82,18 @@ namespace BaitM8s.API.Controllers
                 return StatusCode(500, $"An error occurred while trying to create a booking.");
             }
         }
+
+        [HttpGet("booked-people-count")]
+        public async Task<ActionResult<IDictionary<string, int>>> GetBookedPeopleCountAsync(int fishingSpotId = 1, int weekNumber = 48, int year = 2025)
+        {
+            try
+            {
+                return Ok(await _bookingDAO.GetBookedPeopleCountAsync(fishingSpotId, weekNumber, year));
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
+        }
     }
 }

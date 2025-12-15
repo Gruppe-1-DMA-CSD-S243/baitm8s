@@ -47,6 +47,22 @@
             }
         }
     </select>
+    <label style="display:inline-block; margin-right: 10px;">
+        Number of people:
+    </label>
+    <select class="form-select" id="numberOfPeople" name="numberOfPeople" style="width: 100px; height: 40px; display:inline-block;" onchange="this.form.submit()"> 
+        @for (int i = 1; i < Model.FishingSpot.Capacity + 1; i++) 
+        {
+            if (i == Model.NumberOfPeople)
+            {
+                <option value="@i" selected>@i</option>
+            }
+            else
+            {
+                <option value="@i">@i</option>
+            }
+        }
+    </select>
 </form>
 
 <table class="table table-bordered text-center">
@@ -69,7 +85,29 @@
             <tr>
                 @foreach (var date in days)
                 {
-                    <td>
+                    string timeslotStr = $"{date.Day}-{time.Hours}";
+
+                    @if (Model.BookedPeople.ContainsKey(timeslotStr))
+                    {
+                        @if (Model.FishingSpot.Capacity < Model.BookedPeople[timeslotStr] + Model.NumberOfPeople) 
+                        {
+                        <td>
+                        <a asp-controller="Booking"
+                           asp-action="BookAvailableTime"
+                           asp-route-id="@Model.FishingSpot.Id"
+                           asp-route-day="@date.Day"
+                           asp-route-year="@date.Year"
+                           asp-route-month="@date.Month"
+                           asp-route-startTime="@time.Hours"
+                           asp-route-endTime="@time.Add(slotDuration).Hours"
+                           class="btn btn-outline-primary btn-sm" style="background-color: red; pointer-events: none">
+                            @timeSlot
+                        </a>
+                        </td>
+                        }
+                        else
+                        {
+                        <td>
                         <a asp-controller="Booking"
                            asp-action="BookAvailableTime"
                            asp-route-id="@Model.FishingSpot.Id"
@@ -81,7 +119,25 @@
                            class="btn btn-outline-primary btn-sm">
                             @timeSlot
                         </a>
-                    </td>
+                        </td>
+                        }
+                    }
+                    else
+                    {
+                        <td>
+                        <a asp-controller="Booking"
+                           asp-action="BookAvailableTime"
+                           asp-route-id="@Model.FishingSpot.Id"
+                           asp-route-day="@date.Day"
+                           asp-route-year="@date.Year"
+                           asp-route-month="@date.Month"
+                           asp-route-startTime="@time.Hours"
+                           asp-route-endTime="@time.Add(slotDuration).Hours"
+                           class="btn btn-outline-primary btn-sm">
+                            @timeSlot
+                        </a>
+                        </td>
+                    }
                 }
             </tr>
         }

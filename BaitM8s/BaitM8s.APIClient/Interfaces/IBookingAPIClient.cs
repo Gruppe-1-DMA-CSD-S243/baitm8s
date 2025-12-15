@@ -13,5 +13,6 @@ namespace BaitM8s.APIClient.Interfaces
         Task<BookingDTO?> GetOneAsync(int id);
         Task<bool> DeleteAsync(int id);
         Task<int> CreateAsync(BookingDTO bookingDTO);
+        Task<IDictionary<string, int>> GetBookedPeopleCountAsync(int fishingSpotId, int weekNumber, int year);
     }
 }

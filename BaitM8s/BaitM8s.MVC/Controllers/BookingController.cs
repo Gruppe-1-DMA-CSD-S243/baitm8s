@@ -117,7 +117,7 @@ namespace BaitM8s.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AvailableTimes(int id, int? weekNumber, int? year)
+        public async Task<IActionResult> AvailableTimes(int id, int? weekNumber, int? year, int numberOfPeople = 1)
         {
             var fishingSpot = await _fishingSpotApiClient.GetFishingSpotAsync(id);
 
@@ -129,12 +129,17 @@ namespace BaitM8s.MVC.Controllers
             var weekStart = ISOWeek.ToDateTime(selectedYear, selectedWeek, DayOfWeek.Monday);
             var weekDates = Enumerable.Range(0, 7).Select(d => weekStart.AddDays(d)).ToArray();
 
+            //TODO: Test:
+            IDictionary<string, int> bookedPeople = await _bookingApiClient.GetBookedPeopleCountAsync(fishingSpot.Id, selectedWeek, selectedYear);
+
             var model = new FishingSpotAvailabilityViewModel
             {
                 FishingSpot = fishingSpot,
                 WeekDates = weekDates,
                 SelectedWeek = selectedWeek,
-                SelectedYear = selectedYear
+                SelectedYear = selectedYear,
+                BookedPeople = bookedPeople,
+                NumberOfPeople = numberOfPeople
             };
 
             return View(model);
