@@ -5,12 +5,16 @@ using BaitM8s.DAL.DAO;
 using BaitM8s.DAL.Interfaces;
 using BaitM8s.Services.Notifications;
 using BaitM8s.Services.Notifications.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BaitM8s.API
 {
     public class Program
     {
+        private const string _connectionString = "Data Source=localhost;Database=BaitM8s;User ID=sa;Password=@12tf56so;Trust Server Certificate=True;";
+        private const string _telegramKey = "8230947150:AAHn8ZkyVU4DLGMvtGY06u0ZDz1lnVtHpKY";
+        private const string _telegramChatId = "-1003297586522";
         public static void Main(string[] args)
         {
 
@@ -27,19 +31,19 @@ namespace BaitM8s.API
             builder.Services.AddControllers();
 
             builder.Services.AddScoped<IAnglerDAO>(anglerDAO =>
-            new AnglerDAO(configuration["CONNECTION_STRING"]));
+            new AnglerDAO(configuration["CONNECTION_STRING"] ?? _connectionString));
 
             builder.Services.AddScoped<IBookingDAO>(bookingDAO =>
-            new BookingDAO(configuration["CONNECTION_STRING"]));
+            new BookingDAO(configuration["CONNECTION_STRING"] ?? _connectionString));
 
             builder.Services.AddScoped<IFishingSpotDAO>(fishingSpotDAO =>
-            new FishingSpotDAO(configuration["CONNECTION_STRING"]));
+            new FishingSpotDAO(configuration["CONNECTION_STRING"] ?? _connectionString));
 
             builder.Services.AddScoped<IFishingSpotMapper>(fishingSpotMapper =>
             new FishingSpotMapper());
 
             builder.Services.AddScoped<INotificationService>(notificationService =>
-            new TelegramNotificationService("https://api.telegram.org", configuration["TELEGRAM_API_KEY"], configuration["TELEGRAM_CHAT_ID"]));
+            new TelegramNotificationService("https://api.telegram.org", configuration["TELEGRAM_API_KEY"] ?? _telegramKey, configuration["TELEGRAM_CHAT_ID"] ?? _telegramChatId));
 
             builder.Services.AddScoped<IBookingMapper>(bookingMapper =>
             new BookingMapper());

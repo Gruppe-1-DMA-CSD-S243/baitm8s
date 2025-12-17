@@ -2,11 +2,13 @@ using BaitM8s.APIClient.Clients;
 using BaitM8s.APIClient.Interfaces;
 using BaitM8s.DAL.DTO;
 using BaitM8s.DAL.Interfaces;
+using System.CodeDom;
 
 namespace BaitM8s.MVC
 {
     public class Program
     {
+        private const string _apiBaseUri = "https://localhost:8888/api";
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -21,13 +23,13 @@ namespace BaitM8s.MVC
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddScoped<IBookingAPIClient>(apiClient => 
-            new BookingAPIClient(configuration["API_BASE_URI"]));
+            new BookingAPIClient(configuration["API_BASE_URI"] ?? _apiBaseUri));
 
             builder.Services.AddScoped<IAnglerAPIClient>(angler => 
-            new AnglerAPIClient(configuration["API_BASE_URI"]));
+            new AnglerAPIClient(configuration["API_BASE_URI"] ?? _apiBaseUri));
 
             builder.Services.AddScoped<IFishingSpotAPIClient>(fishingSpot =>
-            new FishingSpotAPIClient(configuration["API_BASE_URI"]));
+            new FishingSpotAPIClient(configuration["API_BASE_URI"] ?? _apiBaseUri));
 
             builder.Services.AddSession();
 
